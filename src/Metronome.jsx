@@ -5,40 +5,45 @@ import Wood from './audio/wood.mp3';
 
 const Metronome = () => {
     const [BPM, changeBPM] = React.useState(40); 
-    let woodAudio = null;
-    let metronome = null;
-
-    React.useEffect(() => {
-        woodAudio = document.createElement('audio');
-        woodAudio.src = Wood;
-    }, []);
-   
+    let woodAudio = document.createElement('audio');
+    woodAudio.src = Wood;
+    let metronomeInterval = null;
 
     function incrementBPM(increment) {
         changeBPM(BPM + increment);
+        stop();
+        play();
     }
 
-    function handleChange(event) {
+    function handleBPMChange(event) {
         changeBPM(event.target.value);
+        stop();
+        play();
     }
 
     function metronomeTick() {
          woodAudio.play();
     }
 
+    function getClickTime(BPM) {
+        return 60000 / BPM;
+    }
+
     function play() { 
-        if(!metronome) {
-            metronome = setInterval(metronomeTick, 1000)
+        if(!metronomeInterval) {
+            let clickTime = getClickTime(BPM);
+            console.log('clickTime', clickTime);
+            metronomeInterval = setInterval(metronomeTick, clickTime);
         } 
     }
 
     function stop() {
-        clearInterval(metronome);
+        clearInterval(metronomeInterval);
     }
 
     return (
         <div className="metronomeContainer"> 
-			<input type="number" value={BPM} onChange={handleChange}/>
+			<input type="number" value={BPM} onChange={handleBPMChange}/>
 			<br/>
 			<button onClick={() => incrementBPM(-1)}>-</button>
 			<button onClick={() => incrementBPM(1)}>+</button>
