@@ -1,6 +1,4 @@
-/*
-    refactor => clear interval when playmode = stop
-
+/* 
     fix high speeds
 
     keep playing when input new time
@@ -19,6 +17,8 @@
         change accent
 
     tap tempo
+
+    add tempo names bar
 */
 
 
@@ -29,6 +29,8 @@ import Wood from './audio/wood.mp3';
 
 const Metronome = () => {
     console.log('render');
+    let minBPM = 0;
+    let maxBPM = 200;
     let [BPM, setBPM] = React.useState(40);  
     let [playMode, setPlayMode] = React.useState('stop');
     let clickTime = getClickTime(BPM);    
@@ -36,9 +38,9 @@ const Metronome = () => {
     let woodAudio = document.createElement('audio');
     woodAudio.src = Wood; 
 
-    React.useEffect(() => { 
-        if(playMode === 'play') {
-            const metronome = setInterval(() => {   
+    React.useEffect(() => {  
+        if(playMode === 'play') { 
+            const metronome = setInterval(() => {    
                 woodAudio.play(); 
             }, getClickTime(BPM));
 
@@ -47,11 +49,19 @@ const Metronome = () => {
     }, [playMode, BPM]);
 
     function incrementBPM(increment) { 
-       setBPM(BPM + increment);
+        setBPM(BPM + increment);
     }
 
-    function handleBPMChange(event) {   
-        setBPM(event.target.value);  
+    function handleBPMChange(event) { 
+        let newBPM = event.target.value; 
+
+        if(newBPM >= minBPM && newBPM <= maxBPM) {
+            setBPM(event.target.value);
+        } else if(newBPM < minBPM) {
+            setBPM(minBPM);
+        } else if (newBPM > maxBPM) {
+            setBPM(maxBPM);
+        }
     }
  
     function getClickTime(BPM) {
@@ -69,14 +79,13 @@ const Metronome = () => {
     return (
         <div className="metronomeContainer"> 
             BPM: {BPM}
-			<input type="number" value={BPM} onChange={handleBPMChange} id="BPM_input"/>
+			<input type="number" value={BPM} min={minBPM} max={maxBPM} onChange={handleBPMChange} id="BPMInput"/>
 			<br/>
 			<button onClick={() => incrementBPM(-1)}>-</button>
 			<button onClick={() => incrementBPM(1)}>+</button>
 
 			<button onClick={play} id="playButton">Play</button>
-			<button onClick={stop} id="stopButton">Stop</button>
-            {/*<button onClick={mute} id="muteButton">Mute</button>*/}
+			<button onClick={stop} id="stopButton">Stop</button> 
 		</div>
     )
 }
