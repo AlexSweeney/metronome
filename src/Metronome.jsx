@@ -30,8 +30,8 @@ import Wood from './audio/wood.mp3';
 const Metronome = () => {
     console.log('render');
     let [BPM, changeBPM] = React.useState(40);  
-    let [playMode, changePlayMode] = React.useState('play');
-    let clickTime = getClickTime(BPM);   
+    let [playMode, changePlayMode] = React.useState('stop');
+    let clickTime = getClickTime(BPM);    
 
     let woodAudio = document.createElement('audio');
     woodAudio.src = Wood; 
@@ -52,27 +52,46 @@ const Metronome = () => {
         return document.getElementById("BPM_input").value;
     }
 
-    function metronomeTick() { 
-        console.log('tick',playMode);
+    function isPlaying() {
+        console.log('getPlayMode'); 
+        let a = Array.from(document.getElementById('playButton').classList).indexOf('selected') !== -1;
+        console.log(a);
+
+        return a;
+    }
+
+    function metronomeTick() {  
         woodAudio.play();
-        if(playMode === 'play') { 
+        if(isPlaying()) { 
             setTimeout(metronomeTick, getClickTime(getBPM()));
         } 
     }
 
     function play() {  
         woodAudio.muted = false;
+        addClass('playButton', 'selected');
+        removeClass('stopButton', 'selected');
         changePlayMode('play');
         metronomeTick(BPM); 
     }
 
     function stop() {  
         woodAudio.muted = true;
+        addClass('stopButton', 'selected');
+        removeClass('playButton', 'selected');
         changePlayMode('stop'); 
     }
 
     function mute() {
         woodAudio.muted = true;
+    }
+
+    function addClass(elementId, className) {
+        document.getElementById(elementId).classList.add(className);
+    }
+
+    function removeClass(elementId, className) {
+        document.getElementById(elementId).classList.remove(className);
     }
  
     return (
@@ -83,8 +102,8 @@ const Metronome = () => {
 			<button onClick={() => incrementBPM(-1)}>-</button>
 			<button onClick={() => incrementBPM(1)}>+</button>
 
-			<button onClick={play}>Play</button>
-			<button onClick={stop}>Stop</button>
+			<button onClick={play} id="playButton">Play</button>
+			<button onClick={stop} id="stopButton">Stop</button>
             <button onClick={mute}>Mute</button>
 		</div>
     )
