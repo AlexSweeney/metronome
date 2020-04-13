@@ -1,6 +1,4 @@
 /*
-    mute button
-
     fix: mutliple click play
 
     keep playing when input new time
@@ -71,10 +69,12 @@ const Metronome = () => {
     }
 
     function play() {   
-        addClass('playButton', 'selected');
-        removeClass('stopButton', 'selected');
-        changePlayMode('play');
-        metronomeTick(BPM); 
+        if(!elementHasClass('playButton', 'selected')) {
+            addClass('playButton', 'selected');
+            removeClass('stopButton', 'selected');
+            changePlayMode('play');
+            metronomeTick(BPM); 
+        } 
     }
 
     function stop() {   
