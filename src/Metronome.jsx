@@ -1,8 +1,4 @@
 /* 
-    fix high speeds
-
-    keep playing when input new time
-
     keep incrementing when hold down button
 
     volume control
@@ -27,13 +23,13 @@ import './metronomeStyle.css';
 
 import Wood from './audio/wood.mp3';
 
-const Metronome = () => {
-    console.log('render');
+const Metronome = () => { 
     let minBPM = 0;
     let maxBPM = 200;
     let [BPM, setBPM] = React.useState(40);  
     let [playMode, setPlayMode] = React.useState('stop');
-    let clickTime = getClickTime(BPM);    
+    let [incrementHold, setIncrementHold] = React.useState(null);
+    let clickTime = getClickTime(BPM);     
 
     let woodAudio = document.createElement('audio');
     woodAudio.src = Wood; 
@@ -48,8 +44,27 @@ const Metronome = () => {
         } 
     }, [playMode, BPM]);
 
-    function incrementBPM(increment) { 
-        setBPM(BPM + increment);
+    React.useEffect(() => { 
+        if(incrementHold) { 
+            const holdBPM = setInterval(() => {
+                if(incrementHold === 1) { 
+                    setBPM(BPM + 1); 
+                } else if (incrementHold === -1) { 
+                    setBPM(BPM - 1);
+                }
+            }, 500);
+            
+            return () => clearInterval(holdBPM);
+        }
+    }, [incrementHold, BPM])
+
+    function incrementBPM(increment) {  
+        setBPM(BPM + increment)
+        setIncrementHold(increment);
+    }
+
+    function stopIncrementBPM() { 
+       setIncrementHold(null);
     }
 
     function handleBPMChange(event) { 
@@ -77,12 +92,13 @@ const Metronome = () => {
     } 
  
     return (
-        <div className="metronomeContainer"> 
-            BPM: {BPM}
+        <div className="metronomeContainer">  
 			<input type="number" value={BPM} min={minBPM} max={maxBPM} onChange={handleBPMChange} id="BPMInput"/>
 			<br/>
-			<button onClick={() => incrementBPM(-1)}>-</button>
-			<button onClick={() => incrementBPM(1)}>+</button>
+			<button onMouseDown={() => incrementBPM(-1)}
+                    onMouseUp={stopIncrementBPM}>-</button>
+			<button onMouseDown={() => incrementBPM(1)}
+                    onMouseUp={stopIncrementBPM}>+</button>
 
 			<button onClick={play} id="playButton">Play</button>
 			<button onClick={stop} id="stopButton">Stop</button> 
