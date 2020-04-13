@@ -1,7 +1,7 @@
 /*
-    change tempo while playing 
-
     play and stop
+
+    mute button
 
     keep playing when input new time
 
@@ -52,31 +52,25 @@ const Metronome = () => {
         return document.getElementById("BPM_input").value;
     }
 
-    function isPlaying() {
-        console.log('getPlayMode'); 
-        let a = Array.from(document.getElementById('playButton').classList).indexOf('selected') !== -1;
-        console.log(a);
-
-        return a;
+    function isPlaying() { 
+        return Array.from(document.getElementById('playButton').classList).indexOf('selected') !== -1;
     }
 
     function metronomeTick() {  
-        woodAudio.play();
-        if(isPlaying()) { 
+        if(isPlaying()) {
+            woodAudio.play(); 
             setTimeout(metronomeTick, getClickTime(getBPM()));
         } 
     }
 
-    function play() {  
-        woodAudio.muted = false;
+    function play() {   
         addClass('playButton', 'selected');
         removeClass('stopButton', 'selected');
         changePlayMode('play');
         metronomeTick(BPM); 
     }
 
-    function stop() {  
-        woodAudio.muted = true;
+    function stop() {   
         addClass('stopButton', 'selected');
         removeClass('playButton', 'selected');
         changePlayMode('stop'); 
