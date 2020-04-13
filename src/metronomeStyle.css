@@ -1,3 +1,7 @@
 .selected {
 	background-color: blue;
 }
+
+.muted {
+	background-color: red;
+}

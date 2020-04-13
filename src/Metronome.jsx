@@ -1,7 +1,7 @@
 /*
-    play and stop
-
     mute button
+
+    fix: mutliple click play
 
     keep playing when input new time
 
@@ -53,12 +53,19 @@ const Metronome = () => {
     }
 
     function isPlaying() { 
-        return Array.from(document.getElementById('playButton').classList).indexOf('selected') !== -1;
+        return elementHasClass('playButton', 'selected'); 
+    }
+
+    function elementHasClass(elementId, className) {
+        return Array.from(document.getElementById(elementId).classList).indexOf(className) !== -1;
     }
 
     function metronomeTick() {  
         if(isPlaying()) {
-            woodAudio.play(); 
+            if(!elementHasClass('muteButton', 'muted')) {
+                woodAudio.play();
+            }
+            
             setTimeout(metronomeTick, getClickTime(getBPM()));
         } 
     }
@@ -76,8 +83,14 @@ const Metronome = () => {
         changePlayMode('stop'); 
     }
 
-    function mute() {
-        woodAudio.muted = true;
+    function mute() { 
+        if(!elementHasClass('muteButton', 'muted')) {
+            addClass('muteButton', 'muted');
+            woodAudio.muted = true;
+        } else {
+            removeClass('muteButton', 'muted');
+            woodAudio.muted = false;
+        }
     }
 
     function addClass(elementId, className) {
@@ -98,7 +111,7 @@ const Metronome = () => {
 
 			<button onClick={play} id="playButton">Play</button>
 			<button onClick={stop} id="stopButton">Stop</button>
-            <button onClick={mute}>Mute</button>
+            <button onClick={mute} id="muteButton">Mute</button>
 		</div>
     )
 }
