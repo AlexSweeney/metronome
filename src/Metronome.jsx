@@ -1,7 +1,7 @@
-/* 
-    keep incrementing when hold down button
-
+/*  
     volume control
+    
+    fix, remove increment on input box
 
     timer
 
@@ -26,18 +26,17 @@ import Wood from './audio/wood.mp3';
 const Metronome = () => { 
     let minBPM = 0;
     let maxBPM = 200;
+    let [volumeSlider, setVolumeSlider] = React.useState(50);
+    let [volume, setVolume] = React.useState(0.5);
     let [BPM, setBPM] = React.useState(40);  
     let [playMode, setPlayMode] = React.useState('stop');
     let [incrementHold, setIncrementHold] = React.useState(null);
     let clickTime = getClickTime(BPM);     
 
-    let woodAudio = document.createElement('audio');
-    woodAudio.src = Wood; 
-
     React.useEffect(() => {  
         if(playMode === 'play') { 
             const metronome = setInterval(() => {    
-                woodAudio.play(); 
+                document.getElementById('woodAudio').play(); 
             }, getClickTime(BPM));
 
             return () => clearInterval(metronome);
@@ -52,11 +51,23 @@ const Metronome = () => {
                 } else if (incrementHold === -1) { 
                     setBPM(BPM - 1);
                 }
-            }, 500);
+            }, 100);
             
             return () => clearInterval(holdBPM);
         }
-    }, [incrementHold, BPM])
+    }, [incrementHold, BPM]);
+
+    React.useEffect(() => {
+        console.log('change volumeSlider');
+        updateVolume();
+        
+    }, [volumeSlider]);
+
+    function updateVolume() {
+        console.log('updateVolume', volume);
+        setVolume(volumeSlider / 100);
+        document.getElementById('woodAudio').volume = volume;
+    }
 
     function incrementBPM(increment) {  
         setBPM(BPM + increment)
@@ -90,9 +101,15 @@ const Metronome = () => {
     function stop() {
         setPlayMode('stop');
     } 
+
+    function handleVolumeSliderChange(e) {
+        setVolumeSlider(e.target.value);
+    }
  
     return (
-        <div className="metronomeContainer">  
+        <div className="metronomeContainer" id="metronomeContainer">  
+            <audio src={Wood} id="woodAudio"/>
+
 			<input type="number" value={BPM} min={minBPM} max={maxBPM} onChange={handleBPMChange} id="BPMInput"/>
 			<br/>
 			<button onMouseDown={() => incrementBPM(-1)}
@@ -102,6 +119,9 @@ const Metronome = () => {
 
 			<button onClick={play} id="playButton">Play</button>
 			<button onClick={stop} id="stopButton">Stop</button> 
+
+            <input type="range" min="0" max="100" value={volumeSlider} onChange={handleVolumeSliderChange}/>
+            volume {volumeSlider}
 		</div>
     )
 }
