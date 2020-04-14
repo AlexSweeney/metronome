@@ -20,23 +20,39 @@ function Timer() {
 	let [minutes, setMinutes] = useState('00');
 	let [seconds, setSeconds] = useState('00');
 
+	function addLeadingZero(number, addition) {
+		console.log('addLeadingZero', arguments);
+		console.log("Number(number)", Number(number));
+		number = Number(number) + addition;
+		console.log('number', number);
+		
+		if(number < 0) {
+			return '00';
+		}
+
+		if(number < 10) {
+			return '0' + number;
+		} 
+		
+		return number;
+	}
+
 	function handleKeyDown(e) {
-		if(e.key === 'ArrowUp') {
-			console.log('up');
+		if(e.key === 'ArrowUp') { 
 			if(e.target.id === 'hourInput') {
-				setHours(Number(hours) + 1);
+				setHours(addLeadingZero(hours, 1));
 			} else if (e.target.id === 'minuteInput') {
-				setMinutes(Number(minutes) + 1);
+				setMinutes(addLeadingZero(minutes, 1));
 			} else if (e.target.id === 'secondInput') {
-				setSeconds(Number(seconds) + 1);
+				setSeconds(addLeadingZero(seconds, 1));
 			}
 		} else if (e.key === 'ArrowDown') { 
 			if(e.target.id === 'hourInput') {
-				setHours(Number(hours) - 1);
+				setHours(addLeadingZero(hours, -1));
 			} else if (e.target.id === 'minuteInput') {
-				setMinutes(Number(minutes) - 1);
+				setMinutes(addLeadingZero(minutes, -1));
 			} else if (e.target.id === 'secondInput') {
-				setSeconds(Number(seconds) - 1);
+				setSeconds(addLeadingZero(seconds, -1));
 			}
 		}
 	} 
