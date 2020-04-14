@@ -1,8 +1,4 @@
 /*  
-    pre delay on increment hold
-
-    fix, remove increment on input box
-
     timer
 
     style
@@ -62,8 +58,7 @@ const Metronome = () => {
     }, [incrementHold, incrementPause, BPM]);
 
     React.useEffect(() => { 
-        updateVolume();
-        
+        updateVolume(); 
     }, [volumeSlider]);
 
     function updateVolume() { 
@@ -130,6 +125,7 @@ const Metronome = () => {
 
             <input type="range" min="0" max="100" value={volumeSlider} onChange={handleVolumeSliderChange}/>
             volume {volumeSlider}
+            <br/>
 		</div>
     )
 }
