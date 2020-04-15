@@ -63,32 +63,27 @@ function Timer() {
 		return String(number).substring(1,); 
 	}
 
-	function handleKeyDown(e) { 
-		console.log('keyDown');
+	function handleKeyDown(e) {  
 		let increment = getNumberFromKey(e.key);
 		let newValue = addLeadingZero(e.target.value, increment); 
 		dispatch({target: e.target.id, newValue}); 
 	}  
 
-	function handleChange(e) {  
-		let newValue = removeFirstDigit(e.target.value); 
+	function handleChange(e) {   
+		let newValue = e.target.value;
+
+		if(String(newValue).length > 1) {
+			newValue = removeFirstDigit(newValue); 
+		}  
+
 		dispatch({target: e.target.id, newValue});
-	}
-
-	function handleFocus(e) {
-		console.log('handleFocus');
-		// dispatch({target: e.target.id, newValue: '' });
-	}
-
-	function handleFocusOut(e) {
-		console.log('handleFocusOut');
 	}
 
 	return ( 
 		<>
-			<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown}/>
-			<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown}/>
-			<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown} onFocus={handleFocus} onChange={handleChange}/>
+			<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown} onChange={handleChange}/>
+			<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown} onChange={handleChange}/>
+			<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown} onChange={handleChange}/>
 		</>
 	)
 }
