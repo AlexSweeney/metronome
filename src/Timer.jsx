@@ -1,9 +1,8 @@
 /*
-	input numbers
-		focus press up or down 
-			change to reducer 
+	input numbers 
+		focus on box, type number
 
-		focus type
+		highlight numbers, then type (replace)
 		
 		play, stop, pause
 			seconds
@@ -16,10 +15,7 @@
 
 import React, {useState, useEffect, useReducer} from 'react';
 
-function Timer() { 
-	/*let [hours, setHours] = useState('00');
-	let [minutes, setMinutes] = useState('00');
-	let [seconds, setSeconds] = useState('00');*/
+function Timer() {  
 	let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
 	const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
 
@@ -40,13 +36,13 @@ function Timer() {
 
 		switch(action.target) {
 			case 'hourInput': 
-				hours = (addLeadingZero(hours, action.number));
+				hours = action.newValue;
 			 	break;
 			case 'minuteInput': 
-				minutes = (addLeadingZero(minutes, action.number));
+				minutes = action.newValue;
 				break;
 			case 'secondInput':
-				seconds = (addLeadingZero(seconds, action.number)); 
+				seconds = action.newValue; 
 				break;
 		} 
 
@@ -63,16 +59,36 @@ function Timer() {
 		}
 	}
 
+	function removeFirstDigit(number) {
+		return String(number).substring(1,); 
+	}
+
 	function handleKeyDown(e) { 
-		let number = getNumberFromKey(e.key);
-		dispatch({number, target: e.target.id}); 
+		console.log('keyDown');
+		let increment = getNumberFromKey(e.key);
+		let newValue = addLeadingZero(e.target.value, increment); 
+		dispatch({target: e.target.id, newValue}); 
 	}  
+
+	function handleChange(e) {  
+		let newValue = removeFirstDigit(e.target.value); 
+		dispatch({target: e.target.id, newValue});
+	}
+
+	function handleFocus(e) {
+		console.log('handleFocus');
+		// dispatch({target: e.target.id, newValue: '' });
+	}
+
+	function handleFocusOut(e) {
+		console.log('handleFocusOut');
+	}
 
 	return ( 
 		<>
-			 <input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown}/>
+			<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown}/>
 			<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown}/>
-			<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown}/>
+			<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown} onFocus={handleFocus} onChange={handleChange}/>
 		</>
 	)
 }
