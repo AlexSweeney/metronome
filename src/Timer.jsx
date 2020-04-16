@@ -1,15 +1,12 @@
 /*
-	input numbers 
-		focus on box, type number
+	fix, up down key increment 
 
-		highlight numbers, then type (replace)
-		
-		play, stop, pause
-			seconds
-			minutes
-			hours
+	play, stop, pause
+		seconds
+		minutes
+		hours
 
-		increment buttons -> above and below
+	increment buttons -> above and below
 */
 
 
@@ -63,27 +60,46 @@ function Timer() {
 		return String(number).substring(1,); 
 	}
 
-	function handleKeyDown(e) {  
+	function handleKeyDown(e) {   
 		let increment = getNumberFromKey(e.key);
-		let newValue = addLeadingZero(e.target.value, increment); 
+		let newValue = e.target.value; 
+
+		if(increment === 0) {  
+			if(String(newValue).length > 1) {
+				newValue = removeFirstDigit(newValue); 
+				newValue += Number(e.key);
+			}  
+		} else {
+			newValue = addLeadingZero(e.target.value, increment); 
+		}
+
+		
 		dispatch({target: e.target.id, newValue}); 
 	}  
 
 	function handleChange(e) {   
-		let newValue = e.target.value;
+		/*if(getNumberFromKey(e.key))
+		
 
-		if(String(newValue).length > 1) {
-			newValue = removeFirstDigit(newValue); 
-		}  
+		dispatch({target: e.target.id, newValue});*/
+	}
 
-		dispatch({target: e.target.id, newValue});
+	function stop() {
+		timeState = initialTimeState;
 	}
 
 	return ( 
 		<>
-			<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown} onChange={handleChange}/>
-			<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown} onChange={handleChange}/>
-			<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown} onChange={handleChange}/>
+			<div id="inputContainer">
+				<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown} onChange={handleChange}/>
+				<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown} onChange={handleChange}/>
+				<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown} onChange={handleChange}/>
+			</div>
+			<div id="buttonContainer">
+				<button type="button">Play</button>
+				<button type="button">Pause</button>
+				<button type="button" onClick={stop}>Stop</button>
+			</div>
 		</>
 	)
 }
