@@ -85,8 +85,7 @@ function Timer() {
 		} else {
 			newValue = addLeadingZero(e.target.value, increment); 
 		}
-
-		
+ 
 		dispatch({target: e.target.id, newValue}); 
 	}  
 
@@ -113,28 +112,32 @@ function Timer() {
 		return {hours, minutes, seconds};
 	}
 
-	function loopTimer(currentTime) {
-		console.log('loopTimer', currentTime);
-		if(playMode === 'play') { 
-			let newTime = decreaseTime(currentTime); 
-			dispatch({target: 'play', newTime});
-			setTimeout(() => loopTimer(newTime), 1000);
-		}
-	}
-
 	useEffect(() => {
 		if(playMode === 'play') {
-			loopTimer(timeState);
+			const timer = setInterval(() => {
+				let newTime = decreaseTime(timeState); 
+				dispatch({target: 'play', newTime});
+			}, 1000);
+
+			return () => clearInterval(timer);
 		}
-	}, [playMode])
+	}, [playMode, timeState])
 
 	function stop() { 
+		setPlayMode('stop');
 		dispatch({target: 'stop'});
 	}
 
-	function play() {
-		console.log('click play');
+	function play() { 
 		setPlayMode('play'); 
+	}
+
+	function pause() {
+		if(playMode === 'pause') {
+			setPlayMode('play');
+		} else {
+			setPlayMode('pause');
+		} 
 	}
 
 	return ( 
@@ -146,8 +149,10 @@ function Timer() {
 			</div>
 			<div id="buttonContainer">
 				<button type="button" onClick={play}>Play</button>
-				<button type="button">Pause</button>
+				<button type="button" onClick={pause}>Pause</button>
 				<button type="button" onClick={stop}>Stop</button>
+				<br/>
+				PlayMode: {playMode}
 			</div>
 		</>
 	)
