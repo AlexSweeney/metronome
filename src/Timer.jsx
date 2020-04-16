@@ -1,7 +1,7 @@
 /*
-	fix, up down key increment 
+	stop
 
-	play, stop, pause
+	play, pause
 		seconds
 		minutes
 		hours
@@ -41,6 +41,11 @@ function Timer() {
 			case 'secondInput':
 				seconds = action.newValue; 
 				break;
+			case 'stop':
+				seconds = '00';
+				minutes = '00';
+				hours = '00';
+				break;
 		} 
 
 		return {hours, minutes, seconds}; 
@@ -61,6 +66,7 @@ function Timer() {
 	}
 
 	function handleKeyDown(e) {   
+		console.log(e)
 		let increment = getNumberFromKey(e.key);
 		let newValue = e.target.value; 
 
@@ -77,23 +83,16 @@ function Timer() {
 		dispatch({target: e.target.id, newValue}); 
 	}  
 
-	function handleChange(e) {   
-		/*if(getNumberFromKey(e.key))
-		
-
-		dispatch({target: e.target.id, newValue});*/
-	}
-
-	function stop() {
-		timeState = initialTimeState;
+	function stop() { 
+		dispatch({target: 'stop'});
 	}
 
 	return ( 
 		<>
 			<div id="inputContainer">
-				<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown} onChange={handleChange}/>
-				<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown} onChange={handleChange}/>
-				<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown} onChange={handleChange}/>
+				<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown}/>
+				<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown}/>
+				<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown}/>
 			</div>
 			<div id="buttonContainer">
 				<button type="button">Play</button>
