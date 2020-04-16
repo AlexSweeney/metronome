@@ -1,13 +1,4 @@
 /*
-	play, 
-
-	refactor play
-
-	pause
-
-	fix, play then stop
-		
-
 	increment buttons -> above and below
 */
 
@@ -140,12 +131,25 @@ function Timer() {
 		} 
 	}
 
+	function clickTimeIncrement(target, value, increment) {
+		let newValue = addLeadingZero(value, increment); 
+		dispatch({target, newValue}); 
+	}
+
 	return ( 
 		<>
 			<div id="inputContainer">
+				<button type="button" onClick={() => clickTimeIncrement('hourInput', timeState.hours, 1)}> + </button>
 				<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown}/>
+				<button type="button" onClick={() => clickTimeIncrement('hourInput', timeState.hours, -1)}> - </button>
+				
+				<button type="button" onClick={() => clickTimeIncrement('minuteInput', timeState.minutes, 1)}> + </button>
 				<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown}/>
+				<button type="button" onClick={() => clickTimeIncrement('minuteInput', timeState.minutes, -1)}> - </button>
+				
+				<button type="button" onClick={() => clickTimeIncrement('secondInput', timeState.seconds, 1)}> + </button>
 				<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown}/>
+				<button type="button" onClick={() => clickTimeIncrement('secondInput', timeState.seconds, -1)}> - </button>
 			</div>
 			<div id="buttonContainer">
 				<button type="button" onClick={play}>Play</button>
