@@ -1,9 +1,3 @@
-/*	
-	play
-		fix - minutes
-		fix - hours
-*/
-
 import React, {useState, useEffect, useReducer} from 'react';
 
 function Timer() {  

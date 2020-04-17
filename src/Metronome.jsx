@@ -1,5 +1,5 @@
 /*  
-    Play pause stop - TIMER
+    Volume component
 
     refactor Metronome -  tidy, seperate
 
@@ -60,15 +60,6 @@ const Metronome = () => {
         } 
     }, [incrementHold, incrementPause, BPM]);
 
-/*    React.useEffect(() => { 
-        updateVolume(); 
-    }, [volumeSlider]);*/
-
-   /* function updateVolume() { 
-        setVolume(volumeSlider / 100);
-        document.getElementById('woodAudio').volume = volume;
-    }*/
-
     function incrementBPM(increment) {   
         incrementHoldTimer = setTimeout(() => {
              setIncrementPause(false);
@@ -107,9 +98,19 @@ const Metronome = () => {
         setPlayMode('stop');
     } 
 
-   /* function handleVolumeSliderChange(e) {
+    // Volume
+        /* function handleVolumeSliderChange(e) {
         setVolumeSlider(e.target.value);
-    }*/
+        }*/
+
+        /*    React.useEffect(() => { 
+            updateVolume(); 
+        }, [volumeSlider]);*/
+
+       /* function updateVolume() { 
+            setVolume(volumeSlider / 100);
+            document.getElementById('woodAudio').volume = volume;
+        }*/
  
     return (
         <div className="metronomeContainer" id="metronomeContainer">  
