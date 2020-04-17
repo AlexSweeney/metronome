@@ -1,9 +1,5 @@
-/*
-	set time: 
-		key
-		click
-		hold	
-	
+/*	
+	fix - click button and it acts as if hold
 	play
 */
 
@@ -58,7 +54,6 @@ function Timer() {
 
 			return {hours, minutes, seconds}; 
 		}
-			
 
 	// Run timer
 		function decreaseTime(currentTime) {
@@ -76,8 +71,7 @@ function Timer() {
 			}
 			
 			// if hours === 0
-			if(hours === '00' && minutes === '00' && seconds === '00') {
-				console.log('STOP');
+			if(hours === '00' && minutes === '00' && seconds === '00') { 
 				setPlayMode('stop');
 			}
 
@@ -130,8 +124,9 @@ function Timer() {
 }
 
 function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
-		let [hold, setHold] = useState(false);
-		let [increment, setIncrement] = useState(null);
+	let [hold, setHold] = useState(false);
+	let buttonIsDown = false;
+	let [increment, setIncrement] = useState(null);
 
 	// Util
 		function getNumberFromKey(key) {
@@ -170,15 +165,23 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 			// increment timeState
 			clickTimeIncrement(increment); 
 
-			// set hold timer
+			// !! fix set hold timer
+			buttonIsDown = true;
+			console.log('buttonIsDown', buttonIsDown);
+
 			setTimeout(() => {
-				setIncrement(increment);
-				setHold(true);   
+				console.log('timeout', buttonIsDown);
+				if(buttonIsDown) {
+					setIncrement(increment);
+					setHold(true);  
+				}
+				 
 			}, 1000); 
 		}
 
 		function handleMouseUp() { 
 			setIncrement(null);
+			buttonIsDown = false;
 			setHold(false);
 		}
 
@@ -202,10 +205,15 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 		<div className="timerInputButtonContainer"> 
 			<button type="button" 
 					onMouseDown={() => handleMouseDown(1)}
-					onMouseUp={handleMouseUp}
+					onMouseUp={handleMouseUp} 
 					onMouseOut={handleMouseUp}
 			> + </button>
-			<input id="hourInput" type="number" min="0" max="99" value={timeState[type]} onKeyDown={handleKeyDown}/>
+			<input id="hourInput" 
+				type="number" 
+				min="0" 
+				max="99" 
+				value={timeState[type]} 
+				onKeyDown={handleKeyDown}/>
 			<button type="button"  
 					onMouseDown={() => handleMouseDown(-1)} 
 					onMouseUp={handleMouseUp}
