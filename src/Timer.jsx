@@ -164,18 +164,13 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 		function handleMouseDown(increment) {
 			// increment timeState
 			clickTimeIncrement(increment); 
+			buttonIsDown = true; 
 
-			// !! fix set hold timer
-			buttonIsDown = true;
-			console.log('buttonIsDown', buttonIsDown);
-
-			setTimeout(() => {
-				console.log('timeout', buttonIsDown);
+			setTimeout(() => { 
 				if(buttonIsDown) {
 					setIncrement(increment);
 					setHold(true);  
-				}
-				 
+				} 
 			}, 1000); 
 		}
 

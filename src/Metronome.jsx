@@ -1,5 +1,5 @@
 /*  
-    timer
+    refactor -  tidy, seperate
 
     style
 
@@ -23,25 +23,26 @@ const Metronome = () => {
     let minBPM = 0;
     let maxBPM = 200;
 
-    let [volumeSlider, setVolumeSlider] = React.useState(50);
     let [volume, setVolume] = React.useState(0.5);
+   
     let [BPM, setBPM] = React.useState(40);  
     let [playMode, setPlayMode] = React.useState('stop');
     let [incrementHold, setIncrementHold] = React.useState(null);
     let [incrementPause, setIncrementPause] = React.useState(true);
     let incrementHoldTimer = null;
 
-    let clickTime = getClickTime(BPM);     
+    let clickTime = getClickTime(BPM);   
 
-    React.useEffect(() => {  
-        if(playMode === 'play') { 
-            const metronome = setInterval(() => {    
-                document.getElementById('woodAudio').play(); 
-            }, getClickTime(BPM));
+    // Play mode  
+        React.useEffect(() => {  
+            if(playMode === 'play') { 
+                const metronome = setInterval(() => {    
+                    document.getElementById('woodAudio').play(); 
+                }, getClickTime(BPM));
 
-            return () => clearInterval(metronome);
-        } 
-    }, [playMode, BPM]);
+                return () => clearInterval(metronome);
+            } 
+        }, [playMode, BPM]);
 
     React.useEffect(() => {   
         if(incrementHold && !incrementPause) {  
@@ -57,14 +58,14 @@ const Metronome = () => {
         } 
     }, [incrementHold, incrementPause, BPM]);
 
-    React.useEffect(() => { 
+/*    React.useEffect(() => { 
         updateVolume(); 
-    }, [volumeSlider]);
+    }, [volumeSlider]);*/
 
-    function updateVolume() { 
+   /* function updateVolume() { 
         setVolume(volumeSlider / 100);
         document.getElementById('woodAudio').volume = volume;
-    }
+    }*/
 
     function incrementBPM(increment) {   
         incrementHoldTimer = setTimeout(() => {
@@ -104,9 +105,9 @@ const Metronome = () => {
         setPlayMode('stop');
     } 
 
-    function handleVolumeSliderChange(e) {
+   /* function handleVolumeSliderChange(e) {
         setVolumeSlider(e.target.value);
-    }
+    }*/
  
     return (
         <div className="metronomeContainer" id="metronomeContainer">  
@@ -115,6 +116,8 @@ const Metronome = () => {
             <br/>
 			<input type="number" value={BPM} min={minBPM} max={maxBPM} onChange={handleBPMChange} id="BPMInput"/>
 			<br/>
+
+            {/* <InputButton value={BPM} increment={} */}
 			<button onMouseDown={() => incrementBPM(-1)}
                     onMouseUp={stopIncrementBPM}>-</button>
 			<button onMouseDown={() => incrementBPM(1)}
@@ -123,10 +126,35 @@ const Metronome = () => {
 			<button onClick={play} id="playButton">Play</button>
 			<button onClick={stop} id="stopButton">Stop</button> 
 
-            <input type="range" min="0" max="100" value={volumeSlider} onChange={handleVolumeSliderChange}/>
-            volume {volumeSlider}
+            <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
+            Volume: {Math.floor(volume * 100)}
             <br/>
 		</div>
+    )
+}
+
+function SliderInput({value, setValue, minValue, maxValue}) {
+    let [sliderValue, setSliderValue] = React.useState(50);
+
+    function handleSliderChange(e) {
+        setSliderValue(e.target.value);
+        updateValue(e.target.value);
+    }
+
+    function updateValue(value) {
+        let newValue = convertValue(value);
+        setValue(newValue);
+    }
+
+    function convertValue(value) {
+        let valueRatio = (maxValue - minValue) / 100;
+        return value * valueRatio;
+    }
+    
+    return (
+        <input type="range" min="0" max="100" 
+            value={sliderValue} 
+            onChange={handleSliderChange}/>
     )
 }
 
