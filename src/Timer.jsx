@@ -13,8 +13,7 @@ function Timer() {
 	let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
 	const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
 
-	let [playMode, setPlayMode] = useState('stop'); 
-	let [currentTarget, setCurrentTarget] = useState(null);
+	let [playMode, setPlayMode] = useState('stop');
 
 	const inputButtonProps = {addLeadingZero, timeState, dispatch};
 
@@ -131,6 +130,9 @@ function Timer() {
 }
 
 function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
+		let [hold, setHold] = useState(false);
+		let [increment, setIncrement] = useState(null);
+
 	// Util
 		function getNumberFromKey(key) {
 			if(key === 'ArrowUp') {
@@ -166,47 +168,48 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 	// button click 
 		function handleMouseDown(increment) {
 			// increment timeState
-			clickTimeIncrement(type, timeState[type], increment); 
+			clickTimeIncrement(increment); 
 
 			// set hold timer
-			/*setTimeout(() => {
-				setCurrentTarget({target, increment});  
-			}, 1000); */
+			setTimeout(() => {
+				setIncrement(increment);
+				setHold(true);   
+			}, 1000); 
 		}
 
 		function handleMouseUp() { 
-			// setCurrentTarget(null); 
+			setIncrement(null);
+			setHold(false);
 		}
 
-		function clickTimeIncrement(target, value, increment) { 
-			let newValue = addLeadingZero(value, increment);  
-			dispatch({target, newValue});  
+		function clickTimeIncrement(increment) {  
+			let newValue = addLeadingZero(timeState[type], increment);   
+			dispatch({target: type, newValue});  
 		}
 
 	// button hold
-		/*useEffect(() => { 
-			if(currentTarget) {
-				let {target, increment} = currentTarget;
-
+		useEffect(() => { 
+			if(hold) { 
 				let holdInterval = setInterval(() => {
-					clickTimeIncrement(target, timeState[target], increment);
+					clickTimeIncrement(increment);
 				}, 100);
 
 				return () => clearInterval(holdInterval);
 			}
-		}, [currentTarget, timeState]); */
+		}, [hold, timeState, increment]); 
 
 	return (
-		<div className="timerInputButtonContainer">
-			{type}
+		<div className="timerInputButtonContainer"> 
 			<button type="button" 
 					onMouseDown={() => handleMouseDown(1)}
 					onMouseUp={handleMouseUp}
+					onMouseOut={handleMouseUp}
 			> + </button>
 			<input id="hourInput" type="number" min="0" max="99" value={timeState[type]} onKeyDown={handleKeyDown}/>
 			<button type="button"  
 					onMouseDown={() => handleMouseDown(-1)} 
 					onMouseUp={handleMouseUp}
+					onMouseOut={handleMouseUp}
 			> - </button>
 		</div>
 	)
