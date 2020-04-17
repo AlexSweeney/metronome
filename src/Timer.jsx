@@ -1,15 +1,16 @@
 /*
-	hold increment buttons
+	refactor: make timer input button, save
 */
-
-
 import React, {useState, useEffect, useReducer} from 'react';
 
 function Timer() {  
 	let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
 	const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
+
 	let [playMode, setPlayMode] = useState('stop'); 
 	let [currentTarget, setCurrentTarget] = useState(null);
+
+	const inputButtonProps = {handleMouseDown, handleMouseUp, handleKeyDown, timeState};
 
 	// Util
 		function addLeadingZero(number, addition) { 
@@ -182,22 +183,14 @@ function Timer() {
 			} else {
 				setPlayMode('pause');
 			} 
-		}
+		} 
 
 	return ( 
 		<>
 			<div id="inputContainer">
-				<button type="button" 
-						onMouseDown={() => handleMouseDown('hours', 1)}
-						onMouseUp={handleMouseUp}
-				> + </button>
-				<input id="hourInput" type="number" min="0" max="99" value={timeState.hours} onKeyDown={handleKeyDown}/>
-				<button type="button"  
-						onMouseDown={() => handleMouseDown('hours', -1)} 
-						onMouseUp={handleMouseUp}
-				> - </button>
-				
-				
+				<TimerInputButton type="hours" {...inputButtonProps}/>
+				<TimerInputButton type="minutes" {...inputButtonProps}/>
+				<TimerInputButton type="seconds" {...inputButtonProps}/> 
 			</div>
 			<div id="buttonContainer">
 				<button type="button" onClick={play}>Play</button>
@@ -208,15 +201,20 @@ function Timer() {
 	)
 }
 
+function TimerInputButton({type, handleMouseDown, handleMouseUp, handleKeyDown, timeState}) {
+	return (
+		<div className="timerInputButtonContainer">
+			<button type="button" 
+					onMouseDown={() => handleMouseDown(type, 1)}
+					onMouseUp={handleMouseUp}
+			> + </button>
+			<input id="hourInput" type="number" min="0" max="99" value={timeState[type]} onKeyDown={handleKeyDown}/>
+			<button type="button"  
+					onMouseDown={() => handleMouseDown(type, -1)} 
+					onMouseUp={handleMouseUp}
+			> - </button>
+		</div>
+	)
+}
+
 export default Timer;
-
-
-				/*onMouseUp={() => handleMouseUp()}*/
-
-			{/*	<button type="button" onClick={() => clickTimeIncrement('minuteInput', timeState.minutes, 1)}> + </button>
-				<input id="minuteInput" type="number" min="0" max="60" value={timeState.minutes} onKeyDown={handleKeyDown}/>
-				<button type="button" onClick={() => clickTimeIncrement('minuteInput', timeState.minutes, -1)}> - </button>
-				
-				<button type="button" onClick={() => clickTimeIncrement('secondInput', timeState.seconds, 1)}> + </button>
-				<input id="secondInput" type="number" min="0" max="60" value={timeState.seconds} onKeyDown={handleKeyDown}/>
-				<button type="button" onClick={() => clickTimeIncrement('secondInput', timeState.seconds, -1)}> - </button>*/}
