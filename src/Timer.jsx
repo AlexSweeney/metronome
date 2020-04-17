@@ -1,5 +1,6 @@
 /*	
 	fix - click button and it acts as if hold
+	fix - click, out hover = acts as if hold
 	play
 */
 
@@ -124,8 +125,8 @@ function Timer() {
 }
 
 function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
-	let [hold, setHold] = useState(false);
-	let buttonIsDown = false;
+	let [buttonIsHeld, setButtonIsHeld] = useState(false);
+	let [buttonIsDown, setButtonIsDown] = useState(false);
 	let [increment, setIncrement] = useState(null);
 
 	// Util
@@ -161,23 +162,20 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 		}  
  
 	// button click 
-		function handleMouseDown(increment) {
-			// increment timeState
+		function handleMouseDown(increment) {  
 			clickTimeIncrement(increment); 
-			buttonIsDown = true; 
+			setButtonIsDown(true);
 
-			setTimeout(() => { 
-				if(buttonIsDown) {
-					setIncrement(increment);
-					setHold(true);  
-				} 
+			setTimeout(() => {  
+				setButtonIsHeld(true);   
+				setIncrement(increment);
 			}, 1000); 
 		}
 
-		function handleMouseUp() { 
+		function handleMouseUp() {   
+			setButtonIsDown(false);
+			setButtonIsHeld(false);
 			setIncrement(null);
-			buttonIsDown = false;
-			setHold(false);
 		}
 
 		function clickTimeIncrement(increment) {  
@@ -186,18 +184,20 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 		}
 
 	// button hold
-		useEffect(() => { 
-			if(hold) { 
+		useEffect(() => {  
+			if(buttonIsDown && buttonIsHeld) {  
 				let holdInterval = setInterval(() => {
 					clickTimeIncrement(increment);
 				}, 100);
 
 				return () => clearInterval(holdInterval);
+			} else if(!buttonIsDown && buttonIsHeld) {
+				setButtonIsHeld(false);
 			}
-		}, [hold, timeState, increment]); 
+		}, [buttonIsDown, buttonIsHeld, timeState, increment]); 
 
 	return (
-		<div className="timerInputButtonContainer"> 
+		<div className="timerInputButtonContainer">  
 			<button type="button" 
 					onMouseDown={() => handleMouseDown(1)}
 					onMouseUp={handleMouseUp} 

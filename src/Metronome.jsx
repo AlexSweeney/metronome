@@ -1,5 +1,7 @@
 /*  
-    refactor -  tidy, seperate
+    Play pause stop - TIMER
+
+    refactor Metronome -  tidy, seperate
 
     style
 
@@ -135,6 +137,7 @@ const Metronome = () => {
 
 function SliderInput({value, setValue, minValue, maxValue}) {
     let [sliderValue, setSliderValue] = React.useState(50);
+    let valueRatio = (maxValue - minValue) / 100;
 
     function handleSliderChange(e) {
         setSliderValue(e.target.value);
@@ -142,12 +145,11 @@ function SliderInput({value, setValue, minValue, maxValue}) {
     }
 
     function updateValue(value) {
-        let newValue = convertValue(value);
+        let newValue = convertSliderValue(value);
         setValue(newValue);
     }
 
-    function convertValue(value) {
-        let valueRatio = (maxValue - minValue) / 100;
+    function convertSliderValue(value) { 
         return value * valueRatio;
     }
     
