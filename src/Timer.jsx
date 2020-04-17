@@ -1,6 +1,12 @@
 /*
-	refactor: make timer input button, save
+	set time: 
+		key
+		click
+		hold	
+	
+	play
 */
+
 import React, {useState, useEffect, useReducer} from 'react';
 
 function Timer() {  
@@ -10,7 +16,7 @@ function Timer() {
 	let [playMode, setPlayMode] = useState('stop'); 
 	let [currentTarget, setCurrentTarget] = useState(null);
 
-	const inputButtonProps = {handleMouseDown, handleMouseUp, handleKeyDown, timeState};
+	const inputButtonProps = {addLeadingZero, timeState, dispatch};
 
 	// Util
 		function addLeadingZero(number, addition) { 
@@ -23,32 +29,6 @@ function Timer() {
 			} else {
 				return number;
 			} 
-		}
-
-		function getNumberFromKey(key) {
-			if(key === 'ArrowUp') {
-				return 1;
-			} else if (key === 'ArrowDown') {
-				return -1;
-			} else {
-				return 0;
-			}
-		}
-
-		function removeFirstDigit(number) {
-			return String(number).substring(1,); 
-		}
-
-		function getTargetFromId(id) {
-			if(id === 'hourInput') {
-				return 'hours';
-			} else if(id === 'minuteInput') {
-				return 'minutes';
-			} else if(id === 'secondInput') {
-				return 'seconds';
-			} else {
-				return null;
-			}
 		}
 
 	// Set time
@@ -81,22 +61,7 @@ function Timer() {
 		}
 
 		// key
-			function handleKeyDown(e) {    
-				let increment = getNumberFromKey(e.key);
-				let newValue = e.target.value; 
-				let target = getTargetFromId(e.target.id);
 
-				if(increment === 0) {  
-					if(String(newValue).length > 1) {
-						newValue = removeFirstDigit(newValue); 
-						newValue += Number(e.key);
-					}  
-				} else {
-					newValue = addLeadingZero(e.target.value, increment); 
-				}
-		 
-				dispatch({target, newValue}); 
-			}  
 
 		// button click 
 			function clickTimeIncrement(target, value, increment) { 
@@ -201,18 +166,64 @@ function Timer() {
 	)
 }
 
-function TimerInputButton({type, handleMouseDown, handleMouseUp, handleKeyDown, timeState}) {
+function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
+	// Util
+		function getNumberFromKey(key) {
+			if(key === 'ArrowUp') {
+				return 1;
+			} else if (key === 'ArrowDown') {
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+
+		function getTargetFromId(id) {
+			if(id === 'hourInput') {
+				return 'hours';
+			} else if(id === 'minuteInput') {
+				return 'minutes';
+			} else if(id === 'secondInput') {
+				return 'seconds';
+			} else {
+				return null;
+			}
+		}
+
+		function removeFirstDigit(number) {
+			return String(number).substring(1,); 
+		}
+
+	// Key down
+		function handleKeyDown(e) {     
+			let increment = getNumberFromKey(e.key);
+			let newValue = e.target.value;   
+			
+			if(increment === 0) {  
+				if(String(newValue).length > 1) {
+					newValue = removeFirstDigit(newValue); 
+					newValue += Number(e.key);
+				}  
+			} else {
+				newValue = addLeadingZero(newValue, increment); 
+			}
+			   
+			dispatch({target: type, newValue}); 
+		}  
+
+
 	return (
 		<div className="timerInputButtonContainer">
-			<button type="button" 
+			{type}
+			{/*<button type="button" 
 					onMouseDown={() => handleMouseDown(type, 1)}
 					onMouseUp={handleMouseUp}
-			> + </button>
+			> + </button>*/}
 			<input id="hourInput" type="number" min="0" max="99" value={timeState[type]} onKeyDown={handleKeyDown}/>
-			<button type="button"  
+			{/*<button type="button"  
 					onMouseDown={() => handleMouseDown(type, -1)} 
 					onMouseUp={handleMouseUp}
-			> - </button>
+			> - </button>*/}
 		</div>
 	)
 }
