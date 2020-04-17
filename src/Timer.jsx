@@ -1,7 +1,7 @@
 /*	
-	fix - click button and it acts as if hold
-	fix - click, out hover = acts as if hold
 	play
+		fix - minutes
+		fix - hours
 */
 
 import React, {useState, useEffect, useReducer} from 'react';
@@ -63,15 +63,18 @@ function Timer() {
 
 			// if seconds === 0 
 			if(seconds === '00') {
+				// minus one minute
+				if(Number(minutes) > 0) seconds = '60';
 				minutes = addLeadingZero(minutes, -1); 
 			}
 			
 			// if minutes === 0
 			if(minutes === '00') {
-				hours = addLeadingZero(hours, -1);
-			}
-			
-			// if hours === 0
+				if(Number(hours) > 0) minutes = '60';
+				hours = addLeadingZero(hours, -1); 
+			} 
+
+			// if all === 0
 			if(hours === '00' && minutes === '00' && seconds === '00') { 
 				setPlayMode('stop');
 			}
