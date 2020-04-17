@@ -59,42 +59,6 @@ function Timer() {
 
 			return {hours, minutes, seconds}; 
 		}
-
-		// key
-
-
-		// button click 
-			function clickTimeIncrement(target, value, increment) { 
-				let newValue = addLeadingZero(value, increment);  
-				dispatch({target, newValue});  
-			}
-
-		// button hold
-			useEffect(() => { 
-				if(currentTarget) {
-					let {target, increment} = currentTarget;
-
-					let holdInterval = setInterval(() => {
-						clickTimeIncrement(target, timeState[target], increment);
-					}, 100);
-
-					return () => clearInterval(holdInterval);
-				}
-			}, [currentTarget, timeState]);
-
-			function handleMouseDown(target, increment) {
-				// increment timeState
-				clickTimeIncrement(target, timeState[target], increment); 
-
-				// set hold timer
-				setTimeout(() => {
-					setCurrentTarget({target, increment});  
-				}, 1000); 
-			}
-
-			function handleMouseUp() { 
-				setCurrentTarget(null); 
-			}
 			
 
 	// Run timer
@@ -178,18 +142,6 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 			}
 		}
 
-		function getTargetFromId(id) {
-			if(id === 'hourInput') {
-				return 'hours';
-			} else if(id === 'minuteInput') {
-				return 'minutes';
-			} else if(id === 'secondInput') {
-				return 'seconds';
-			} else {
-				return null;
-			}
-		}
-
 		function removeFirstDigit(number) {
 			return String(number).substring(1,); 
 		}
@@ -210,20 +162,52 @@ function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
 			   
 			dispatch({target: type, newValue}); 
 		}  
+ 
+	// button click 
+		function handleMouseDown(increment) {
+			// increment timeState
+			clickTimeIncrement(type, timeState[type], increment); 
 
+			// set hold timer
+			/*setTimeout(() => {
+				setCurrentTarget({target, increment});  
+			}, 1000); */
+		}
+
+		function handleMouseUp() { 
+			// setCurrentTarget(null); 
+		}
+
+		function clickTimeIncrement(target, value, increment) { 
+			let newValue = addLeadingZero(value, increment);  
+			dispatch({target, newValue});  
+		}
+
+	// button hold
+		/*useEffect(() => { 
+			if(currentTarget) {
+				let {target, increment} = currentTarget;
+
+				let holdInterval = setInterval(() => {
+					clickTimeIncrement(target, timeState[target], increment);
+				}, 100);
+
+				return () => clearInterval(holdInterval);
+			}
+		}, [currentTarget, timeState]); */
 
 	return (
 		<div className="timerInputButtonContainer">
 			{type}
-			{/*<button type="button" 
-					onMouseDown={() => handleMouseDown(type, 1)}
+			<button type="button" 
+					onMouseDown={() => handleMouseDown(1)}
 					onMouseUp={handleMouseUp}
-			> + </button>*/}
+			> + </button>
 			<input id="hourInput" type="number" min="0" max="99" value={timeState[type]} onKeyDown={handleKeyDown}/>
-			{/*<button type="button"  
-					onMouseDown={() => handleMouseDown(type, -1)} 
+			<button type="button"  
+					onMouseDown={() => handleMouseDown(-1)} 
 					onMouseUp={handleMouseUp}
-			> - </button>*/}
+			> - </button>
 		</div>
 	)
 }
