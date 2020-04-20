@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Util from './Util.jsx';
 
 function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {
 	let {addLeadingZero} = Util;
 	// property = property to increment, state,function
 	
-	/*let [buttonIsHeld, setButtonIsHeld] = useState(false);
+	let [buttonIsHeld, setButtonIsHeld] = useState(false);
 	let [buttonIsDown, setButtonIsDown] = useState(false);
-	let [increment, setIncrement] = useState(null);*/
+	let [increment, setIncrement] = useState(null);
 
 	// Util
 		function getNumberFromKey(key) {
@@ -27,13 +27,8 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 	// Key down
 		function handleKeyDown(e) {     
 			let increment = getNumberFromKey(e.key);
-			let newValue = e.target.value;   
+			let newValue = e.target.value;    
 
-			// console.log('handleKeyDown');
-			// console.log('increment', increment);
-			// console.log('value', newValue);
-			
-			
 			if(increment === 0) {  
 				if(String(newValue).length > 1) {
 					newValue = removeFirstDigit(newValue); 
@@ -46,38 +41,34 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 					newValue = Number(newValue) + increment;
 				}
 			}
-			  
-			// console.log('newValue', newValue);
-			// console.log('dispatch', dispatch);
-			// console.log('{target: property, newValue}', {target: property, newValue});
 			
 			dispatch({target: property, newValue}); 
 		}  
  
 	// button click 
 		function handleMouseDown(increment) {  
-			/*clickTimeIncrement(increment); 
+			clickTimeIncrement(increment); 
 			setButtonIsDown(true);
 
 			setTimeout(() => {  
 				setButtonIsHeld(true);   
 				setIncrement(increment);
-			}, 1000); */
+			}, 1000); 
 		}
 
 		function handleMouseUp() {   
-			/*setButtonIsDown(false);
+			setButtonIsDown(false);
 			setButtonIsHeld(false);
-			setIncrement(null);*/
+			setIncrement(null);
 		}
 
 		function clickTimeIncrement(increment) {  
-			// let newValue = addLeadingZero(state[type], increment);   
-			// dispatch({target: type, newValue});  
+			let newValue = addLeadingZero(state[property], increment);   
+			dispatch({target: property, newValue});  
 		}
 
 	// button hold
-		/*useEffect(() => {  
+		useEffect(() => {  
 			if(buttonIsDown && buttonIsHeld) {  
 				let holdInterval = setInterval(() => {
 					clickTimeIncrement(increment);
@@ -87,7 +78,7 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 			} else if(!buttonIsDown && buttonIsHeld) {
 				setButtonIsHeld(false);
 			}
-		}, [buttonIsDown, buttonIsHeld, state, increment]); */
+		}, [buttonIsDown, buttonIsHeld, state, increment]); 
 
 	return (
 		<div className="timerInputButtonContainer">  

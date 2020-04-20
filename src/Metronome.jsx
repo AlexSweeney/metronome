@@ -107,21 +107,14 @@ const Metronome = () => {
 
 
     // BPM
-        // let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
-        // const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
-       
-        // let [BPM, setBPM] = React.useState(40);
         let initalBPMState = { BPM: '40'};
         const [BPMState, dispatch] = React.useReducer(BPMReducer, initalBPMState);
+        let BPMProps = {property: 'BPM', state: BPMState, dispatch, displayLeadingZero: false};
 
-        function BPMReducer(state, action) { 
-            console.log('BPMReducer');
-            console.log('state', state);
-            console.log('action', action);
+        function BPMReducer(state, action) {  
             let newBPM = action.newValue;
             let minBPM = 0;
-            let maxBPM = 200; 
-            console.log('newBPM', newBPM);
+            let maxBPM = 200;  
 
             if(newBPM >= minBPM && newBPM <= maxBPM) {
                 return {BPM: newBPM};
@@ -130,9 +123,7 @@ const Metronome = () => {
             } else if (newBPM > maxBPM) {
                 return {BPM: maxBPM};
             }
-        }
-
-        let BPMProps = {property: 'BPM', state: BPMState, dispatch, displayLeadingZero: false};
+        } 
 
     return (
         <div className="metronomeContainer" id="metronomeContainer">  
@@ -147,6 +138,7 @@ const Metronome = () => {
                     onMouseUp={stopIncrementBPM}>-</button>
 			<button onMouseDown={() => incrementBPM(1)}
                     onMouseUp={stopIncrementBPM}>+</button>*/}
+            BPM
             <InputWithIncrementButtons {...BPMProps}/>
 
 			{/*<button onClick={play} id="playButton">Play</button>
