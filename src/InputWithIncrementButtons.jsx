@@ -35,10 +35,10 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 			
 			
 			if(increment === 0) {  
-				/*if(String(newValue).length > 1) {
+				if(String(newValue).length > 1) {
 					newValue = removeFirstDigit(newValue); 
 					newValue += Number(e.key);
-				}  */
+				} 
 			} else {
 				if(displayLeadingZero) {
 					newValue = addLeadingZero(newValue, increment); 
@@ -47,9 +47,9 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 				}
 			}
 			  
-			console.log('newValue', newValue);
-			console.log('dispatch', dispatch);
-			console.log('{target: property, newValue}', {target: property, newValue});
+			// console.log('newValue', newValue);
+			// console.log('dispatch', dispatch);
+			// console.log('{target: property, newValue}', {target: property, newValue});
 			
 			dispatch({target: property, newValue}); 
 		}  
