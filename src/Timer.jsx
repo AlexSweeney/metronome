@@ -1,25 +1,15 @@
 import React, {useState, useEffect, useReducer} from 'react';
+import Util from './Util.jsx';
+import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 
 function Timer() {  
+	let {addLeadingZero} = Util;
 	let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
 	const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
 
 	let [playMode, setPlayMode] = useState('stop');
 
-	const inputButtonProps = {addLeadingZero, timeState, dispatch};
-
-	// Util
-		function addLeadingZero(number, addition) { 
-			number = Number(number) + addition; 
-			
-			if(number < 0) {
-				return '00';
-			} else if(number < 10) {
-				return '0' + number;
-			} else {
-				return number;
-			} 
-		}
+	const inputButtonProps = {timeState, dispatch};
 
 	// Set time
 		function timeReducer(timeState, action) { 
@@ -108,9 +98,9 @@ function Timer() {
 	return ( 
 		<>
 			<div id="inputContainer">
-				<TimerInputButton type="hours" {...inputButtonProps}/>
-				<TimerInputButton type="minutes" {...inputButtonProps}/>
-				<TimerInputButton type="seconds" {...inputButtonProps}/> 
+				<InputWithIncrementButtons property="hours" {...inputButtonProps}/>
+				<InputWithIncrementButtons property="minutes" {...inputButtonProps}/>
+				<InputWithIncrementButtons property="seconds" {...inputButtonProps}/> 
 			</div>
 			<div id="buttonContainer">
 				<button type="button" onClick={play}>Play</button>
@@ -121,98 +111,6 @@ function Timer() {
 	)
 }
 
-function TimerInputButton({type, addLeadingZero, timeState, dispatch}) {
-	let [buttonIsHeld, setButtonIsHeld] = useState(false);
-	let [buttonIsDown, setButtonIsDown] = useState(false);
-	let [increment, setIncrement] = useState(null);
 
-	// Util
-		function getNumberFromKey(key) {
-			if(key === 'ArrowUp') {
-				return 1;
-			} else if (key === 'ArrowDown') {
-				return -1;
-			} else {
-				return 0;
-			}
-		}
-
-		function removeFirstDigit(number) {
-			return String(number).substring(1,); 
-		}
-
-	// Key down
-		function handleKeyDown(e) {     
-			let increment = getNumberFromKey(e.key);
-			let newValue = e.target.value;   
-			
-			if(increment === 0) {  
-				if(String(newValue).length > 1) {
-					newValue = removeFirstDigit(newValue); 
-					newValue += Number(e.key);
-				}  
-			} else {
-				newValue = addLeadingZero(newValue, increment); 
-			}
-			   
-			dispatch({target: type, newValue}); 
-		}  
- 
-	// button click 
-		function handleMouseDown(increment) {  
-			clickTimeIncrement(increment); 
-			setButtonIsDown(true);
-
-			setTimeout(() => {  
-				setButtonIsHeld(true);   
-				setIncrement(increment);
-			}, 1000); 
-		}
-
-		function handleMouseUp() {   
-			setButtonIsDown(false);
-			setButtonIsHeld(false);
-			setIncrement(null);
-		}
-
-		function clickTimeIncrement(increment) {  
-			let newValue = addLeadingZero(timeState[type], increment);   
-			dispatch({target: type, newValue});  
-		}
-
-	// button hold
-		useEffect(() => {  
-			if(buttonIsDown && buttonIsHeld) {  
-				let holdInterval = setInterval(() => {
-					clickTimeIncrement(increment);
-				}, 100);
-
-				return () => clearInterval(holdInterval);
-			} else if(!buttonIsDown && buttonIsHeld) {
-				setButtonIsHeld(false);
-			}
-		}, [buttonIsDown, buttonIsHeld, timeState, increment]); 
-
-	return (
-		<div className="timerInputButtonContainer">  
-			<button type="button" 
-					onMouseDown={() => handleMouseDown(1)}
-					onMouseUp={handleMouseUp} 
-					onMouseOut={handleMouseUp}
-			> + </button>
-			<input id="hourInput" 
-				type="number" 
-				min="0" 
-				max="99" 
-				value={timeState[type]} 
-				onKeyDown={handleKeyDown}/>
-			<button type="button"  
-					onMouseDown={() => handleMouseDown(-1)} 
-					onMouseUp={handleMouseUp}
-					onMouseOut={handleMouseUp}
-			> - </button>
-		</div>
-	)
-}
 
 export default Timer;
