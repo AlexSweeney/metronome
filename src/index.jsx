@@ -8,7 +8,7 @@ var root = document.querySelector("#root");
 ReactDOM.render(
 	<>
 		<Metronome/> 
-		{/*<Timer/>*/}
+		<Timer/>
 	</>,
 	root
 );

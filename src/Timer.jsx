@@ -5,13 +5,11 @@ import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 function Timer() {  
 	let {addLeadingZero} = Util;
 
-	let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
-	const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
-	const inputButtonProps = {timeState, dispatch};
-
-	let [playMode, setPlayMode] = useState('stop'); 
-
 	// Set time
+		let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
+		const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
+		const inputButtonProps = {state: timeState, dispatch, displayLeadingZero: true};
+		 
 		function timeReducer(timeState, action) { 
 			let {hours, minutes, seconds} = timeState; 
 
@@ -67,6 +65,8 @@ function Timer() {
 		}
  
 	// Play Pause Stop
+		let [playMode, setPlayMode] = useState('stop'); 
+
 		useEffect(() => {
 			if(playMode === 'play') {
 				const timer = setInterval(() => {

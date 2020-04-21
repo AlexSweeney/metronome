@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Util from './Util.jsx';
 
-function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {
+function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {  
 	let {addLeadingZero} = Util; 
 	let [buttonIsHeld, setButtonIsHeld] = useState(false);
 	let [buttonIsDown, setButtonIsDown] = useState(false);
