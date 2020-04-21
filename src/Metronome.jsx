@@ -89,13 +89,17 @@ const Metronome = () => {
             <div className="BPMContainer"> 
                 <InputWithIncrementButtons {...BPMProps}/>
             </div>
-
-			{/*<button onClick={play} id="playButton">Play</button>
-			<button onClick={stop} id="stopButton">Stop</button> 
-
-            <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
-            Volume: {Math.floor(volume * 100)}
-            <br/>*/}
+            
+            <div className="buttonContainer">
+                <button onClick={play} id="playButton" className="BPMButton">Play</button>
+                <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
+            </div>
+            
+            <div className="volumeContainer">
+                <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
+                {/*Volume: {Math.floor(volume * 100)}*/}
+                <br/>
+            </div>
 		</div>
     )
 }
