@@ -24,15 +24,23 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 
 	// Key down
 		function handleKeyDown(e) {     
+			console.log('e.key', e.key);
+			console.log('typeof(e.key)', typeof(e.key));
+			console.log('Number(e.key)', Number(e.key));
+			console.log('typeof(Number(e.key))', typeof(Number(e.key)));
 			let increment = getNumberFromKey(e.key);
 			let newValue = e.target.value;    
 
-			if(increment === 0) {  
+			console.log('newValue', newValue);
+			
+			// If number
+			if(increment === 0 && typeof(Number(e.key)) === 'number') {  
 				if(String(newValue).length > 1) {
 					newValue = removeFirstDigit(newValue); 
 					newValue += Number(e.key);
 				} 
-			} else {
+			// If up arrow or down arrow
+			} else { 
 				if(displayLeadingZero) {
 					newValue = addLeadingZero(newValue, increment); 
 				} else {

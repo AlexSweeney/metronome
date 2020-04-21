@@ -1,8 +1,4 @@
 /*  
-    refactor Metronome -  
-    
-    basic style
-
     fix, click bpm and press backspace
 
     fix, max minutes / seconds = 60
