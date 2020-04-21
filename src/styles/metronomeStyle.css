@@ -19,11 +19,13 @@ input[type=number] {
 }
 
 .BPMContainer {
-	background-color: grey;
-	text-align: center;
+	background-color: grey; 
     width: 30em;
     height: 15em;
     margin: auto;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
 }
 
 .BPMDisplay {
