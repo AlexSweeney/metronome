@@ -1,7 +1,9 @@
 /*  
     refactor Metronome -  
     
-    style
+    basic style
+
+    flash with bpm click
 
     Settings:
         change metronome sound
@@ -15,7 +17,7 @@
 
 
 import React, {useEffect, useState, useReducer} from 'react';
-import './metronomeStyle.css';
+import './styles/metronomeStyle.css';
 
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 import SliderInput from './SliderInput.jsx';
@@ -83,15 +85,17 @@ const Metronome = () => {
     return (
         <div className="metronomeContainer" id="metronomeContainer">  
             <audio src={Wood} id="woodAudio"/>
-            BPM
-            <InputWithIncrementButtons {...BPMProps}/>
 
-			<button onClick={play} id="playButton">Play</button>
+            <div className="BPMContainer"> 
+                <InputWithIncrementButtons {...BPMProps}/>
+            </div>
+
+			{/*<button onClick={play} id="playButton">Play</button>
 			<button onClick={stop} id="stopButton">Stop</button> 
 
             <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
             Volume: {Math.floor(volume * 100)}
-            <br/>
+            <br/>*/}
 		</div>
     )
 }

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Util from './Util.jsx';
+import './styles/inputWithIncrementButtonsStyle.css';
 
 function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {  
 	let {addLeadingZero} = Util; 
@@ -79,22 +80,25 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 		}, [buttonIsDown, buttonIsHeld, state, increment]); 
 
 	return (
-		<div className="timerInputButtonContainer">  
+		<div className="timerInputButtonContainer">   
 			<button type="button" 
 					onMouseDown={() => handleMouseDown(1)}
 					onMouseUp={handleMouseUp} 
 					onMouseOut={handleMouseUp}
+					className={property+"Input"}
 			> + </button>
 			<input id={property+"input"}
 				type="number" 
 				min="0" 
 				max="99" 
 				value={state[property]} 
-				onKeyDown={handleKeyDown}/>
+				onKeyDown={handleKeyDown}
+				className={property+"Display"}/>
 			<button type="button"  
 					onMouseDown={() => handleMouseDown(-1)} 
 					onMouseUp={handleMouseUp}
 					onMouseOut={handleMouseUp}
+					className={property+"Input"}
 			> - </button>
 		</div>
 	)
