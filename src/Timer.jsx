@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import Util from './Util.jsx';
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
+import './styles/timerStyle.css';
 
 function Timer() {  
 	let {addLeadingZero} = Util;
@@ -96,18 +97,18 @@ function Timer() {
 		} 
 
 	return ( 
-		<>
-			<div id="inputContainer">
-				<InputWithIncrementButtons property="hours" {...inputButtonProps}/>
-				<InputWithIncrementButtons property="minutes" {...inputButtonProps}/>
-				<InputWithIncrementButtons property="seconds" {...inputButtonProps}/> 
+		<div className="timerContainer">
+			<div className="timerInputContainer">
+				<InputWithIncrementButtons className="timerInput" property="hours" {...inputButtonProps}/>
+				<InputWithIncrementButtons className="timerInput" property="minutes" {...inputButtonProps}/>
+				<InputWithIncrementButtons className="timerInput" property="seconds" {...inputButtonProps}/> 
 			</div>
-			<div id="buttonContainer">
+			<div className="timerButtonContainer">
 				<button type="button" onClick={play}>Play</button>
 				<button type="button" onClick={pause}>Pause</button>
 				<button type="button" onClick={stop}>Stop</button>
 			</div>
-		</>
+		</div>
 	)
 }
 

@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Util from './Util.jsx';
-import './styles/inputWithIncrementButtonsStyle.css';
+import Util from './Util.jsx'; 
 
 function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {  
 	let {addLeadingZero} = Util; 
@@ -81,25 +80,25 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 
 	return (
 		<div className="timerInputButtonContainer">   
-			<button type="button" 
-					onMouseDown={() => handleMouseDown(1)}
-					onMouseUp={handleMouseUp} 
-					onMouseOut={handleMouseUp}
-					className={property+"Input"}
-			> + </button>
-			<input id={property+"input"}
-				type="number" 
-				min="0" 
-				max="99" 
-				value={state[property]} 
-				onKeyDown={handleKeyDown}
-				className={property+"Display"}/>
 			<button type="button"  
 					onMouseDown={() => handleMouseDown(-1)} 
 					onMouseUp={handleMouseUp}
 					onMouseOut={handleMouseUp}
 					className={property+"Input"}
 			> - </button>
+			<input id={property+"input"}
+				type="number" 
+				min="0" 
+				max="99" 
+				value={state[property]} 
+				onKeyDown={handleKeyDown}
+				className={property+"Display"}/> 
+			<button type="button" 
+					onMouseDown={() => handleMouseDown(1)}
+					onMouseUp={handleMouseUp} 
+					onMouseOut={handleMouseUp}
+					className={property+"Input"}
+			> + </button>
 		</div>
 	)
 }

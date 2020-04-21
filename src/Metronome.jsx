@@ -3,6 +3,11 @@
     
     basic style
 
+    fix, click bpm and press backspace
+
+    fix, max minutes / seconds = 60
+    change time while playing
+
     flash with bpm click
 
     Settings:
@@ -20,7 +25,8 @@ import React, {useEffect, useState, useReducer} from 'react';
 import './styles/metronomeStyle.css';
 
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
-import SliderInput from './SliderInput.jsx';
+import SliderInput from './SliderInput.jsx'; 
+import Timer from "./Timer.jsx";
 
 import Wood from './audio/wood.mp3';
 
@@ -99,6 +105,10 @@ const Metronome = () => {
                 <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
                 {/*Volume: {Math.floor(volume * 100)}*/}
                 <br/>
+            </div>
+
+            <div className="timerComponentContainer">
+                <Timer/>
             </div>
 		</div>
     )

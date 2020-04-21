@@ -25,7 +25,7 @@ input[type=number] {
 .metronomeContainer {
 	background-color: grey;
     width: 30em;
-    height: 100vh;
+    height: 20em;
     margin: auto; 
 }
 
@@ -35,8 +35,7 @@ input[type=number] {
     height: 11em;
     display: flex;
     align-items: flex-end;
-    justify-content: center;
-    border: 2px dashed red;
+    justify-content: center; 
 }
 
 .BPMDisplay {
@@ -61,8 +60,7 @@ input[type=number] {
 .buttonContainer {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	border: 2px dashed green;
+	justify-content: center; 
     height: 4em;
 }
 
@@ -76,7 +74,13 @@ input[type=number] {
 .volumeContainer {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	border: 2px solid blue;
+	justify-content: center; 
 	height: 2em;
+    margin-bottom: 2em;
+}
+
+/* ========== Timer =========== */
+.timerComponentContainer {
+    width: 80%;
+    margin: auto; 
 }
