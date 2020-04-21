@@ -2,9 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Util from './Util.jsx';
 
 function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {
-	let {addLeadingZero} = Util;
-	// property = property to increment, state,function
-	
+	let {addLeadingZero} = Util; 
 	let [buttonIsHeld, setButtonIsHeld] = useState(false);
 	let [buttonIsDown, setButtonIsDown] = useState(false);
 	let [increment, setIncrement] = useState(null);
@@ -47,7 +45,7 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
  
 	// button click 
 		function handleMouseDown(increment) {  
-			clickTimeIncrement(increment); 
+			clickIncrement(increment); 
 			setButtonIsDown(true);
 
 			setTimeout(() => {  
@@ -62,7 +60,7 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 			setIncrement(null);
 		}
 
-		function clickTimeIncrement(increment) {  
+		function clickIncrement(increment) {  
 			let newValue = addLeadingZero(state[property], increment);   
 			dispatch({target: property, newValue});  
 		}
@@ -71,7 +69,7 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 		useEffect(() => {  
 			if(buttonIsDown && buttonIsHeld) {  
 				let holdInterval = setInterval(() => {
-					clickTimeIncrement(increment);
+					clickIncrement(increment);
 				}, 100);
 
 				return () => clearInterval(holdInterval);

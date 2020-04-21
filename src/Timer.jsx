@@ -4,12 +4,12 @@ import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 
 function Timer() {  
 	let {addLeadingZero} = Util;
+
 	let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
 	const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
-
-	let [playMode, setPlayMode] = useState('stop');
-
 	const inputButtonProps = {timeState, dispatch};
+
+	let [playMode, setPlayMode] = useState('stop'); 
 
 	// Set time
 		function timeReducer(timeState, action) { 
@@ -110,7 +110,5 @@ function Timer() {
 		</>
 	)
 }
-
-
 
 export default Timer;
