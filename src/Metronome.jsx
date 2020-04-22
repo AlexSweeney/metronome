@@ -1,6 +1,4 @@
-/*  
-    fix, click bpm and press backspace
-
+/*   
     fix, max minutes / seconds = 60
     change time while playing
 
@@ -28,14 +26,15 @@ import Wood from './audio/wood.mp3';
 
 const Metronome = () => { 
     // BPM
+        let minBPM = 0;
+        let maxBPM = 200;  
         let initalBPMState = { BPM: '40'};
         const [BPMState, dispatch] = useReducer(BPMReducer, initalBPMState);
-        let BPMProps = {property: 'BPM', state: BPMState, dispatch, displayLeadingZero: false};
+        let BPMProps = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false, max: maxBPM}};
 
         function BPMReducer(state, action) {  
             let newBPM = action.newValue;
-            let minBPM = 0;
-            let maxBPM = 200;  
+           
 
             if(newBPM >= minBPM && newBPM <= maxBPM) {
                 return {BPM: newBPM};

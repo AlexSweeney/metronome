@@ -9,7 +9,7 @@ function Timer() {
 	// Set time
 		let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
 		const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
-		const inputButtonProps = {state: timeState, dispatch, displayLeadingZero: true};
+		const inputButtonProps = {state: timeState, dispatch, settings: { displayLeadingZero: true, max: 60}};
 		 
 		function timeReducer(timeState, action) { 
 			let {hours, minutes, seconds} = timeState; 

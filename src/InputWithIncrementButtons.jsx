@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Util from './Util.jsx'; 
 
-function InputWithIncrementButtons({property, state, dispatch, displayLeadingZero}) {  
-	let {addLeadingZero} = Util; 
+function InputWithIncrementButtons({property, state, dispatch, settings}) {   
+	let max = (settings.hasOwnProperty('max') && settings.max || '99');
+	let min = (settings.hasOwnProperty('min') && settings.min || '0');
+
+	let {addLeadingZero} = Util;   
 	let [buttonIsHeld, setButtonIsHeld] = useState(false);
 	let [buttonIsDown, setButtonIsDown] = useState(false);
 	let [increment, setIncrement] = useState(null);
@@ -22,16 +25,20 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 			return String(number).substring(1,); 
 		}
 
-	// Key down
-		function handleKeyDown(e) {     
-			console.log('e.key', e.key);
-			console.log('typeof(e.key)', typeof(e.key));
-			console.log('Number(e.key)', Number(e.key));
-			console.log('typeof(Number(e.key))', typeof(Number(e.key)));
-			let increment = getNumberFromKey(e.key);
-			let newValue = e.target.value;    
+		function keepValueInRange(value) {
+			if(Number(value) > max) {
+				return max;
+			} else if(Number(value) < min) {
+				return min;
+			}
 
-			console.log('newValue', newValue);
+			return value;
+		}
+
+	// Key down
+		function handleKeyDown(e) {      
+			let increment = getNumberFromKey(e.key);
+			let newValue = e.target.value;     
 			
 			// If number
 			if(increment === 0 && typeof(Number(e.key)) === 'number') {  
@@ -41,12 +48,15 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 				} 
 			// If up arrow or down arrow
 			} else { 
-				if(displayLeadingZero) {
+				if(settings.displayLeadingZero) {
 					newValue = addLeadingZero(newValue, increment); 
 				} else {
 					newValue = Number(newValue) + increment;
 				}
 			}
+
+			// keep new Value in range
+			newValue = keepValueInRange(newValue);
 			
 			dispatch({target: property, newValue}); 
 		}  
@@ -69,7 +79,7 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 		}
 
 		function clickIncrement(increment) {  
-			let newValue = addLeadingZero(state[property], increment);   
+			let newValue = keepValueInRange(addLeadingZero(state[property], increment));   
 			dispatch({target: property, newValue});  
 		}
 
@@ -96,8 +106,8 @@ function InputWithIncrementButtons({property, state, dispatch, displayLeadingZer
 			> - </button>
 			<input id={property+"input"}
 				type="number" 
-				min="0" 
-				max="99" 
+				min={min}
+				max={max} 
 				value={state[property]} 
 				onKeyDown={handleKeyDown}
 				className={property+"Display"}/> 

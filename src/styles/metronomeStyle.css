@@ -41,9 +41,9 @@ input[type=number] {
     justify-content: center;
 }
 
-.BPMDisplay {
-	height: 2em;
-    width: 2em;
+.BPMDisplay { 
+    height: 2.4em;
+    width: 2.4em;
     border-radius: 2em;
     text-align: center;
     border: 0.2em solid black;
