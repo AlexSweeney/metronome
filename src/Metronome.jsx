@@ -1,5 +1,9 @@
 /*     
-    press space to play / stop
+    press right / left arrows
+
+    hold right / left arrows
+
+    test - hold down space => crash?
 
     timer ding when finished 
 
@@ -36,8 +40,7 @@ const Metronome = () => {
         let BPMProps = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false, max: maxBPM}};
 
         function BPMReducer(state, action) {  
-            let newBPM = action.newValue;
-           
+            let newBPM = action.newValue; 
 
             if(newBPM >= minBPM && newBPM <= maxBPM) {
                 return {BPM: newBPM};
@@ -85,10 +88,13 @@ const Metronome = () => {
                 }
             }
 
-            if(e.key === 'ArrowRight') {
-
+            if(e.key === 'ArrowRight') {    
+                console.log('arrow right');
+                console.log('BPM', BPM);
+                console.log('Number(BPM) + 1', Number(BPM) + 1);
+                dispatch({newValue: Number(BPM) + 1});
             } else if (e.key === 'ArrowLeft') {
-
+                dispatch({newValue: Number(BPM) - 1});
             }  
         });
  
