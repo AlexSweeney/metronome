@@ -1,9 +1,5 @@
 /*     
-    press right / left arrows
-
-    hold right / left arrows
-
-    test - hold down space => crash?
+    hold right / left arrows 
 
     timer ding when finished 
 
@@ -23,6 +19,7 @@ import './styles/metronomeStyle.css';
 
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 import SliderInput from './SliderInput.jsx'; 
+import BPMinput from './BPMinput.jsx';
 import Timer from "./Timer.jsx";
 
 import Wood from './audio/wood.mp3';
@@ -30,32 +27,17 @@ import Util from './Util.jsx';
 
 const Metronome = () => { 
     // Util
-        let {flashColor} = Util;
+        let {flashColor} = Util; 
 
-    // BPM
-        let minBPM = 0;
-        let maxBPM = 200;  
-        let initalBPMState = { BPM: '40'};
-        const [BPMState, dispatch] = useReducer(BPMReducer, initalBPMState);
-        let BPMProps = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false, max: maxBPM}};
+    // BPM 
+        let [BPM, setBPM] = useState(80);
 
-        function BPMReducer(state, action) {  
-            let newBPM = action.newValue; 
-
-            if(newBPM >= minBPM && newBPM <= maxBPM) {
-                return {BPM: newBPM};
-            } else if(newBPM < minBPM) {
-                return {BPM: minBPM};
-            } else if (newBPM > maxBPM) {
-                return {BPM: maxBPM};
-            }
-        } 
-    
     // PLAY
-        let [playMode, setPlayMode] = useState('stop'); 
-        let BPM = BPMState.BPM; 
+        let [playMode, setPlayMode] = useState('stop');  
         let clickTime = getClickTime(BPM);   
         let [keyIsDown, setKeyIsDown] = useState(false);
+        let [keyIsHeld, setKeyIsHeld] = useState(false);
+        let [currentKey, setCurrentKey] = useState(null);
 
         useEffect(() => {   
             if(playMode === 'play') { 
@@ -79,31 +61,15 @@ const Metronome = () => {
         function stop() {
             setPlayMode('stop');
         } 
- 
-        document.addEventListener('keydown', (e) => { 
-            if(keyIsDown) return;
-            setKeyIsDown(true);
 
+        document.addEventListener('keydown', (e) => { 
             if(e.key === ' ') {
                 if(playMode === 'play') {
                     setPlayMode('stop');
                 } else if(playMode === 'stop') {
                     setPlayMode('play');
                 }
-            }
-
-            if(e.key === 'ArrowRight') {    
-                console.log('arrow right');
-                console.log('BPM', BPM);
-                console.log('Number(BPM) + 1', Number(BPM) + 1);
-                dispatch({newValue: Number(BPM) + 1});
-            } else if (e.key === 'ArrowLeft') {
-                dispatch({newValue: Number(BPM) - 1});
             }  
-        });
-
-        document.addEventListener('keyup', (e) => {
-            setKeyIsDown(false);
         });
  
     // Volume
@@ -122,7 +88,7 @@ const Metronome = () => {
             <audio src={Wood} id="woodAudio"/>
 
             <div className="BPMContainer"> 
-                <InputWithIncrementButtons {...BPMProps}/>
+                <BPMinput BPM={BPM}/> 
             </div>
             
             <div className="buttonContainer">
