@@ -55,6 +55,7 @@ const Metronome = () => {
         let [playMode, setPlayMode] = useState('stop'); 
         let BPM = BPMState.BPM; 
         let clickTime = getClickTime(BPM);   
+        let [keyIsDown, setKeyIsDown] = useState(false);
 
         useEffect(() => {   
             if(playMode === 'play') { 
@@ -80,6 +81,9 @@ const Metronome = () => {
         } 
  
         document.addEventListener('keydown', (e) => { 
+            if(keyIsDown) return;
+            setKeyIsDown(true);
+
             if(e.key === ' ') {
                 if(playMode === 'play') {
                     setPlayMode('stop');
@@ -97,6 +101,10 @@ const Metronome = () => {
                 dispatch({newValue: Number(BPM) - 1});
             }  
         });
+
+        document.addEventListener('keyup', (e) => {
+            setKeyIsDown(false);
+        });
  
     // Volume
         let [volume, setVolume] = useState(0.5);
@@ -110,7 +118,7 @@ const Metronome = () => {
         }  
 
     return (
-        <div className="metronomeContainer" id="metronomeContainer">  
+        <div className="metronomeContainer" id="metronomeContainer">   
             <audio src={Wood} id="woodAudio"/>
 
             <div className="BPMContainer"> 
