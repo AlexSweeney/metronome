@@ -10,6 +10,17 @@ function addLeadingZero(number, addition) {
 	} 
 }
 
+function flashColor(target, color, holdTime) { 
+	let el = document.getElementById(target); 
+	let origColor = el.style.backgroundColor;
 
-const Util = {addLeadingZero};
+	el.style.backgroundColor = color;
+
+	setTimeout(() => {
+		el.style.backgroundColor = origColor;
+	}, holdTime);
+}
+
+
+const Util = {addLeadingZero, flashColor};
 export default Util;

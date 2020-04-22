@@ -1,8 +1,7 @@
-/*   
-    fix, max minutes / seconds = 60
-    change time while playing
-
+/*    
     flash with bpm click
+
+    press space to play / stop
 
     Settings:
         change metronome sound
@@ -23,8 +22,12 @@ import SliderInput from './SliderInput.jsx';
 import Timer from "./Timer.jsx";
 
 import Wood from './audio/wood.mp3';
+import Util from './Util.jsx';
 
 const Metronome = () => { 
+    // Util
+        let {flashColor} = Util;
+
     // BPM
         let minBPM = 0;
         let maxBPM = 200;  
@@ -54,6 +57,7 @@ const Metronome = () => {
             if(playMode === 'play') { 
                 const metronome = setInterval(() => {    
                     document.getElementById('woodAudio').play(); 
+                    flashColor('BPMinput', '#64baff', 200);
                 }, getClickTime(BPM));
 
                 return () => clearInterval(metronome);
