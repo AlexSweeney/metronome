@@ -1,7 +1,7 @@
-/*    
-    flash with bpm click
-
+/*     
     press space to play / stop
+
+    timer ding when finished 
 
     Settings:
         change metronome sound
@@ -75,7 +75,23 @@ const Metronome = () => {
         function stop() {
             setPlayMode('stop');
         } 
+ 
+        document.addEventListener('keydown', (e) => { 
+            if(e.key === ' ') {
+                if(playMode === 'play') {
+                    setPlayMode('stop');
+                } else if(playMode === 'stop') {
+                    setPlayMode('play');
+                }
+            }
 
+            if(e.key === 'ArrowRight') {
+
+            } else if (e.key === 'ArrowLeft') {
+
+            }  
+        });
+ 
     // Volume
         let [volume, setVolume] = useState(0.5);
 
