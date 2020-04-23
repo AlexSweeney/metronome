@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useState, useReducer, useEffect} from 'react';
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 
 function BPMinput({BPM}) {
@@ -8,14 +8,13 @@ function BPMinput({BPM}) {
         let initalBPMState = { BPM };
         const [BPMState, dispatch] = useReducer(BPMReducer, initalBPMState);
         let props = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false, max: maxBPM}};
+        let [rightKeyDown, setRightKeyDown] = useState(false);
+        let [leftKeyDown, setLeftKeyDown] = useState(false);
 
-        function BPMReducer(state, action) {  
-            console.log('================ reducer ====================');
-            let newBPM = action.newValue; 
-            console.log('newBPM', newBPM);
+        function BPMReducer(state, action) {   
+            let newBPM = action.newValue;  
 
-            if(newBPM >= minBPM && newBPM <= maxBPM) {
-                console.log('return', newBPM);
+            if(newBPM >= minBPM && newBPM <= maxBPM) { 
                 return {BPM: newBPM};
             } else if(newBPM < minBPM) {
                 return {BPM: minBPM};
@@ -23,58 +22,44 @@ function BPMinput({BPM}) {
                 return {BPM: maxBPM};
             }
         } 
-/*
-         if(keyIsDown) return;
-            setKeyIsDown(true);
 
-            setTimeout(() => { 
-                setCurrentKey(e.key);
-                setKeyIsHeld(true); 
-            }, 500);
+        useEffect(() => { 
+            if(rightKeyDown) { 
+                let ev = new Event('mousedown', {bubbles: true});  
+                document.getElementById('BPMIncreaseButton').dispatchEvent(ev); 
+            } else if (!rightKeyDown) {
+                let ev = new Event('mouseup', {bubbles: true});  
+                document.getElementById('BPMIncreaseButton').dispatchEvent(ev);
+            }
+        }, [rightKeyDown])
 
-         useEffect(() => {  
-            console.log('useEffect');
-            let holdInterval = null;
-            if(keyIsDown && keyIsHeld) { 
-                console.log('pass effect');
-
-                setTimeout(() => {
-                    console.log('interval');
-                    console.log('BPM', BPM);
-                    BPM += 1;
-                    console.log('Post BPM', BPM);
-                    dispatch({newValue: BPM + 1});
-                    // dispatch({newValue: Number(BPM) + 1});
-                }, 100);
-                // setTimeout(() => {
-                //     console.log('timeout');  
-                //     // 
-                //     // handleArrowKeyDown(currentKey);
-                // }, 100);
-                
-            } 
-
-            // else if(!keyIsDown && keyIsHeld) {
-            //     setKeyIsHeld(false);
-            // }
-            return () => clearInterval(holdInterval);
-        }, [keyIsDown, keyIsHeld, BPM])
+        useEffect(() => {
+            if(leftKeyDown) {
+                let ev = new Event('mousedown', {bubbles: true});  
+                document.getElementById('BPMDecreaseButton').dispatchEvent(ev); 
+            } else if(!leftKeyDown) {
+                let ev = new Event('mouseup', {bubbles: true});  
+                document.getElementById('BPMDecreaseButton').dispatchEvent(ev);
+            }
+        }, [leftKeyDown])
+ 
+        document.addEventListener('keydown', (e) => {
+			if(e.key === 'ArrowRight' && !rightKeyDown) { 
+                setRightKeyDown(true);  
+			} else if(e.key === 'ArrowLeft' && !leftKeyDown) { 
+				setLeftKeyDown(true);
+			}
+        });
 
         document.addEventListener('keyup', (e) => {
-            setKeyIsDown(false);
-            setKeyIsHeld(false);
-        });
-		
-		function handleArrowKeyDown(key) {
-            if(key === 'ArrowRight') {     
-                dispatch({newValue: Number(BPM) + 1});
-            } else if (key === 'ArrowLeft') {
-                dispatch({newValue: Number(BPM) - 1});
-            }  
-        }
-        */
+            if(e.key === 'ArrowRight') {   
+                setRightKeyDown(false); 
+            } else if(e.key === 'ArrowLeft') { 
+                setLeftKeyDown(false);
+            }
+        }) 
 
-	return (
+	return ( 
 		<InputWithIncrementButtons {...props}/>
 	);
 };

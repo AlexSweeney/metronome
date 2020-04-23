@@ -61,8 +61,8 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 			dispatch({target: property, newValue}); 
 		}  
  
-	// button click 
-		function handleMouseDown(increment) {  
+	// button click   
+		function handleMouseDown(increment) {   
 			clickIncrement(increment); 
 			setButtonIsDown(true);
 
@@ -98,11 +98,12 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 
 	return (
 		<div className="timerInputButtonContainer">   
-			<button type="button"  
-					onMouseDown={() => handleMouseDown(-1)} 
+			<button type="button"   
+					onMouseDown={() => handleMouseDown(-1)}
 					onMouseUp={handleMouseUp}
-					onMouseOut={handleMouseUp}
+					onMouseOut={handleMouseUp} 
 					className={property+"Input"}
+					id={property+"DecreaseButton"}
 			> - </button>
 			<input id={property+"input"}
 				type="number" 
@@ -110,15 +111,17 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 				max={max} 
 				value={state[property]} 
 				onKeyDown={handleKeyDown}
-				className={property+"Display"}/> 
+				className={property+"Display"}
+			/>
 			<button type="button" 
 					onMouseDown={() => handleMouseDown(1)}
 					onMouseUp={handleMouseUp} 
-					onMouseOut={handleMouseUp}
+					onMouseOut={handleMouseUp}  
 					className={property+"Input"}
+					id={property+"IncreaseButton"}
 			> + </button>
 		</div>
 	)
-}
+} 
 
 export default InputWithIncrementButtons;
