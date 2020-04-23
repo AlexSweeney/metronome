@@ -1,6 +1,4 @@
-/*     
-    hold right / left arrows 
-
+/*      
     timer ding when finished 
 
     Settings:
@@ -85,13 +83,11 @@ const Metronome = () => {
 
     return (
         <div className="metronomeContainer" id="metronomeContainer">   
-            <audio src={Wood} id="woodAudio"/>
-
-            <div className="BPMContainer"> 
-                <BPMinput BPM={BPM}/> 
-            </div>
+            <BPMinput className="BPMComponent" BPM={BPM}/> 
             
             <div className="buttonContainer">
+                <audio src={Wood} id="woodAudio"/>
+
                 <button onClick={play} id="playButton" className="BPMButton">Play</button>
                 <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
             </div>

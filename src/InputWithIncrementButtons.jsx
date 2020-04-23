@@ -62,7 +62,7 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 		}  
  
 	// button click   
-		function handleMouseDown(increment) {   
+		function handleMouseDown(increment) {
 			clickIncrement(increment); 
 			setButtonIsDown(true);
 

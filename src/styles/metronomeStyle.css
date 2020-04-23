@@ -35,7 +35,7 @@ input[type=number] {
 }
 
 /* ============= BPM ============= */
-.BPMContainer { 
+.BPMComponent { 
     width: 100%; 
     display: flex; 
     justify-content: center;
