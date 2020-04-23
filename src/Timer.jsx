@@ -59,6 +59,8 @@ function Timer() {
 
 			// if all === 0
 			if(hours === '00' && minutes === '00' && seconds === '00') { 
+				// play end sound
+				document.getElementById('bellTingAudio').play();
 				setPlayMode('stop');
 			}
 

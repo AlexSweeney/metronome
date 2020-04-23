@@ -21,6 +21,7 @@ import BPMinput from './BPMinput.jsx';
 import Timer from "./Timer.jsx";
 
 import Wood from './audio/wood.mp3';
+import BellTing from './audio/bell-ting.mp3';
 import Util from './Util.jsx';
 
 const Metronome = () => { 
@@ -79,6 +80,7 @@ const Metronome = () => {
 
         function updateVolume(newVolume) { 
             document.getElementById('woodAudio').volume = newVolume;
+            document.getElementById('bellTingAudio').volume = newVolume;
         }  
 
     return (
@@ -87,6 +89,7 @@ const Metronome = () => {
             
             <div className="buttonContainer">
                 <audio src={Wood} id="woodAudio"/>
+                <audio src={BellTing} id="bellTingAudio"/>
 
                 <button onClick={play} id="playButton" className="BPMButton">Play</button>
                 <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
