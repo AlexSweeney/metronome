@@ -93,12 +93,12 @@ function BPMinput({BPM}) {
         }, [BPMState.BPM]);
 
 	return ( 
-        <>
+        <div className="BPMComponent">
     		<InputWithIncrementButtons {...props}/>
             <div className="tempoContainer">
                 {tempo}
             </div> 
-        </>
+        </div>
 	);
 };
 

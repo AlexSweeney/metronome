@@ -1,19 +1,19 @@
-/*     
-    add tempo names bar
-
+/*      
     Settings:
         change metronome sound
         change time signature
         change accent
 
-    tap tempo
+    fix speed
 
-    
+    tap tempo  
 */
 
 
 import React, {useEffect, useState, useReducer} from 'react';
-import './styles/metronomeStyle.css';
+import './styles/metronomeStyle.css'; 
+import { FaCog } from 'react-icons/fa'; 
+import { IconContext } from "react-icons";
 
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 import SliderInput from './SliderInput.jsx'; 
@@ -73,7 +73,7 @@ const Metronome = () => {
         });
  
     // Volume
-        let [volume, setVolume] = useState(0.5);
+       /* let [volume, setVolume] = useState(0.5);
 
         useEffect(() => { 
             updateVolume(volume);
@@ -82,13 +82,25 @@ const Metronome = () => {
         function updateVolume(newVolume) { 
             document.getElementById('woodAudio').volume = newVolume;
             document.getElementById('bellTingAudio').volume = newVolume;
-        }  
+        }  */
 
     return (
-        <div className="metronomeContainer" id="metronomeContainer">   
-            <BPMinput className="BPMComponent" BPM={BPM}/> 
+        <div className="metronomeContainer" id="metronomeContainer"> 
+            <div className="BPMContainer">
+                <div></div>
+
+                <BPMinput BPM={BPM}/> 
+
+                <div className="cogContainer">
+                    <IconContext.Provider value={{ color: "black", className: "Cog" }}>
+                      <div>
+                        <FaCog size={30}/>
+                      </div>
+                    </IconContext.Provider>
+                </div>  
+            </div>
             
-            <div className="buttonContainer">
+            {/*<div className="buttonContainer">
                 <audio src={Wood} id="woodAudio"/>
                 <audio src={BellTing} id="bellTingAudio"/>
 
@@ -98,13 +110,12 @@ const Metronome = () => {
             
             <div className="volumeContainer">
                 <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
-                {/*Volume: {Math.floor(volume * 100)}*/}
                 <br/>
             </div>
 
             <div className="timerComponentContainer">
                 <Timer/>
-            </div>
+            </div>*/}
 		</div>
     )
 }
