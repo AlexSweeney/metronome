@@ -4,7 +4,7 @@ import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 function BPMinput({BPM}) {
 	// BPM
         let minBPM = 0;
-        let maxBPM = 200;  
+        let maxBPM = 300;  
         let initalBPMState = { BPM };
         const [BPMState, dispatch] = useReducer(BPMReducer, initalBPMState);
         let props = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false, max: maxBPM}};
@@ -59,8 +59,46 @@ function BPMinput({BPM}) {
             }
         }) 
 
+    // TEMPO
+        let [tempo, setTempo] = useState(getTempo(BPMState.BPM));
+
+        function getTempo(BPM) {
+            if(BPM === 0) {
+                return '';
+            } else if(BPM >= 1 && BPM <= 20) {
+                return 'Larghissimo';
+            } else if (BPM >= 20 && BPM <= 40) {
+                return 'Grave';
+            } else if (BPM >= 40 && BPM <= 60) {
+                return 'Lento / Largo';
+            } else if (BPM >= 60 && BPM <= 66) {
+                return 'Larghetto';
+            } else if (BPM >= 67 && BPM <= 75) {
+                return 'Adagio';
+            } else if (BPM >= 76 && BPM <= 107) {
+                return 'Andante';
+            } else if (BPM >= 108 && BPM <= 119) {
+                return 'Moderato';
+            } else if (BPM >= 120 && BPM <= 167) {
+                return 'Allegro';
+            } else if (BPM >= 168 && BPM <= 200) {
+                return 'Presto';
+            } else if (BPM >= 201) {
+                return 'Prestissimo';
+            } 
+        }
+
+        useEffect(() => { 
+            setTempo(getTempo(BPMState.BPM));
+        }, [BPMState.BPM]);
+
 	return ( 
-		<InputWithIncrementButtons {...props}/>
+        <>
+    		<InputWithIncrementButtons {...props}/>
+            <div className="tempoContainer">
+                {tempo}
+            </div> 
+        </>
 	);
 };
 

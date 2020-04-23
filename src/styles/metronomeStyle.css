@@ -59,6 +59,14 @@ input[type=number] {
     margin: 0 0.3em;
 }
 
+.tempoContainer {
+    height: 1.3em;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: white;
+    font-family: sans-serif;
+}
+
 /* ============= Buttons ============= */
 .buttonContainer {
     display: flex; 

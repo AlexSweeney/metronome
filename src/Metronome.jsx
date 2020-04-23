@@ -1,5 +1,5 @@
-/*      
-    timer ding when finished 
+/*     
+    add tempo names bar
 
     Settings:
         change metronome sound
@@ -8,7 +8,7 @@
 
     tap tempo
 
-    add tempo names bar
+    
 */
 
 
@@ -22,6 +22,7 @@ import Timer from "./Timer.jsx";
 
 import Wood from './audio/wood.mp3';
 import BellTing from './audio/bell-ting.mp3';
+
 import Util from './Util.jsx';
 
 const Metronome = () => { 
@@ -93,7 +94,7 @@ const Metronome = () => {
 
                 <button onClick={play} id="playButton" className="BPMButton">Play</button>
                 <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
-            </div>
+            </div> 
             
             <div className="volumeContainer">
                 <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
