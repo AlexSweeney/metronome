@@ -1,4 +1,4 @@
-/*      
+/*
     Settings:
         change metronome sound
         change time signature
@@ -80,43 +80,52 @@ const Metronome = () => {
         }, [volume]);
 
         function updateVolume(newVolume) { 
-            document.getElementById('woodAudio').volume = newVolume;
-            document.getElementById('bellTingAudio').volume = newVolume;
+           /* document.getElementById('woodAudio').volume = newVolume;
+            document.getElementById('bellTingAudio').volume = newVolume;*/
         }  
 
+    // Settings
+        let [settingsView, setSettingsView] = useState(false);
+
     return (
-        <div className="metronomeContainer" id="metronomeContainer"> 
-            <div className="BPMContainer"> 
-                <div className="cogContainer"></div>
+        <div>
+            { settingsView ? 
+                <div>Settings View</div>
+                :  
+                <div className="metronomeContainer" id="metronomeContainer"> 
+                    <div className="BPMContainer"> 
+                        <div className="cogContainer"></div> 
 
-                <BPMinput BPM={BPM}/> 
+                        <BPMinput BPM={BPM}/> 
 
-                <div className="cogContainer">
-                    <IconContext.Provider value={{ color: "black", className: "Cog" }}>
-                      <div>
-                        <FaCog size={30}/>
-                      </div>
-                    </IconContext.Provider>
-                </div>  
-            </div>
-            
-            <div className="buttonContainer">
-                <audio src={Wood} id="woodAudio"/>
-                <audio src={BellTing} id="bellTingAudio"/>
+                        <div className="cogContainer" id="cogContainer" onMouseDown={() => setSettingsView(settingsView = !settingsView)}>
+                            <IconContext.Provider value={{ color: "black", className: "Cog", id: "cog"}}>
+                              <div onClick={console.log('div click')}>
+                                <FaCog size={30} onClick={console.log('div click')}/>
+                              </div>
+                            </IconContext.Provider>
+                        </div>  
+                    </div>
+                    
+                    <div className="buttonContainer">
+                        <audio src={Wood} id="woodAudio"/>
+                        <audio src={BellTing} id="bellTingAudio"/>
 
-                <button onClick={play} id="playButton" className="BPMButton">Play</button>
-                <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
-            </div> 
-            
-            <div className="volumeContainer">
-                <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
-                <br/>
-            </div>
+                        <button onClick={play} id="playButton" className="BPMButton">Play</button>
+                        <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
+                    </div> 
+                    
+                    <div className="volumeContainer">
+                        <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
+                        <br/>
+                    </div>
 
-            <div className="timerComponentContainer">
-                <Timer/>
-            </div>
-		</div>
+                    <div className="timerComponentContainer">
+                        <Timer/>
+                    </div>
+                </div>
+            }
+        </div>
     )
 }
  
