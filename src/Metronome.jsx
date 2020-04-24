@@ -73,7 +73,7 @@ const Metronome = () => {
         });
  
     // Volume
-       /* let [volume, setVolume] = useState(0.5);
+        let [volume, setVolume] = useState(0.5);
 
         useEffect(() => { 
             updateVolume(volume);
@@ -82,7 +82,7 @@ const Metronome = () => {
         function updateVolume(newVolume) { 
             document.getElementById('woodAudio').volume = newVolume;
             document.getElementById('bellTingAudio').volume = newVolume;
-        }  */
+        }  
 
     return (
         <div className="metronomeContainer" id="metronomeContainer"> 
@@ -100,7 +100,7 @@ const Metronome = () => {
                 </div>  
             </div>
             
-            {/*<div className="buttonContainer">
+            <div className="buttonContainer">
                 <audio src={Wood} id="woodAudio"/>
                 <audio src={BellTing} id="bellTingAudio"/>
 
@@ -115,7 +115,7 @@ const Metronome = () => {
 
             <div className="timerComponentContainer">
                 <Timer/>
-            </div>*/}
+            </div>
 		</div>
     )
 }

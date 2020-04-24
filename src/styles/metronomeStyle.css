@@ -28,6 +28,10 @@ input[type=number] {
     height: 30em;
     margin: auto;
     border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /* ============= BPM ============= */
