@@ -86,8 +86,8 @@ const Metronome = () => {
 
     return (
         <div className="metronomeContainer" id="metronomeContainer"> 
-            <div className="BPMContainer">
-                <div></div>
+            <div className="BPMContainer"> 
+                <div className="cogContainer"></div>
 
                 <BPMinput BPM={BPM}/> 
 
