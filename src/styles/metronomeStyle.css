@@ -28,32 +28,32 @@ input[type=number] {
     height: 30em;
     margin: auto;
     border-radius: 1em;
+}
+
+/* ========== Cog ========== */
+.cogContainer {
+    display: flex;
+    height: 3em;
+    width: 100%;
+    justify-content: flex-end; 
+    align-items: center;
+    padding-right: 0.5em;
+}
+
+/* ============= BPM ============= */
+.metronomeView {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-}
-
-/* ============= BPM ============= */
-.BPMContainer {
-    display: flex;
-    flex-direction: row;
-    width: 100%; 
-    justify-content: space-between;
+    height: 27em;
 }
 
 .BPMComponent {  
     display: flex; 
-    flex-direction: column;
-    margin-top: 3em;
+    flex-direction: column; 
 }
-
-.cogContainer {
-    display: flex;
-    padding: 1em;
-    width: 4em;
-}
-
+ 
 .BPMDisplay { 
     height: 2.4em;
     width: 2.4em;
@@ -83,21 +83,10 @@ input[type=number] {
 }
 
 /* ============= Buttons ============= */
-.buttonContainer {
-    display: flex; 
-    justify-content: center; 
-}
-
 .BPMButton {
 	font-size: 1.5em;
     width: 4em;
     margin: 0 0.3em;
-}
-
-/* ========== Volume ========== */
-.volumeContainer {
-	display: flex; 
-    justify-content: center;
 }
 
 /* ========== Timer =========== */

@@ -88,25 +88,22 @@ const Metronome = () => {
         let [settingsView, setSettingsView] = useState(false);
 
     return (
-        <div>
-            { settingsView ? 
-                <div>Settings View</div>
-                :  
-                <div className="metronomeContainer" id="metronomeContainer"> 
-                    <div className="BPMContainer"> 
-                        <div className="cogContainer"></div> 
+        <div> 
+            <div className="metronomeContainer" id="metronomeContainer"> 
+                <div className="cogContainer" id="cogContainer" onMouseDown={() => setSettingsView(settingsView = !settingsView)}>
+                    <IconContext.Provider value={{ color: "black", className: "Cog", id: "cog"}}>
+                    <FaCog size={30}/> 
+                    </IconContext.Provider>
+                </div>  
+            
+                { settingsView ?
+                <div className="settingsView"> 
+                    <p>Settings View</p>
+                </div>
+                : 
+                <div className="metronomeView"> 
+                    <BPMinput BPM={BPM}/>   
 
-                        <BPMinput BPM={BPM}/> 
-
-                        <div className="cogContainer" id="cogContainer" onMouseDown={() => setSettingsView(settingsView = !settingsView)}>
-                            <IconContext.Provider value={{ color: "black", className: "Cog", id: "cog"}}>
-                              <div onClick={console.log('div click')}>
-                                <FaCog size={30} onClick={console.log('div click')}/>
-                              </div>
-                            </IconContext.Provider>
-                        </div>  
-                    </div>
-                    
                     <div className="buttonContainer">
                         <audio src={Wood} id="woodAudio"/>
                         <audio src={BellTing} id="bellTingAudio"/>
@@ -114,7 +111,7 @@ const Metronome = () => {
                         <button onClick={play} id="playButton" className="BPMButton">Play</button>
                         <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
                     </div> 
-                    
+
                     <div className="volumeContainer">
                         <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
                         <br/>
@@ -124,7 +121,8 @@ const Metronome = () => {
                         <Timer/>
                     </div>
                 </div>
-            }
+                }
+            </div> 
         </div>
     )
 }
