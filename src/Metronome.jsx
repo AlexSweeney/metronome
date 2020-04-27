@@ -17,6 +17,7 @@ import './styles/metronomeStyle.css';
 import { FaCog } from 'react-icons/fa'; 
 
 import { IconContext } from "react-icons"; 
+
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -38,9 +39,7 @@ const Metronome = () => {
         let {flashColor} = Util; 
 
     // Metronome Sound
-        // let {metronomeSound, setMetronomeSound} = useState('Wood');
-        let metronomeSound = 'Wood';
-        console.log('metronomeSound', metronomeSound);
+       
 
     // BPM 
         let [BPM, setBPM] = useState(80);
@@ -99,15 +98,15 @@ const Metronome = () => {
 
     // Settings
         let [settingsView, setSettingsView] = useState(false);
-
-        function handleSettingsClick(message) {
-            console.log(message);
-        }
+        let [metronomeSound, setMetronomeSound] = useState('Wood');
+        // let metronomeSound = 'Wood'; 
 
         let value = "hello";
 
-        function handleChange() {
+        function handleChange(e) {
+            setMetronomeSound(e.target.value);
             console.log('change');
+            console.log(e.target.value);
         }
 
     return (
@@ -128,12 +127,12 @@ const Metronome = () => {
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Sound</FormLabel>
                             <RadioGroup name="sound" value={metronomeSound} onChange={handleChange}>
-                                <FormControlLabel vale="wood" control={<Radio/>} label="Wood"/>
-                                <FormControlLabel vale="click" control={<Radio/>} label="Clicks"/>
-                                <FormControlLabel vale="snareDrum" control={<Radio/>} label="Snare Drum"/>
-                                <FormControlLabel vale="kickDrum" control={<Radio/>} label="Kick Drum"/>
-                                <FormControlLabel vale="cat" control={<Radio/>} label="cat"/>
-                                <FormControlLabel vale="dog" control={<Radio/>} label="dog"/>
+                                <FormControlLabel value="wood" control={<Radio/>} label="Wood"/>
+                                <FormControlLabel value="click" control={<Radio/>} label="Clicks"/>
+                                <FormControlLabel value="snareDrum" control={<Radio/>} label="Snare Drum"/>
+                                <FormControlLabel value="kickDrum" control={<Radio/>} label="Kick Drum"/>
+                                <FormControlLabel value="cat" control={<Radio/>} label="cat"/>
+                                <FormControlLabel value="dog" control={<Radio/>} label="dog"/>
                             </RadioGroup>
                         </FormControl> 
                     {/* Time Signature */}
