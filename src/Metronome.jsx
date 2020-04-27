@@ -6,6 +6,8 @@
 
     fix speed
 
+    fix click bpm then type delete = crash
+
     tap tempo  
 */
 
@@ -13,7 +15,13 @@
 import React, {useEffect, useState, useReducer} from 'react';
 import './styles/metronomeStyle.css'; 
 import { FaCog } from 'react-icons/fa'; 
-import { IconContext } from "react-icons";
+
+import { IconContext } from "react-icons"; 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 import SliderInput from './SliderInput.jsx'; 
@@ -28,6 +36,11 @@ import Util from './Util.jsx';
 const Metronome = () => { 
     // Util
         let {flashColor} = Util; 
+
+    // Metronome Sound
+        // let {metronomeSound, setMetronomeSound} = useState('Wood');
+        let metronomeSound = 'Wood';
+        console.log('metronomeSound', metronomeSound);
 
     // BPM 
         let [BPM, setBPM] = useState(80);
@@ -87,6 +100,16 @@ const Metronome = () => {
     // Settings
         let [settingsView, setSettingsView] = useState(false);
 
+        function handleSettingsClick(message) {
+            console.log(message);
+        }
+
+        let value = "hello";
+
+        function handleChange() {
+            console.log('change');
+        }
+
     return (
         <div> 
             <div className="metronomeContainer" id="metronomeContainer"> 
@@ -98,10 +121,28 @@ const Metronome = () => {
             
                 { settingsView ?
                 <div className="settingsView"> 
-                    <p>Settings View</p>
+                    {/* Choose Metronome Sound */}
+                        metronomeSound: {String(metronomeSound)} 
+                        <br/>
+                         
+                        <FormControl component="fieldset">
+                            <FormLabel component="legend">Sound</FormLabel>
+                            <RadioGroup name="sound" value={metronomeSound} onChange={handleChange}>
+                                <FormControlLabel vale="wood" control={<Radio/>} label="Wood"/>
+                                <FormControlLabel vale="click" control={<Radio/>} label="Clicks"/>
+                                <FormControlLabel vale="snareDrum" control={<Radio/>} label="Snare Drum"/>
+                                <FormControlLabel vale="kickDrum" control={<Radio/>} label="Kick Drum"/>
+                                <FormControlLabel vale="cat" control={<Radio/>} label="cat"/>
+                                <FormControlLabel vale="dog" control={<Radio/>} label="dog"/>
+                            </RadioGroup>
+                        </FormControl> 
+                    {/* Time Signature */}
+
+                    {/* Tap Tempo */}
                 </div>
                 : 
                 <div className="metronomeView"> 
+
                     <BPMinput BPM={BPM}/>   
 
                     <div className="buttonContainer">
