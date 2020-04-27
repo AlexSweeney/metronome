@@ -92,21 +92,16 @@ const Metronome = () => {
         }, [volume]);
 
         function updateVolume(newVolume) { 
-           /* document.getElementById('woodAudio').volume = newVolume;
-            document.getElementById('bellTingAudio').volume = newVolume;*/
+            document.getElementById('woodAudio').volume = newVolume;
+            document.getElementById('bellTingAudio').volume = newVolume;
         }  
 
     // Settings
         let [settingsView, setSettingsView] = useState(false);
-        let [metronomeSound, setMetronomeSound] = useState('Wood');
-        // let metronomeSound = 'Wood'; 
-
-        let value = "hello";
+        let [metronomeSound, setMetronomeSound] = useState('wood'); 
 
         function handleChange(e) {
-            setMetronomeSound(e.target.value);
-            console.log('change');
-            console.log(e.target.value);
+            setMetronomeSound(e.target.value); 
         }
 
     return (
@@ -120,21 +115,20 @@ const Metronome = () => {
             
                 { settingsView ?
                 <div className="settingsView"> 
-                    {/* Choose Metronome Sound */}
-                        metronomeSound: {String(metronomeSound)} 
-                        <br/>
-                         
-                        <FormControl component="fieldset">
-                            <FormLabel component="legend">Sound</FormLabel>
-                            <RadioGroup name="sound" value={metronomeSound} onChange={handleChange}>
-                                <FormControlLabel value="wood" control={<Radio/>} label="Wood"/>
-                                <FormControlLabel value="click" control={<Radio/>} label="Clicks"/>
-                                <FormControlLabel value="snareDrum" control={<Radio/>} label="Snare Drum"/>
-                                <FormControlLabel value="kickDrum" control={<Radio/>} label="Kick Drum"/>
-                                <FormControlLabel value="cat" control={<Radio/>} label="cat"/>
-                                <FormControlLabel value="dog" control={<Radio/>} label="dog"/>
-                            </RadioGroup>
-                        </FormControl> 
+                    {/* Choose Metronome Sound */}  
+                        <div className="metronomeSoundRadios">
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Metronome Sound</FormLabel>
+                                <RadioGroup name="sound" value={metronomeSound} onChange={handleChange}>
+                                    <FormControlLabel value="wood" control={<CustomRadio/>} label="Wood"/>
+                                    <FormControlLabel value="click" control={<CustomRadio/>} label="Click"/>
+                                    <FormControlLabel value="snareDrum" control={<CustomRadio/>} label="Snare Drum"/>
+                                    <FormControlLabel value="kickDrum" control={<CustomRadio/>} label="Kick Drum"/>
+                                    <FormControlLabel value="cat" control={<CustomRadio/>} label="Cat"/>
+                                    <FormControlLabel value="dog" control={<CustomRadio/>} label="Dog"/>
+                                </RadioGroup>
+                            </FormControl> 
+                        </div>
                     {/* Time Signature */}
 
                     {/* Tap Tempo */}
@@ -164,6 +158,16 @@ const Metronome = () => {
                 }
             </div> 
         </div>
+    )
+}
+
+function CustomRadio(props) {
+    return (
+        <Radio
+            className="radio"  
+            color="white"
+            {...props}
+        />
     )
 }
  

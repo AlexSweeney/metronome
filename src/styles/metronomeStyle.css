@@ -83,14 +83,36 @@ input[type=number] {
     margin-top: 0.5em;
 }
 
-/* ============= Buttons ============= */
+/* ========== Buttons ========== */
 .BPMButton {
 	font-size: 1.5em;
     width: 4em;
     margin: 0 0.3em;
 }
 
-/* ========== Timer =========== */
+/* ========== Timer ========== */
 .timerComponentContainer {
     width: 80%; 
+}
+
+/* ========== Settings ========== */
+.metronomeSoundRadios {
+    display: flex;
+    padding-left: 2em;
+    padding-top: 1em;
+}
+
+.radioTitle { 
+    font-size: 1.5em;
+    font-family: sans-serif; 
+    color: black;
+}
+
+.MuiFormLabel-root {
+    color: black;
+    height: 1.6em;
+}
+
+.MuiFormControlLabel-root { 
+    height: 1.6em;
 }
