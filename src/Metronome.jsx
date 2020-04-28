@@ -1,9 +1,16 @@
 /*
     Settings:
         change metronome sound
+            * buttons x
+            * sounds 
+            * hook up sounds 
         change time signature
         change accent
+    
+    fix flash color press play + press cog = error
 
+    fix change sound while playing
+    
     fix speed
 
     fix click bpm then type delete = crash
@@ -31,15 +38,17 @@ import Timer from "./Timer.jsx";
 
 import Wood from './audio/wood.mp3';
 import BellTing from './audio/bell-ting.mp3';
+import Click from './audio/click.mp3';
+import Meow from './audio/meow.mp3';
+import Snare from './audio/snare.mp3';
+import Kick from './audio/kick.mp3';
+import Bark from './audio/bark.mp3';
 
 import Util from './Util.jsx';
 
 const Metronome = () => { 
     // Util
         let {flashColor} = Util; 
-
-    // Metronome Sound
-       
 
     // BPM 
         let [BPM, setBPM] = useState(80);
@@ -53,9 +62,11 @@ const Metronome = () => {
 
         useEffect(() => {   
             if(playMode === 'play') { 
-                const metronome = setInterval(() => {    
-                    document.getElementById('woodAudio').play(); 
-                    flashColor('BPMinput', '#64baff', 200);
+                const metronome = setInterval(() => {     
+                    document.getElementById(metronomeSound+'Audio').play(); 
+
+
+                    // flashColor('BPMinput', '#64baff', 200);
                 }, getClickTime(BPM));
 
                 return () => clearInterval(metronome);
@@ -112,6 +123,14 @@ const Metronome = () => {
                     <FaCog size={30}/> 
                     </IconContext.Provider>
                 </div>  
+
+                <audio src={Wood} id="woodAudio"/>
+                <audio src={BellTing} id="bellTingAudio"/>
+                <audio src={Click} id="clickAudio"/>
+                <audio src={Meow} id="catAudio"/>
+                <audio src={Snare} id="snareDrumAudio"/>
+                <audio src={Kick} id="kickDrumAudio"/>
+                <audio src={Bark} id="dogAudio"/> 
             
                 { settingsView ?
                 <div className="settingsView"> 
@@ -139,9 +158,6 @@ const Metronome = () => {
                     <BPMinput BPM={BPM}/>   
 
                     <div className="buttonContainer">
-                        <audio src={Wood} id="woodAudio"/>
-                        <audio src={BellTing} id="bellTingAudio"/>
-
                         <button onClick={play} id="playButton" className="BPMButton">Play</button>
                         <button onClick={stop} id="stopButton" className="BPMButton">Stop</button> 
                     </div> 
