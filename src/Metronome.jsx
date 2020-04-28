@@ -1,7 +1,5 @@
 /*
-    Settings:  
-    
-    fix flash color press play + press cog = error
+    Settings:   
 
     fix change sound while playing
     
@@ -107,8 +105,16 @@ const Metronome = () => {
         let [settingsView, setSettingsView] = useState(false);
         let [metronomeSound, setMetronomeSound] = useState('wood'); 
 
-        function handleChange(e) {
-            setMetronomeSound(e.target.value); 
+        function handleChange(e) { 
+            if(playMode === 'play') {
+                setPlayMode('stop');
+                setMetronomeSound(e.target.value);  
+                setTimeout(() => {
+                    setPlayMode('play');
+                }, 1);
+            } else {
+                setMetronomeSound(e.target.value); 
+            } 
         }
 
     return (

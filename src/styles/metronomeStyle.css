@@ -112,6 +112,7 @@ input[type=number] {
     font-family: sans-serif;
     color: black;
     margin-top: 0em;
+    margin-bottom: 0.5em;
 }
 
 .MuiFormControlLabel-root { 
