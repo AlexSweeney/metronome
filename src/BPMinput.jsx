@@ -1,7 +1,7 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 
-function BPMinput({BPM}) {
+function BPMinput({BPM, setBPM}) {
 	// BPM
         let minBPM = 0;
         let maxBPM = 300;  
@@ -15,10 +15,13 @@ function BPMinput({BPM}) {
             let newBPM = action.newValue;  
 
             if(newBPM >= minBPM && newBPM <= maxBPM) { 
+                setBPM(newBPM);
                 return {BPM: newBPM};
             } else if(newBPM < minBPM) {
+                setBPM(minBPM);
                 return {BPM: minBPM};
             } else if (newBPM > maxBPM) {
+                setBPM(maxBPM);
                 return {BPM: maxBPM};
             }
         } 

@@ -1,8 +1,6 @@
 /*
     Settings:   
 
-    fix change sound while playing
-    
     fix speed
 
     fix save volume when change screens
@@ -49,6 +47,7 @@ const Metronome = () => {
 
     // BPM 
         let [BPM, setBPM] = useState(80);
+        let BPMProps = {BPM, setBPM};
 
     // PLAY
         let [playMode, setPlayMode] = useState('stop');  
@@ -59,6 +58,10 @@ const Metronome = () => {
 
         useEffect(() => {   
             if(playMode === 'play') { 
+                console.log('useEffect + play');
+                console.log('BPM', BPM);
+                console.log('getClickTime(BPM)', getClickTime(BPM));
+
                 const metronome = setInterval(() => {     
                     document.getElementById(metronomeSound+'Audio').play(); 
                     (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
@@ -157,7 +160,7 @@ const Metronome = () => {
                 : 
                 <div className="metronomeView"> 
 
-                    <BPMinput BPM={BPM}/>   
+                    <BPMinput {...BPMProps}/>   
 
                     <div className="buttonContainer">
                         <button onClick={play} id="playButton" className="BPMButton">Play</button>
