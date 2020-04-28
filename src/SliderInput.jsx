@@ -23,12 +23,9 @@ function SliderInput({value, setValue, minValue, maxValue}) {
     }
     
     return (
-        <> 
-            sliderValue: {sliderValue} 
-            <input type="range" min="0" max="100" 
-                value={sliderValue} 
-                onChange={handleSliderChange}/>
-        </>
+        <input type="range" min="0" max="100" 
+            value={sliderValue} 
+            onChange={handleSliderChange}/> 
     )
 }
 

@@ -1,7 +1,5 @@
 /*
-    Settings:    
-
-    fix save volume when change screens
+    Settings:     
 
     fix click bpm then type delete = crash
 
@@ -55,9 +53,16 @@ const Metronome = () => {
         let [currentKey, setCurrentKey] = useState(null);
 
         useEffect(() => {   
-            if(playMode === 'play') {  
-                const metronome = setInterval(() => {     
-                    document.getElementById(metronomeSound+'Audio').play(); 
+            if(playMode === 'play') { 
+                let sound = document.getElementById(metronomeSound+'Audio'); 
+
+                const metronome = setInterval(() => {  
+                    if(!sound.ended) {
+                        sound.pause();
+                        sound.currentTime = 0;
+                    } 
+
+                    sound.play(); 
                     (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
                 }, getClickTime(BPM));
 
