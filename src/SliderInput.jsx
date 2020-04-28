@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 
 function SliderInput({value, setValue, minValue, maxValue}) {
-    let [sliderValue, setSliderValue] = useState(50);
     let valueRatio = (maxValue - minValue) / 100;
-
+    let [sliderValue, setSliderValue] = useState(getSliderValue(value));
+     
     function handleSliderChange(e) {
         setSliderValue(e.target.value);
         updateValue(e.target.value);
@@ -17,11 +17,18 @@ function SliderInput({value, setValue, minValue, maxValue}) {
     function convertSliderValue(value) { 
         return value * valueRatio;
     }
+
+    function getSliderValue(value) { 
+        return value / valueRatio;
+    }
     
     return (
-        <input type="range" min="0" max="100" 
-            value={sliderValue} 
-            onChange={handleSliderChange}/>
+        <> 
+            sliderValue: {sliderValue} 
+            <input type="range" min="0" max="100" 
+                value={sliderValue} 
+                onChange={handleSliderChange}/>
+        </>
     )
 }
 

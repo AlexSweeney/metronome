@@ -1,7 +1,5 @@
 /*
-    Settings:   
-
-    fix speed
+    Settings:    
 
     fix save volume when change screens
 
@@ -57,11 +55,7 @@ const Metronome = () => {
         let [currentKey, setCurrentKey] = useState(null);
 
         useEffect(() => {   
-            if(playMode === 'play') { 
-                console.log('useEffect + play');
-                console.log('BPM', BPM);
-                console.log('getClickTime(BPM)', getClickTime(BPM));
-
+            if(playMode === 'play') {  
                 const metronome = setInterval(() => {     
                     document.getElementById(metronomeSound+'Audio').play(); 
                     (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
@@ -118,7 +112,7 @@ const Metronome = () => {
             } else {
                 setMetronomeSound(e.target.value); 
             } 
-        }
+        } 
 
     return (
         <div> 
@@ -168,7 +162,7 @@ const Metronome = () => {
                     </div> 
 
                     <div className="volumeContainer">
-                        <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/>
+                        <SliderInput value={volume} setValue={setVolume} minValue={0} maxValue={1}/> 
                         <br/>
                     </div>
 
