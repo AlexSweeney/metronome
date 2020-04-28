@@ -7,6 +7,8 @@
     
     fix speed
 
+    fix save volume when change screens
+
     fix click bpm then type delete = crash
 
     unit test
@@ -45,6 +47,7 @@ import Util from './Util.jsx';
 const Metronome = () => { 
     // Util
         let {flashColor} = Util; 
+        let audioIDs = ["woodAudio", "bellTingAudio", "clickAudio", "catAudio", "snareDrumAudio", "kickDrumAudio", "dogAudio"]; 
 
     // BPM 
         let [BPM, setBPM] = useState(80);
@@ -97,8 +100,7 @@ const Metronome = () => {
         }, [volume]);
 
         function updateVolume(newVolume) { 
-            document.getElementById('woodAudio').volume = newVolume;
-            document.getElementById('bellTingAudio').volume = newVolume;
+            audioIDs.forEach(audio => document.getElementById(audio).volume = newVolume); 
         }  
 
     // Settings
