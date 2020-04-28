@@ -1,11 +1,5 @@
 /*
-    Settings:
-        change metronome sound
-            * buttons x
-            * sounds 
-            * hook up sounds 
-        change time signature
-        change accent
+    Settings:  
     
     fix flash color press play + press cog = error
 
@@ -15,7 +9,9 @@
 
     fix click bpm then type delete = crash
 
-    tap tempo  
+    unit test
+
+    time signatures + light + accent  
 */
 
 
@@ -64,9 +60,7 @@ const Metronome = () => {
             if(playMode === 'play') { 
                 const metronome = setInterval(() => {     
                     document.getElementById(metronomeSound+'Audio').play(); 
-
-
-                    // flashColor('BPMinput', '#64baff', 200);
+                    (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
                 }, getClickTime(BPM));
 
                 return () => clearInterval(metronome);
@@ -137,7 +131,7 @@ const Metronome = () => {
                     {/* Choose Metronome Sound */}  
                         <div className="metronomeSoundRadios">
                             <FormControl component="fieldset">
-                                <FormLabel component="legend">Metronome Sound</FormLabel>
+                                <h3>Metronome Sound</h3>
                                 <RadioGroup name="sound" value={metronomeSound} onChange={handleChange}>
                                     <FormControlLabel value="wood" control={<CustomRadio/>} label="Wood"/>
                                     <FormControlLabel value="click" control={<CustomRadio/>} label="Click"/>

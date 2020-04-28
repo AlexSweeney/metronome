@@ -99,7 +99,6 @@ input[type=number] {
 .metronomeSoundRadios {
     display: flex;
     padding-left: 2em;
-    padding-top: 1em;
 }
 
 .radioTitle { 
@@ -108,9 +107,11 @@ input[type=number] {
     color: black;
 }
 
-.MuiFormLabel-root {
+.settingsView h3 {
+    font-size: 1.3em;
+    font-family: sans-serif;
     color: black;
-    height: 1.6em;
+    margin-top: 0em;
 }
 
 .MuiFormControlLabel-root { 
