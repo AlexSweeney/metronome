@@ -1,9 +1,7 @@
 /*
     Settings:     
-    
-    fix click then type, start with one digit
-
-    fix click bpm then type delete = crash
+     
+    fix timer + change view
 
 
 
@@ -123,6 +121,41 @@ const Metronome = () => {
             } 
         } 
 
+    // Timer 
+        let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
+        const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
+        let [timerPlayMode, setTimerPlayMode] = useState('stop'); 
+
+        function timeReducer(timeState, action) { 
+            let {hours, minutes, seconds} = timeState; 
+
+            switch(action.target) {
+                case 'hours': 
+                    hours = action.newValue;
+                    break;
+                case 'minutes': 
+                    minutes = action.newValue;
+                    break;
+                case 'seconds':
+                    seconds = action.newValue; 
+                    break;
+                case 'play': 
+                    hours = action.newTime.hours;
+                    minutes = action.newTime.minutes;
+                    seconds = action.newTime.seconds;
+                    break;
+                case 'stop':
+                    seconds = '00';
+                    minutes = '00';
+                    hours = '00';
+                    break;
+            } 
+
+            return {hours, minutes, seconds}; 
+        }
+
+        let timerProps = {timeState, dispatch, timeReducer, timerPlayMode, setTimerPlayMode};
+
     return (
         <div> 
             <div className="metronomeContainer" id="metronomeContainer"> 
@@ -176,7 +209,7 @@ const Metronome = () => {
                     </div>
 
                     <div className="timerComponentContainer">
-                        <Timer/>
+                        <Timer {...timerProps}/>
                     </div>
                 </div>
                 }

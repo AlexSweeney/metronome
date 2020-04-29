@@ -2,12 +2,10 @@ import React, {useState, useReducer, useEffect} from 'react';
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 
 function BPMinput({BPM, setBPM}) {
-	// BPM
-        let minBPM = 0;
-        let maxBPM = 300;  
+	// BPM  
         let initalBPMState = { BPM };
         const [BPMState, dispatch] = useReducer(BPMReducer, initalBPMState);
-        let props = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false, max: maxBPM}};
+        let props = {property: 'BPM', state: BPMState, dispatch, settings: {displayLeadingZero: false}};
         let [rightKeyDown, setRightKeyDown] = useState(false);
         let [leftKeyDown, setLeftKeyDown] = useState(false);
 

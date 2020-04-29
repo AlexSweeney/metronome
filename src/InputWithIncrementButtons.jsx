@@ -27,16 +27,6 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 			return String(number).substring(1,); 
 		}
 
-		function keepValueInRange(value) {
-			if(Number(value) > max) {
-				return max;
-			} else if(Number(value) < min) {
-				return min;
-			}
-
-			return value;
-		}
-
 	// Key down
 		function handleKeyDown(e) {      
 			let increment = getNumberFromKey(e.key);
@@ -85,7 +75,7 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 		}
 
 		function clickIncrement(increment) {  
-			let newValue = keepValueInRange(addLeadingZero(state[property], increment));   
+			let newValue = addLeadingZero(state[property], increment);   
 			dispatch({target: property, newValue});  
 		}
 
@@ -103,8 +93,7 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 		}, [buttonIsDown, buttonIsHeld, state, increment]); 
 
 	return (
-		<div className="timerInputButtonContainer">   
-			isNewFocus: {String(isNewFocus)}
+		<div className="timerInputButtonContainer">    
 			<button type="button"   
 					onMouseDown={() => handleMouseDown(-1)}
 					onMouseUp={handleMouseUp}

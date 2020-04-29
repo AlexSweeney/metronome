@@ -3,41 +3,11 @@ import Util from './Util.jsx';
 import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 import './styles/timerStyle.css';
 
-function Timer() {  
+function Timer({timeState, dispatch, timeReducer, timerPlayMode, setTimerPlayMode}) {  
 	let {addLeadingZero} = Util;
 
-	// Set time
-		let initialTimeState = {hours: '00', minutes: '00', seconds: '00'};
-		const [timeState, dispatch] = useReducer(timeReducer, initialTimeState);
+	// Set time 
 		const inputButtonProps = {state: timeState, dispatch, settings: { displayLeadingZero: true, max: 60}};
-		 
-		function timeReducer(timeState, action) { 
-			let {hours, minutes, seconds} = timeState; 
-
-			switch(action.target) {
-				case 'hours': 
-					hours = action.newValue;
-				 	break;
-				case 'minutes': 
-					minutes = action.newValue;
-					break;
-				case 'seconds':
-					seconds = action.newValue; 
-					break;
-				case 'play': 
-					hours = action.newTime.hours;
-					minutes = action.newTime.minutes;
-					seconds = action.newTime.seconds;
-					break;
-				case 'stop':
-					seconds = '00';
-					minutes = '00';
-					hours = '00';
-					break;
-			} 
-
-			return {hours, minutes, seconds}; 
-		}
 
 	// Run timer
 		function decreaseTime(currentTime) {
@@ -61,17 +31,15 @@ function Timer() {
 			if(hours === '00' && minutes === '00' && seconds === '00') { 
 				// play end sound
 				document.getElementById('bellTingAudio').play();
-				setPlayMode('stop');
+				setTimerPlayMode('stop');
 			}
 
 			return {hours, minutes, seconds};
 		}
  
 	// Play Pause Stop
-		let [playMode, setPlayMode] = useState('stop'); 
-
 		useEffect(() => {
-			if(playMode === 'play') {
+			if(timerPlayMode === 'play') {
 				const timer = setInterval(() => {
 					let newTime = decreaseTime(timeState); 
 					dispatch({target: 'play', newTime});
@@ -79,22 +47,22 @@ function Timer() {
 
 				return () => clearInterval(timer);
 			}
-		}, [playMode, timeState])
+		}, [timerPlayMode, timeState])
 
 		function stop() { 
-			setPlayMode('stop');
+			setTimerPlayMode('stop');
 			dispatch({target: 'stop'});
 		}
 
 		function play() { 
-			setPlayMode('play'); 
+			setTimerPlayMode('play'); 
 		}
 
 		function pause() {
-			if(playMode === 'pause') {
-				setPlayMode('play');
+			if(timerPlayMode === 'pause') {
+				setTimerPlayMode('play');
 			} else {
-				setPlayMode('pause');
+				setTimerPlayMode('pause');
 			} 
 		} 
 
