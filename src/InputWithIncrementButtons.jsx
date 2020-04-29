@@ -10,6 +10,8 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 	let [buttonIsDown, setButtonIsDown] = useState(false);
 	let [increment, setIncrement] = useState(null);
 
+	let [isNewFocus, setIsNewFocus] = useState(false);
+
 	// Util
 		function getNumberFromKey(key) {
 			if(key === 'ArrowUp') {
@@ -39,12 +41,18 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 		function handleKeyDown(e) {      
 			let increment = getNumberFromKey(e.key);
 			let newValue = e.target.value;     
-			
+ 
 			// If number
 			if(increment === 0 && typeof(Number(e.key)) === 'number') {  
-				if(String(newValue).length > 1) {
-					newValue = removeFirstDigit(newValue); 
-					newValue += Number(e.key);
+				if(isNewFocus) { 
+					newValue = e.key;
+				} else {   
+					if(newValue.length >= 3) { 
+						newValue = Number(newValue.substring(1,3)); 
+						newValue = Number(String(newValue) + String(e.key)); 
+					} else { 
+						newValue += Number(e.key); 
+					} 
 				} 
 			// If up arrow or down arrow
 			} else { 
@@ -55,9 +63,7 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 				}
 			}
 
-			// keep new Value in range
-			newValue = keepValueInRange(newValue);
-			
+			setIsNewFocus(false);    
 			dispatch({target: property, newValue}); 
 		}  
  
@@ -98,6 +104,7 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 
 	return (
 		<div className="timerInputButtonContainer">   
+			isNewFocus: {String(isNewFocus)}
 			<button type="button"   
 					onMouseDown={() => handleMouseDown(-1)}
 					onMouseUp={handleMouseUp}
@@ -111,6 +118,8 @@ function InputWithIncrementButtons({property, state, dispatch, settings}) {
 				max={max} 
 				value={state[property]} 
 				onKeyDown={handleKeyDown}
+				onFocus={() => setIsNewFocus(true)} 
+				onBlur={() => setIsNewFocus(false)}
 				className={property+"Display"}
 			/>
 			<button type="button" 

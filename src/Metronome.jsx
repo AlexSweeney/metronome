@@ -1,7 +1,11 @@
 /*
     Settings:     
+    
+    fix click then type, start with one digit
 
     fix click bpm then type delete = crash
+
+
 
     unit test
 

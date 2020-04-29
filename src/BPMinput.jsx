@@ -12,18 +12,9 @@ function BPMinput({BPM, setBPM}) {
         let [leftKeyDown, setLeftKeyDown] = useState(false);
 
         function BPMReducer(state, action) {   
-            let newBPM = action.newValue;  
-
-            if(newBPM >= minBPM && newBPM <= maxBPM) { 
-                setBPM(newBPM);
-                return {BPM: newBPM};
-            } else if(newBPM < minBPM) {
-                setBPM(minBPM);
-                return {BPM: minBPM};
-            } else if (newBPM > maxBPM) {
-                setBPM(maxBPM);
-                return {BPM: maxBPM};
-            }
+            let newBPM = action.newValue; 
+            setBPM(newBPM);
+            return {BPM: newBPM};  
         } 
 
         useEffect(() => { 
