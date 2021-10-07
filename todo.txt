@@ -1,0 +1,10 @@
+/*
+    Settings:     
+     
+    fix timer + change view
+
+    unit test
+
+    time signatures + light + accent  
+*/
+

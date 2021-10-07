@@ -1,4 +1,4 @@
-function addLeadingZero(number, addition) { 
+export function addLeadingZero(number, addition) { 
 	number = Number(number) + addition; 
 	
 	if(number < 0) {
@@ -10,7 +10,7 @@ function addLeadingZero(number, addition) {
 	} 
 }
 
-function flashColor(target, color, holdTime) { 
+export function flashColor(target, color, holdTime) { 
 	let el = document.getElementById(target); 
 	let origColor = el.style.backgroundColor;
 
@@ -19,8 +19,4 @@ function flashColor(target, color, holdTime) {
 	setTimeout(() => {
 		el.style.backgroundColor = origColor;
 	}, holdTime);
-}
-
-
-const Util = {addLeadingZero, flashColor};
-export default Util;
+} 
