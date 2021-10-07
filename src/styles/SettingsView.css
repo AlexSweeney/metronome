@@ -1,0 +1,22 @@
+.settings-view { 
+  display: flex; 
+}
+
+.show-settings-view {
+  display: flex;
+}
+
+.hide-settings-view {
+  display: none;
+}
+
+.settings-view h3 {
+  font-size: 1.3em;
+  font-family: sans-serif;
+  color: black;
+  cursor: default;
+}    
+
+.MuiFormControlLabel-root { 
+  height: 1.6em;
+} 

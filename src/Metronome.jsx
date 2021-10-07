@@ -1,16 +1,10 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import AudioElements from './components/AudioElements.jsx';
 import SettingsViewToggle from './components/SettingsViewToggle.jsx';
+import SettingsView from './components/SettingsView.jsx';
 
 import './styles/Metronome.css';
-
-
-// import Radio from '@material-ui/core/Radio';
-// import RadioGroup from '@material-ui/core/RadioGroup';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import FormControl from '@material-ui/core/FormControl';
-// import FormLabel from '@material-ui/core/FormLabel';
-
+ 
 // import InputWithIncrementButtons from './InputWithIncrementButtons.jsx';
 // import SliderInput from './SliderInput.jsx';
 // import BPMinput from './BPMinput.jsx';
@@ -29,15 +23,37 @@ export default function Metronome() {
     "Kick-Drum", 
     "Dog",
     "Cat", 
-   ]; 
+  ]; 
+
+  const [metronomeSound, setMetronomeSound] = useState(audioIDs[0]);
+
+  // =============== Mode
+  const [playMode, setPlayMode] = useState('stop');
 
   // =============== View
-  const [settingsView, setSettingsView] = useState(false);
-
+  const [showSettingsView, setShowSettingsView] = useState(false);
 
   // =============================== Event Handlers =============================== //
   function onSettingsViewToggleClick() {
-    setSettingsView(oldVal => !oldVal)
+    setShowSettingsView(oldVal => !oldVal)
+  }
+
+  function onSettingsOptionClick(e) {
+    changeMetronomeSound(e.target.value)
+  }
+
+  // =============================== Helper Fns =============================== //
+  function changeMetronomeSound(newSound) {
+    if(playMode === 'play') {
+      setPlayMode('stop');
+      setMetronomeSound(newSound);
+      
+      setTimeout(() => {
+        setPlayMode('play');
+      }, 1);
+    } else {
+      setMetronomeSound(newSound);
+    }
   }
 
   // BPM 
@@ -159,26 +175,19 @@ export default function Metronome() {
 
       <div className="metronome-container" id="metronomeContainer"> 
         <SettingsViewToggle handleClick={onSettingsViewToggleClick}/>
+
+        <SettingsView 
+          show={showSettingsView} 
+          handleClick={onSettingsOptionClick} 
+          options={audioIDs}
+          selectedOption={metronomeSound}
+        />
                 {/*
 
                 
             
                 { settingsView ?
-                <div className="settingsView"> 
-                        <div className="metronomeSoundRadios">
-                            <FormControl component="fieldset">
-                                <h3>Metronome Sound</h3>
-                                <RadioGroup name="sound" value={metronomeSound} onChange={handleChange}>
-                                    <FormControlLabel value="wood" control={<CustomRadio/>} label="Wood"/>
-                                    <FormControlLabel value="click" control={<CustomRadio/>} label="Click"/>
-                                    <FormControlLabel value="snareDrum" control={<CustomRadio/>} label="Snare Drum"/>
-                                    <FormControlLabel value="kickDrum" control={<CustomRadio/>} label="Kick Drum"/>
-                                    <FormControlLabel value="cat" control={<CustomRadio/>} label="Cat"/>
-                                    <FormControlLabel value="dog" control={<CustomRadio/>} label="Dog"/>
-                                </RadioGroup>
-                            </FormControl> 
-                        </div>
-                  </div>
+                
                 : 
                 <div className="metronomeView"> 
 
@@ -206,10 +215,6 @@ export default function Metronome() {
 
 /*function CustomRadio(props) {
   return (
-    <Radio
-            className="radio"  
-            color="white"
-            {...props}
-        />
+    
   )
 }*/

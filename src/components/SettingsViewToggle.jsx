@@ -10,9 +10,3 @@ export default function SettingsViewToggle({handleClick}) {
     </div>  
 	)
 }
-
-{/*<div className="cog-container" id="cogContainer" onClick={handleClick}>
-  <IconContext.Provider value={{ color: "black", className: "Cog", id: "cog"}}>
-  	<FaCog size={30}/> 
-  </IconContext.Provider>
-</div>  */}
