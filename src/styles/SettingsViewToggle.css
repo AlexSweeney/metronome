@@ -1,0 +1,12 @@
+.cog-container {
+  display: flex;
+  height: 3em; 
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 1em;
+  padding-top: 1em;
+}
+
+.cog-container:hover {
+	cursor: pointer;
+}

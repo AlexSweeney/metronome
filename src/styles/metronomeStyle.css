@@ -1,4 +1,4 @@
-* {
+/*/** {
 	box-sizing: border-box;
 }
 
@@ -22,7 +22,7 @@ input[type=number] {
 	background-color: red;
 }
 
-.metronomeContainer {
+.metronome-container {
     background-color: grey;
     width: 30em;
     height: 30em;
@@ -117,4 +117,4 @@ input[type=number] {
 
 .MuiFormControlLabel-root { 
     height: 1.6em;
-}
+}*/*/

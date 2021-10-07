@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import AudioElements from './components/AudioElements.jsx';
+import SettingsViewToggle from './components/SettingsViewToggle.jsx';
 
-// import './styles/metronomeStyle.css';
-// import { FaCog } from 'react-icons/fa';
+import './styles/Metronome.css';
 
-// import { IconContext } from "react-icons";
 
 // import Radio from '@material-ui/core/Radio';
 // import RadioGroup from '@material-ui/core/RadioGroup';
@@ -31,6 +30,15 @@ export default function Metronome() {
     "Dog",
     "Cat", 
    ]; 
+
+  // =============== View
+  const [settingsView, setSettingsView] = useState(false);
+
+
+  // =============================== Event Handlers =============================== //
+  function onSettingsViewToggleClick() {
+    setSettingsView(oldVal => !oldVal)
+  }
 
   // BPM 
   // const [BPM, setBPM] = useState(80);
@@ -148,13 +156,10 @@ export default function Metronome() {
   return (
     <div>
       <AudioElements ids={audioIDs}/>
-{/*
-            <div className="metronomeContainer" id="metronomeContainer"> 
-                <div className="cogContainer" id="cogContainer" onMouseDown={() => setSettingsView(settingsView = !settingsView)}>
-                    <IconContext.Provider value={{ color: "black", className: "Cog", id: "cog"}}>
-                    <FaCog size={30}/> 
-                    </IconContext.Provider>
-                </div>  
+
+      <div className="metronome-container" id="metronomeContainer"> 
+        <SettingsViewToggle handleClick={onSettingsViewToggleClick}/>
+                {/*
 
                 
             
@@ -193,8 +198,8 @@ export default function Metronome() {
                         <Timer {...timerProps}/>
                     </div>
                 </div>
-                }
-            </div>  */}
+                }*/}
+      </div>  
     </div>
   )
 }
