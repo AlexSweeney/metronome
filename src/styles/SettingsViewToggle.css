@@ -7,6 +7,11 @@
   padding-top: 1em;
 }
 
-.cog-container:hover {
+.cog:hover {
 	cursor: pointer;
+	color: #33a0ff;
+}
+
+.cog:active {
+	color: #3229b7;
 }
