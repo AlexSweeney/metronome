@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/metronome/static/css/main.146b14b7.chunk.css",
+    "main.js": "/metronome/static/js/main.2c348b44.chunk.js",
+    "main.js.map": "/metronome/static/js/main.2c348b44.chunk.js.map",
+    "runtime-main.js": "/metronome/static/js/runtime-main.70b3adb7.js",
+    "runtime-main.js.map": "/metronome/static/js/runtime-main.70b3adb7.js.map",
+    "static/js/2.5fba0ad2.chunk.js": "/metronome/static/js/2.5fba0ad2.chunk.js",
+    "static/js/2.5fba0ad2.chunk.js.map": "/metronome/static/js/2.5fba0ad2.chunk.js.map",
+    "index.html": "/metronome/index.html",
+    "precache-manifest.937c22b8ec56fd9569acdc4048eb7016.js": "/metronome/precache-manifest.937c22b8ec56fd9569acdc4048eb7016.js",
+    "service-worker.js": "/metronome/service-worker.js",
+    "static/css/main.146b14b7.chunk.css.map": "/metronome/static/css/main.146b14b7.chunk.css.map",
+    "static/js/2.5fba0ad2.chunk.js.LICENSE.txt": "/metronome/static/js/2.5fba0ad2.chunk.js.LICENSE.txt",
+    "static/media/bark.mp3": "/metronome/static/media/bark.3fa2c1a2.mp3",
+    "static/media/bell-ting.mp3": "/metronome/static/media/bell-ting.1020003c.mp3",
+    "static/media/click.mp3": "/metronome/static/media/click.050d261a.mp3",
+    "static/media/kick.mp3": "/metronome/static/media/kick.226f07c9.mp3",
+    "static/media/meow.mp3": "/metronome/static/media/meow.b6c6c54f.mp3",
+    "static/media/snare.mp3": "/metronome/static/media/snare.867e6ece.mp3",
+    "static/media/wood.mp3": "/metronome/static/media/wood.f56443f5.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.70b3adb7.js",
+    "static/js/2.5fba0ad2.chunk.js",
+    "static/css/main.146b14b7.chunk.css",
+    "static/js/main.2c348b44.chunk.js"
+  ]
+}
