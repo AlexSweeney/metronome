@@ -1,0 +1,120 @@
+* {
+	box-sizing: border-box;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.selected {
+	background-color: blue;
+}
+
+.muted {
+	background-color: red;
+}
+
+.metronomeContainer {
+    background-color: grey;
+    width: 30em;
+    height: 30em;
+    margin: auto;
+    border-radius: 1em;
+}
+
+/* ========== Cog ========== */
+.cogContainer {
+    display: flex;
+    height: 3em;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1em;
+    padding-top: 1em;
+}
+
+/* ============= BPM ============= */
+.metronomeView {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 27em;
+}
+
+.BPMComponent {  
+    display: flex; 
+    flex-direction: column; 
+}
+ 
+.BPMDisplay { 
+    height: 2.4em;
+    width: 2.4em;
+    border-radius: 2em;
+    text-align: center;
+    border: 0.2em solid black;
+    font-weight: bold;
+    font-size: 4em;
+}
+
+.BPMInput {
+	height: 1em;
+    width: 1em;
+    font-size: 3em;
+    line-height: 0em;
+    margin: 0 0.3em;
+}
+
+.tempoContainer {
+    height: 1.3em;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+/* ========== Buttons ========== */
+.BPMButton {
+	font-size: 1.5em;
+    width: 4em;
+    margin: 0 0.3em;
+}
+
+/* ========== Timer ========== */
+.timerComponentContainer {
+    width: 80%; 
+}
+
+/* ========== Settings ========== */
+.metronomeSoundRadios {
+    display: flex;
+    padding-left: 2em;
+}
+
+.radioTitle { 
+    font-size: 1.5em;
+    font-family: sans-serif; 
+    color: black;
+}
+
+.settingsView h3 {
+    font-size: 1.3em;
+    font-family: sans-serif;
+    color: black;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
+}
+
+.MuiFormControlLabel-root { 
+    height: 1.6em;
+}
