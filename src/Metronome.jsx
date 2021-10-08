@@ -3,6 +3,7 @@ import AudioElements from './components/AudioElements.jsx';
 import SettingsViewToggle from './components/SettingsViewToggle.jsx';
 import SettingsView from './components/SettingsView.jsx';
 import BpmDisplay from './components/BpmDisplay.jsx';
+import VolumeSlider from './components/VolumeSlider.jsx';
 
 import './styles/Metronome.css';
  
@@ -36,6 +37,9 @@ export default function Metronome() {
 
   // =============== View
   const [bpm, setBpm] = useState(60);
+
+  // =============== Volume
+  const [volume, setVolume] = useState(0.5);
 
   // =============================== Classes =============================== //
 
@@ -198,6 +202,8 @@ export default function Metronome() {
 
         <div className="metronome-view" hidden={showSettingsView}>
           <BpmDisplay bpm={bpm} setBpm={setBpm}/>
+          <VolumeSlider volume={volume} setVolume={setVolume}/>
+
         </div>
                 {/*
 
