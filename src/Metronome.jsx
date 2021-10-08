@@ -16,6 +16,9 @@ import { flashColor } from './utils.jsx';
 
 export default function Metronome() {
   // =============================== Constants =============================== //
+  // =============== bpm
+  const [bpm, setBpm] = useState(60);
+
   // =============== Audio
   const audioIDs = [
     "Wood", 
@@ -27,17 +30,16 @@ export default function Metronome() {
     "Cat", 
   ]; 
 
-  const [metronomeSound, setMetronomeSound] = useState(audioIDs[0]);
+  const [metronomeSoundId, setMetronomeSoundId] = useState(audioIDs[0]);
+  const [metronomeInterval, setMetronomeInterval] = useState(null);
+  const [metronomeTime, setMetronomeTime] = useState(getMetronomeTime(bpm));
 
   // =============== Mode
   const [playMode, setPlayMode] = useState('stop');
 
   // =============== View
   const [showSettingsView, setShowSettingsView] = useState(false);
-
-  // =============== View
-  const [bpm, setBpm] = useState(60);
-
+ 
   // =============== Volume
   const [volume, setVolume] = useState(0.5);
 
@@ -49,7 +51,7 @@ export default function Metronome() {
   }
 
   function onSettingsOptionClick(e) {
-    changeMetronomeSound(e.target.value)
+    changemetronomeSoundId(e.target.value)
   }
 
   function onVolumeChange(newVolume) {
@@ -65,49 +67,68 @@ export default function Metronome() {
   }
 
   function onPlay() {
-    const metronomeSoundElement = document.getElementById(metronomeSound);
-     metronomeSoundElement.play()
-
-    /*setInterval(() => {
-      console.log('play')
-      console.log(metronomeSoundElement)
-     
-    }, 1000)*/
-
-    // let sound = document.getElementById(metronomeSound + 'Audio');
-
-      /*const metronome = setInterval(() => {
-        if (!sound.ended) {
-          sound.pause();
-          sound.currentTime = 0;
-        }
-
-        sound.play();
-        (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
-      }, getClickTime(BPM));*/
+    playSound(metronomeSoundId) 
+    startMetronomeInterval()
   }
 
   function onStop() {
+    stopSound(metronomeSoundId)
+    stopMetronomeInterval() 
+  }
 
+  function onBpmChange(bpm, playMode) {
+    // onStop()
+    // setMetronomeTime(getMetronomeTime(bpm))
+    // if(playMode === 'play') onPlay()
   }
 
   // =============================== Helper Fns =============================== //
-  function changeMetronomeSound(newSound) {
+  function changemetronomeSoundId(newSound) {
     if(playMode === 'play') {
       setPlayMode('stop');
-      setMetronomeSound(newSound);
+      setMetronomeSoundId(newSound);
       
       setTimeout(() => {
         setPlayMode('play');
       }, 1);
     } else {
-      setMetronomeSound(newSound);
+      setMetronomeSoundId(newSound);
     }
+  }
+
+  function startMetronomeInterval() {
+    const thisInterval = setInterval(() => { 
+      playSound(metronomeSoundId)
+    }, metronomeTime)
+
+    setMetronomeInterval(thisInterval) 
+  } 
+
+  function stopMetronomeInterval() {
+    clearInterval(metronomeInterval) 
+    setMetronomeInterval(null)
   }
 
   function changeVolume(id, newVolume) {
     const element = document.getElementById(id);
     if(element) element.volume = newVolume;
+  }
+
+  function playSound(id) {
+    const soundElement = document.getElementById(id);
+    if(soundElement) soundElement.play()
+  }
+
+  function stopSound(id) {
+    const soundElement = document.getElementById(id);
+    if(soundElement) {
+      soundElement.pause();
+      soundElement.currentTime = 0;
+    }
+  }
+
+  function getMetronomeTime(bpm) {
+    return 60000 / bpm;
   }
 
   // =============================== Listen / trigger =============================== //
@@ -119,26 +140,13 @@ export default function Metronome() {
   // =============== Play Stop
   useEffect(() => {
     if(playMode === 'play') onPlay()
-    if(playMode === 'stop') onStop()
-      /*let sound = document.getElementById(metronomeSound + 'Audio');
-
-      const metronome = setInterval(() => {
-        if (!sound.ended) {
-          sound.pause();
-          sound.currentTime = 0;
-        }
-
-        sound.play();
-        (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
-      }, getClickTime(BPM));
-
-      return () => clearInterval(metronome);*/
-    
-
-    
+    if(playMode === 'stop') onStop()  
   }, [playMode]);
 
   // =============== Change Bpm
+  useEffect(() => {
+    onBpmChange(bpm, playMode)
+  }, [bpm, playMode])
 
  /* useEffect(() => {
     if(!showSettingsView) setShowMetronomeViewClass('show-metronome-view')
@@ -158,7 +166,7 @@ export default function Metronome() {
 
   // useEffect(() => {
   //   if (playMode === 'play') {
-  //     let sound = document.getElementById(metronomeSound + 'Audio');
+  //     let sound = document.getElementById(metronomeSoundId + 'Audio');
 
   //     const metronome = setInterval(() => {
   //       if (!sound.ended) {
@@ -209,17 +217,17 @@ export default function Metronome() {
 
   // // Settings
   // let [settingsView, setSettingsView] = useState(false);
-  // let [metronomeSound, setMetronomeSound] = useState('wood');
+  // let [metronomeSoundId, setMetronomeSoundId] = useState('wood');
 
   // function handleChange(e) {
   //   if (playMode === 'play') {
   //     setPlayMode('stop');
-  //     setMetronomeSound(e.target.value);
+  //     setMetronomeSoundId(e.target.value);
   //     setTimeout(() => {
   //       setPlayMode('play');
   //     }, 1);
   //   } else {
-  //     setMetronomeSound(e.target.value);
+  //     setMetronomeSoundId(e.target.value);
   //   }
   // }
 
@@ -270,7 +278,7 @@ export default function Metronome() {
           show={showSettingsView} 
           handleClick={onSettingsOptionClick} 
           options={audioIDs}
-          selectedOption={metronomeSound}
+          selectedOption={metronomeSoundId}
         />
 
         <div className="metronome-view" hidden={showSettingsView}>
