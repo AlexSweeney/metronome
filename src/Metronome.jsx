@@ -27,8 +27,6 @@ export default function Metronome() {
     "Cat", 
   ]; 
 
-  
-
   const [metronomeSound, setMetronomeSound] = useState(audioIDs[0]);
 
   // =============== Mode
@@ -55,7 +53,7 @@ export default function Metronome() {
   }
 
   function onVolumeChange(newVolume) {
-    // audioIDs.forEach(audio => document.getElementById(audio).volume = newVolume);
+    audioIDs.forEach(id => changeVolume(id, newVolume))
   } 
 
   function onClickPlay() {
@@ -105,6 +103,11 @@ export default function Metronome() {
     } else {
       setMetronomeSound(newSound);
     }
+  }
+
+  function changeVolume(id, newVolume) {
+    const element = document.getElementById(id);
+    if(element) element.volume = newVolume;
   }
 
   // =============================== Listen / trigger =============================== //
