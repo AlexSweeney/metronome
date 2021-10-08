@@ -3,6 +3,7 @@ import ClickHoldButton from './ClickHoldButton.jsx';
 import './../styles/TimerInput.css';
 
 export default function TimerInput({value, setValue, min, max, children}) {
+	// ============================= Event Handlers ============================= //
 	function onClickMinus() {
 		const newVal = value - 1;
 		if(newVal >= min && newVal <= max) {
@@ -25,6 +26,7 @@ export default function TimerInput({value, setValue, min, max, children}) {
 		}
 	}
 
+	// ============================= Helper Fns ============================= //
 	function addLeadingZero(number) {
 		let string = String(number);
 
@@ -32,20 +34,9 @@ export default function TimerInput({value, setValue, min, max, children}) {
 		if(string.length < 2) string = '0' + string;
 
 		return string;
-	}
+	} 
 
-	/*function addLeadingZero(number, addition) { 
-		number = Number(number) + addition; 
-		
-		if(number < 0) {
-			return '00';
-		} else if(number < 10) {
-			return '0' + number;
-		} else {
-			return number;
-		} 
-	}*/
-
+	// ============================= Output ================================ //
 	return (
 		<div>
 			<h4 className="timer-heading">{children}</h4>
