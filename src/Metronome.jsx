@@ -27,6 +27,8 @@ export default function Metronome() {
     "Cat", 
   ]; 
 
+  
+
   const [metronomeSound, setMetronomeSound] = useState(audioIDs[0]);
 
   // =============== Mode
@@ -41,7 +43,7 @@ export default function Metronome() {
   // =============== Volume
   const [volume, setVolume] = useState(0.5);
 
-  // =============================== Classes =============================== //
+  // =============================== Classes ====================================== //
 
   // =============================== Event Handlers =============================== //
   function onSettingsViewToggleClick() {
@@ -50,6 +52,45 @@ export default function Metronome() {
 
   function onSettingsOptionClick(e) {
     changeMetronomeSound(e.target.value)
+  }
+
+  function onVolumeChange(newVolume) {
+    // audioIDs.forEach(audio => document.getElementById(audio).volume = newVolume);
+  } 
+
+  function onClickPlay() {
+    setPlayMode('play')
+  }
+
+  function onClickStop() {
+    setPlayMode('stop')
+  }
+
+  function onPlay() {
+    const metronomeSoundElement = document.getElementById(metronomeSound);
+     metronomeSoundElement.play()
+
+    /*setInterval(() => {
+      console.log('play')
+      console.log(metronomeSoundElement)
+     
+    }, 1000)*/
+
+    // let sound = document.getElementById(metronomeSound + 'Audio');
+
+      /*const metronome = setInterval(() => {
+        if (!sound.ended) {
+          sound.pause();
+          sound.currentTime = 0;
+        }
+
+        sound.play();
+        (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
+      }, getClickTime(BPM));*/
+  }
+
+  function onStop() {
+
   }
 
   // =============================== Helper Fns =============================== //
@@ -67,6 +108,35 @@ export default function Metronome() {
   }
 
   // =============================== Listen / trigger =============================== //
+  // =============== Change Volume
+  useEffect(() => {
+    onVolumeChange(volume);
+  }, [volume]);
+
+  // =============== Play Stop
+  useEffect(() => {
+    if(playMode === 'play') onPlay()
+    if(playMode === 'stop') onStop()
+      /*let sound = document.getElementById(metronomeSound + 'Audio');
+
+      const metronome = setInterval(() => {
+        if (!sound.ended) {
+          sound.pause();
+          sound.currentTime = 0;
+        }
+
+        sound.play();
+        (document.getElementById('BPMinput') && flashColor('BPMinput', '#64baff', 200));
+      }, getClickTime(BPM));
+
+      return () => clearInterval(metronome);*/
+    
+
+    
+  }, [playMode]);
+
+  // =============== Change Bpm
+
  /* useEffect(() => {
     if(!showSettingsView) setShowMetronomeViewClass('show-metronome-view')
     if(showSettingsView) setShowMetronomeViewClass('hide-metronome-view')
@@ -202,8 +272,14 @@ export default function Metronome() {
 
         <div className="metronome-view" hidden={showSettingsView}>
           <BpmDisplay bpm={bpm} setBpm={setBpm}/>
-          <VolumeSlider volume={volume} setVolume={setVolume}/>
+          
+          <div className="buttonContainer">
+            <button onClick={onClickPlay} id="playButton" className="BPMButton">Play</button>
+            <button onClick={onClickStop} id="stopButton" className="BPMButton">Stop</button> 
+          </div> 
 
+          <VolumeSlider volume={volume} setVolume={setVolume}/>
+          {/* Timer */}
         </div>
                 {/*
 
@@ -235,9 +311,3 @@ export default function Metronome() {
     </div>
   )
 }
-
-/*function CustomRadio(props) {
-  return (
-    
-  )
-}*/
