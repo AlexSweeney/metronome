@@ -4,6 +4,7 @@ import SettingsViewToggle from './components/SettingsViewToggle.jsx';
 import SettingsView from './components/SettingsView.jsx';
 import BpmDisplay from './components/BpmDisplay.jsx';
 import VolumeSlider from './components/VolumeSlider.jsx';
+import Timer from './components/Timer.jsx';
 
 import './styles/Metronome.css';
  
@@ -62,7 +63,7 @@ export default function Metronome() {
 
   function onClickPlay() {
     setPlayMode('play') 
-    // play metronome sound 
+    playSound(metronomeSound) 
   }
 
   function onClickStop() {
@@ -365,7 +366,7 @@ export default function Metronome() {
           </div> 
 
           <VolumeSlider volume={volume} setVolume={setVolume}/>
-          {/* Timer */}
+          <Timer/>
         </div>
                 {/*
 

@@ -1,0 +1,40 @@
+.timer-container {
+	padding: 1em;
+	/*height: 6em;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #d8d8d8;
+  border: 2px solid black;
+  border-radius: 1em;
+}
+
+.timer-inputs-container { 
+  display: flex;
+  justify-content: space-around;  
+  padding: 1em;
+}
+
+/* remove increment selectors inside input */ 
+.timer-input-container input::-webkit-outer-spin-button,
+.timer-input-container input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.timer-input-container input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.timer-button-container {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+}
+
+.timer-button-container button {
+  font-size: 1em;
+  margin: 0 0.4em;
+  min-width: 5em;
+}

@@ -38,7 +38,7 @@ export default function AudioElements({ids}) {
   			finishedLoading &&
   			loadedAudio.map(audioObject => { 
   				const {id, src} = audioObject;
-  				return <audio src={src} id={id} preload="true"/>
+  				return <audio src={src} id={id} key={id} preload="true"/>
   			}) 
   		}
   	</div>
