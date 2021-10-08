@@ -159,7 +159,7 @@ export default function Metronome() {
     return () => {
       clearInterval(thisInterval)
     }
-  }, [playMode])
+  }, [playMode, metronomeTime])
 
   // =============== Change Bpm
   useEffect(() => {

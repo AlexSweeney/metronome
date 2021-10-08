@@ -19,23 +19,29 @@ export default function BpmDisplay({bpm, setBpm}) {
 
   // ========================== Constants ========================== //
   const [tempo, setTempo] = useState('');
+  const minBpm = 1;
+  const maxBpm = 400;
 
   // ========================== Event Handlers ========================== //
   function onInputChange(e) {
-    setBpm(e.target.value)
+    changeBpm(e.target.value)
   }
   
   function onMinusClickHold() {
-    const newBpm = bpm - 1;
-    if(newBpm >= 1) setBpm(newBpm)
+    changeBpm(bpm - 1)
   }
 
-  function onPlusClickHold() {
-    const newBpm = bpm + 1;
-    setBpm(newBpm)
+  function onPlusClickHold() { 
+    changeBpm(bpm + 1)
   }
 
   // ========================== Helper Fns ========================== //
+  function changeBpm(newBpm) {
+    if(newBpm >= minBpm && newBpm <= maxBpm) {
+      setBpm(newBpm)
+    }
+  }
+
   function getTempo(bpm) {
     if(bpm === 0) {
       return '';
