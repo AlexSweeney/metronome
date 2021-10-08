@@ -12,8 +12,7 @@ import './styles/Metronome.css';
 // import SliderInput from './SliderInput.jsx';
 // import BPMinput from './BPMinput.jsx';
 // import Timer from "./Timer.jsx"; 
-
-import { flashColor } from './utils.jsx';
+// import { flashColor } from './utils.jsx';
 
 export default function Metronome() {
   // =============================== Constants =============================== //

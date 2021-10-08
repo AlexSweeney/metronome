@@ -25,13 +25,34 @@ export default function TimerInput({value, setValue, min, max, children}) {
 		}
 	}
 
+	function addLeadingZero(number) {
+		let string = String(number);
+
+		if(number <= 0) string = '00';
+		if(string.length < 2) string = '0' + string;
+
+		return string;
+	}
+
+	/*function addLeadingZero(number, addition) { 
+		number = Number(number) + addition; 
+		
+		if(number < 0) {
+			return '00';
+		} else if(number < 10) {
+			return '0' + number;
+		} else {
+			return number;
+		} 
+	}*/
+
 	return (
 		<div>
 			<h4 className="timer-heading">{children}</h4>
 			<div className="timer-input-container">
 				
 				<ClickHoldButton handleClickHold={onClickMinus} className="timer-button">-</ClickHoldButton>
-					<input type="number" onChange={onChange} className="timer-input" value={value}/>
+					<input type="number" onChange={onChange} className="timer-input" value={addLeadingZero(value)}/>
 				<ClickHoldButton handleClickHold={onClickPlus} className="timer-button">+</ClickHoldButton>
 			</div>
 		</div>
