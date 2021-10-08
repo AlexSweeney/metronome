@@ -1,0 +1,49 @@
+.bpm-display-container { 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  height: 100%;
+}
+
+.bpm-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; 
+  width: 100%;
+}
+
+.bpm-button {
+  font-size: 1.5em;
+  width: 4em;
+  margin: 0 0.3em;
+}
+
+.bpm-display { 
+  height: 2.4em;
+  width: 2.4em;
+  border-radius: 2em;
+  text-align: center;
+  border: 0.2em solid black;
+  font-weight: bold;
+  font-size: 4em;
+}
+
+/* remove increment selectors inside input */ 
+.bpm-display-container input::-webkit-outer-spin-button,
+.bpm-display-container input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.bpm-display-container input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.tempo {
+  font-size: 1.7em;
+  font-weight: bold;
+  color: white;
+  font-family: sans-serif;
+} 

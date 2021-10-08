@@ -1,20 +1,22 @@
 import React, {useState, useEffect} from 'react';
 
-export default function ClickHoldButton({handleClickHold, children}) {
+export default function ClickHoldButton({handleClickHold, className, children}) {
 	/*
-		call handleClickHold when clicked
-		trigger handleClickHold when held
-		speed triggering if held longer
+		* call handleClickHold when clicked
+		* trigger handleClickHold when held
+		* speed up triggering as held longer
 
 		trigger when passed key 
 	*/
 	
 	// =============================== Constants ==================================== //
-	const [isDown, setIsDown] = useState(false);
-	const [holdTime, setHoldTime] = useState(0);
-  const [incrementTime, setIncrementTime] = useState(1000);
+	const startIncrementTime =1000;
   const incrementChangePerSecond = 0.25;
 
+	const [isDown, setIsDown] = useState(false);
+	const [holdTime, setHoldTime] = useState(0);
+  const [incrementTime, setIncrementTime] = useState(startIncrementTime);
+  
 	// =============================== Event Handlers =============================== //
 	function onMouseDown() {
 		setIsDown(true)
@@ -28,8 +30,7 @@ export default function ClickHoldButton({handleClickHold, children}) {
 		setIsDown(false)
 	}
 
-	function onTrigger() {
-		console.log('trigger')
+	function onTrigger() { 
 		handleClickHold()
 	}
 
@@ -40,6 +41,11 @@ export default function ClickHoldButton({handleClickHold, children}) {
 	// =============================== Helper Fns  ================================== //
 	function incrementHoldTime(time) {
 		setHoldTime(oldVal => oldVal + time)
+	}
+
+	function resetHold() {
+		setHoldTime(0)
+		setIncrementTime(startIncrementTime)
 	}
 
 	// =============================== Listen / Trigger ============================= //
@@ -56,7 +62,7 @@ export default function ClickHoldButton({handleClickHold, children}) {
  
     return () => { 
       clearInterval(holdTimeInterval)
-      setHoldTime(0)
+	    resetHold()
     }
 	}, [isDown])
 
@@ -71,6 +77,10 @@ export default function ClickHoldButton({handleClickHold, children}) {
 
 	// =============================== Output ======================================= //
 	return (
-		<button onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseOut={onMouseOut}>{children}</button>
+		<button 
+			onMouseDown={onMouseDown} 
+			onMouseUp={onMouseUp} 
+			onMouseOut={onMouseOut}
+			className={className}>{children}</button>
 	)
 }

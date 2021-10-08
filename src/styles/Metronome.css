@@ -10,8 +10,9 @@
 .metronome-view {
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
-/*  height: 27em;*/
+  align-items: center; 
+  height: 100%;
+  width: 100%; 
 }
 
 .show-metronome-view {
