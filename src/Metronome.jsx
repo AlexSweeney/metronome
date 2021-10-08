@@ -60,11 +60,27 @@ export default function Metronome() {
   } 
 
   function onClickPlay() {
-    setPlayMode('play')
+    setPlayMode('play')  
   }
 
   function onClickStop() {
     setPlayMode('stop')
+  }
+
+  function onPlay() {
+    console.log('onPlay(')
+    const metronomeSound = document.getElementById(metronomeSoundId);
+   
+    const thisInterval = setInterval(() => {
+      playSound(metronomeSound)
+    }, metronomeTime)
+ 
+    setMetronomeInterval(thisInterval)
+  }
+
+  function onStop(interval) {
+    clearInterval(interval)
+    setMetronomeInterval(null)
   }
 /*
   function onPlay() { 
@@ -77,12 +93,12 @@ export default function Metronome() {
     stopMetronomeInterval() 
   }*/
 
-  function onBpmChange(bpm) {
-    setMetronomeTime(getMetronomeTime(bpm))
-  }
+  // function onBpmChange(bpm) { 
+    
+  // }
 
   // =============================== Helper Fns =============================== //
-  function changemetronomeSoundId(newSound) {
+  /*function changemetronomeSoundId(newSound) {
     if(playMode === 'play') {
       setPlayMode('stop');
       setMetronomeSoundId(newSound);
@@ -93,20 +109,20 @@ export default function Metronome() {
     } else {
       setMetronomeSoundId(newSound);
     }
-  }
+  }*/
 
-  function startMetronomeInterval() {
-    const thisInterval = setInterval(() => { 
-      playSound(metronomeSoundId)
-    }, metronomeTime)
+  // function startMetronomeInterval() {
+  //   const thisInterval = setInterval(() => { 
+  //     playSound(metronomeSoundId)
+  //   }, metronomeTime)
 
-    setMetronomeInterval(thisInterval) 
-  } 
+  //   setMetronomeInterval(thisInterval) 
+  // } 
 
-  function stopMetronomeInterval() {
-    clearInterval(metronomeInterval) 
-    setMetronomeInterval(null)
-  }
+  // function stopMetronomeInterval() {
+  //   clearInterval(metronomeInterval) 
+  //   setMetronomeInterval(null)
+  // }
 
   function changeVolume(id, newVolume) {
     const element = document.getElementById(id);
@@ -118,14 +134,18 @@ export default function Metronome() {
   }
 
   function playSound(sound) { 
-    sound.pause();
-    sound.currentTime = 0;
-    sound.play() 
+    if(sound) {
+      sound.pause();
+      sound.currentTime = 0;
+      sound.play()   
+    }
   }
 
   function stopSound(sound) {
-    sound.pause();
-    sound.currentTime = 0;
+    if(sound) {
+      sound.pause();
+      sound.currentTime = 0;
+    } 
   }
 
   function getMetronomeTime(bpm) {
@@ -138,17 +158,43 @@ export default function Metronome() {
     onVolumeChange(volume);
   }, [volume]);
 
-  // =============== Play Stop
-  /*useEffect(() => {
-    if(playMode === 'play') onPlay()
-    if(playMode === 'stop') onStop()
-    return () => { onStop() }
-  }, [playMode, metronomeTime]);
-*/
+  // =============== Play Stop  
+  // change to stop mode
   useEffect(() => {
-    let thisInterval;
+    if(playMode === 'play' && !metronomeInterval) onPlay()
+    if(playMode === 'stop') onStop(metronomeInterval) 
+  }, [playMode, metronomeInterval])
+
+  // =============== Change Bpm
+  // change metronome time
+  useEffect(() => { 
+    const newTime = getMetronomeTime(bpm);
+    setMetronomeTime(newTime) 
+  }, [bpm]) 
+
+  // on change metronome time
+  useEffect(() => {
+    console.log('metroNomeTimeChange', metronomeTime)
+    console.log('playMode', playMode)
+    setPlayMode('stop')
+    clearInterval(metronomeInterval)
+    if(playMode === 'play') {
+      setTimeout(() => {
+        setPlayMode('play')
+      }, 1) 
+    }
+  }, [metronomeTime])
+
+
+ /* useEffect(() => {
+    if(!showSettingsView) setShowMetronomeViewClass('show-metronome-view')
+    if(showSettingsView) setShowMetronomeViewClass('hide-metronome-view')
+  }, [showSettingsView])*/
+
+/*let thisInterval;
 
     if(playMode === 'play') {
+      onPlay()
       const metronomeSound = document.getElementById(metronomeSoundId);
 
       thisInterval = setInterval(() => {
@@ -157,23 +203,9 @@ export default function Metronome() {
     }
 
     return () => {
-      clearInterval(thisInterval)
-    }
-  }, [playMode, metronomeTime])
-
-  // =============== Change Bpm
-  useEffect(() => {
-    onBpmChange(bpm)
-  }, [bpm, playMode])
-
-  useEffect(() => {
-    console.log('metronomeTime', metronomeTime)
-  }, [metronomeTime])
-
- /* useEffect(() => {
-    if(!showSettingsView) setShowMetronomeViewClass('show-metronome-view')
-    if(showSettingsView) setShowMetronomeViewClass('hide-metronome-view')
-  }, [showSettingsView])*/
+      // onStop()
+      // clearInterval(thisInterval)
+    }*/
 
   // BPM 
   // const [BPM, setBPM] = useState(80);
