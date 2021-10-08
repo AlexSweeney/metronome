@@ -31,6 +31,7 @@ export default function Metronome() {
   ]; 
 
   const [metronomeSoundId, setMetronomeSoundId] = useState(audioIDs[0]);
+  // const [metronomeSound, setMetronomeSound] = useState(getElement(metronomeSoundId));
   const [metronomeInterval, setMetronomeInterval] = useState(null);
   const [metronomeTime, setMetronomeTime] = useState(getMetronomeTime(bpm));
 
@@ -51,7 +52,7 @@ export default function Metronome() {
   }
 
   function onSettingsOptionClick(e) {
-    changemetronomeSoundId(e.target.value)
+    setMetronomeSoundId(e.target.value)
   }
 
   function onVolumeChange(newVolume) {
@@ -65,8 +66,8 @@ export default function Metronome() {
   function onClickStop() {
     setPlayMode('stop')
   }
-
-  function onPlay() {
+/*
+  function onPlay() { 
     playSound(metronomeSoundId) 
     startMetronomeInterval()
   }
@@ -74,12 +75,10 @@ export default function Metronome() {
   function onStop() {
     stopSound(metronomeSoundId)
     stopMetronomeInterval() 
-  }
+  }*/
 
-  function onBpmChange(bpm, playMode) {
-    // onStop()
-    // setMetronomeTime(getMetronomeTime(bpm))
-    // if(playMode === 'play') onPlay()
+  function onBpmChange(bpm) {
+    setMetronomeTime(getMetronomeTime(bpm))
   }
 
   // =============================== Helper Fns =============================== //
@@ -114,17 +113,19 @@ export default function Metronome() {
     if(element) element.volume = newVolume;
   }
 
-  function playSound(id) {
-    const soundElement = document.getElementById(id);
-    if(soundElement) soundElement.play()
+  function getElement(id) {
+    return document.getElementById(id);
   }
 
-  function stopSound(id) {
-    const soundElement = document.getElementById(id);
-    if(soundElement) {
-      soundElement.pause();
-      soundElement.currentTime = 0;
-    }
+  function playSound(sound) { 
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play() 
+  }
+
+  function stopSound(sound) {
+    sound.pause();
+    sound.currentTime = 0;
   }
 
   function getMetronomeTime(bpm) {
@@ -138,15 +139,36 @@ export default function Metronome() {
   }, [volume]);
 
   // =============== Play Stop
-  useEffect(() => {
+  /*useEffect(() => {
     if(playMode === 'play') onPlay()
-    if(playMode === 'stop') onStop()  
-  }, [playMode]);
+    if(playMode === 'stop') onStop()
+    return () => { onStop() }
+  }, [playMode, metronomeTime]);
+*/
+  useEffect(() => {
+    let thisInterval;
+
+    if(playMode === 'play') {
+      const metronomeSound = document.getElementById(metronomeSoundId);
+
+      thisInterval = setInterval(() => {
+        playSound(metronomeSound)
+      }, metronomeTime)
+    }
+
+    return () => {
+      clearInterval(thisInterval)
+    }
+  }, [playMode])
 
   // =============== Change Bpm
   useEffect(() => {
-    onBpmChange(bpm, playMode)
+    onBpmChange(bpm)
   }, [bpm, playMode])
+
+  useEffect(() => {
+    console.log('metronomeTime', metronomeTime)
+  }, [metronomeTime])
 
  /* useEffect(() => {
     if(!showSettingsView) setShowMetronomeViewClass('show-metronome-view')
