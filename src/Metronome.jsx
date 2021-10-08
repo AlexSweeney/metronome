@@ -2,6 +2,7 @@ import React, { useEffect, useState, useReducer } from 'react';
 import AudioElements from './components/AudioElements.jsx';
 import SettingsViewToggle from './components/SettingsViewToggle.jsx';
 import SettingsView from './components/SettingsView.jsx';
+import BpmDisplay from './components/BpmDisplay.jsx';
 
 import './styles/Metronome.css';
  
@@ -33,6 +34,11 @@ export default function Metronome() {
   // =============== View
   const [showSettingsView, setShowSettingsView] = useState(false);
 
+  // =============== View
+  const [bpm, setBpm] = useState(60);
+
+  // =============================== Classes =============================== //
+
   // =============================== Event Handlers =============================== //
   function onSettingsViewToggleClick() {
     setShowSettingsView(oldVal => !oldVal)
@@ -55,6 +61,12 @@ export default function Metronome() {
       setMetronomeSound(newSound);
     }
   }
+
+  // =============================== Listen / trigger =============================== //
+ /* useEffect(() => {
+    if(!showSettingsView) setShowMetronomeViewClass('show-metronome-view')
+    if(showSettingsView) setShowMetronomeViewClass('hide-metronome-view')
+  }, [showSettingsView])*/
 
   // BPM 
   // const [BPM, setBPM] = useState(80);
@@ -169,6 +181,7 @@ export default function Metronome() {
 
   // let timerProps = { timeState, dispatch, timeReducer, timerPlayMode, setTimerPlayMode };
 
+  // =============================== Output =============================== //
   return (
     <div>
       <AudioElements ids={audioIDs}/>
@@ -182,6 +195,10 @@ export default function Metronome() {
           options={audioIDs}
           selectedOption={metronomeSound}
         />
+
+        <div className="metronome-view" hidden={showSettingsView}>
+          <BpmDisplay bpm={bpm} setBpm={setBpm}/>
+        </div>
                 {/*
 
                 
