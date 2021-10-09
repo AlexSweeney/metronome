@@ -1,4 +1,4 @@
-.bpm-display-container { 
+.bpm-display { 
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -18,7 +18,7 @@
   margin: 0 0.3em;
 }
 
-.bpm-display { 
+.bpm-display-input { 
   height: 2.4em;
   width: 2.4em;
   border-radius: 2em;
@@ -29,14 +29,14 @@
 }
 
 /* remove increment selectors inside input */ 
-.bpm-display-container input::-webkit-outer-spin-button,
-.bpm-display-container input::-webkit-inner-spin-button {
+.bpm-display input::-webkit-outer-spin-button,
+.bpm-display input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-.bpm-display-container input[type=number] {
+.bpm-display input[type=number] {
   -moz-appearance: textfield;
 }
 

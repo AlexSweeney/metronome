@@ -10,10 +10,12 @@ import './styles/Metronome.css';
  
 /*
   To do
-  
+   
   style - layout
   style - hover 
   change metronome sound
+    * when not playing
+    * when playing
   ding when finish timer
   click when change bpm / time
   disable timer buttons when playing
@@ -174,14 +176,18 @@ export default function Metronome() {
         />
 
         <div className="metronome-view" hidden={showSettingsView}>
-          <BpmDisplay bpm={bpm} setBpm={setBpm}/>
-          
-          <div className="buttonContainer">
+          <div className="bpm-display-container">
+            <BpmDisplay bpm={bpm} setBpm={setBpm}/>
+          </div>
+
+          <div className="button-container">
             <button onClick={onClickPlay} id="playButton" className="BPMButton">Play</button>
             <button onClick={onClickStop} id="stopButton" className="BPMButton">Stop</button> 
           </div> 
 
-          <VolumeSlider volume={volume} setVolume={setVolume}/>
+          <div className="volume-slider-container"> 
+            <VolumeSlider volume={volume} setVolume={setVolume}/>
+          </div>
           <Timer/>
         </div> 
       </div>  

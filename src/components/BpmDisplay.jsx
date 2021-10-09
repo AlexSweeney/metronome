@@ -77,10 +77,10 @@ export default function BpmDisplay({bpm, setBpm}) {
 
   // ========================== Output ========================== //
   return (
-    <div className="bpm-display-container">
+    <div className="bpm-display">
       <div className="bpm-container">
         <ClickHoldButton handleClickHold={onMinusClickHold} className="bpm-button">-</ClickHoldButton> 
-          <input className="bpm-display" type="number" value={bpm} onChange={onInputChange}/>
+          <input className="bpm-display-input" type="number" value={bpm} onChange={onInputChange}/>
         <ClickHoldButton handleClickHold={onPlusClickHold} className="bpm-button">+</ClickHoldButton> 
       </div>
       <h3 className="tempo">{tempo}</h3>
