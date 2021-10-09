@@ -5,6 +5,7 @@ import SettingsView from './components/SettingsView.jsx';
 import BpmDisplay from './components/BpmDisplay.jsx';
 import VolumeSlider from './components/VolumeSlider.jsx';
 import Timer from './components/Timer.jsx';
+import { BiPlayCircle, BiStopCircle } from 'react-icons/bi';
 import {playSound, stopSound} from './components/utils.js';
 
 import './styles/Metronome.css';
@@ -13,8 +14,9 @@ import './styles/Metronome.css';
   To do
     
   blip start paus stop timer
- 
-  disable timer buttons when playing
+
+  flash color on play
+  
   icons - play and stop plus and minus
   input time - replace old
 
@@ -190,8 +192,10 @@ export default function Metronome() {
           </div>
 
           <div className="button-container">
-            <button onClick={onClickPlay} id="playButton" className="bpm-button">Play</button>
-            <button onClick={onClickStop} id="stopButton" className="bpm-button">Stop</button> 
+            <BiPlayCircle onClick={onClickPlay} id="playButton" className="play-mode-button"/>
+            <BiStopCircle  onClick={onClickStop} id="stopButton" className="play-mode-button"/>
+           {/* <button onClick={onClickPlay} id="playButton" className="bpm-button"></button>*/}
+            {/*<button onClick={onClickStop} id="stopButton" className="bpm-button"><FaStop/></button> */}
           </div> 
 
           <div className="volume-slider-container"> 

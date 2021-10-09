@@ -29,8 +29,18 @@
   padding: 0.5em;
 }
 
-.bpm-button {
+.play-mode-button {
   cursor: pointer;
+  font-size: 3em;
+  margin: 0 0.5em;
+}
+
+.play-mode-button:hover {
+  color: #0075ff;
+}
+
+.play-mode-button:active {
+  color: #0251af;
 }
 
 .volume-slider-container {

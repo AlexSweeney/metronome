@@ -1,5 +1,6 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import ClickHoldButton from './ClickHoldButton.jsx'; 
+// import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/fa';
 import {playSound} from './utils.js';
 import './../styles/BpmDisplay.css';
 
@@ -82,9 +83,13 @@ export default function BpmDisplay({bpm, setBpm, buttonSound}) {
   return (
     <div className="bpm-display">
       <div className="bpm-container">
-        <ClickHoldButton handleClickHold={onMinusClickHold} className="bpm-button">-</ClickHoldButton> 
+        <ClickHoldButton handleClickHold={onMinusClickHold} className="bpm-button">
+          {/*<AiOutlineMinus/>*/}
+        </ClickHoldButton> 
           <input className="bpm-display-input" type="number" value={bpm} onChange={onInputChange}/>
-        <ClickHoldButton handleClickHold={onPlusClickHold} className="bpm-button">+</ClickHoldButton> 
+        <ClickHoldButton handleClickHold={onPlusClickHold} className="bpm-button">
+          {/*<AiOutlinePlus/>*/}
+        </ClickHoldButton> 
       </div>
       <h3 className="tempo">{tempo}</h3>
     </div>
