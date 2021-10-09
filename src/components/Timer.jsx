@@ -8,6 +8,7 @@ function Timer({finishedSound, buttonSound}) {
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
+	const [buttonsDisabled, setButtonsDisabled] = useState(false);
 	
 	// ==================================== Event Handlers =============================== //
 	function onClickPlay() {
@@ -60,12 +61,14 @@ function Timer({finishedSound, buttonSound}) {
 	}
 
 	// ==================================== Listen / Trigger ================================== //
+	// ================== Play Mode
 	useEffect(() => { 
 		if(playMode === 'play')
 		if(playMode === 'pause') 
 		if(playMode === 'stop') resetTime() 
 	}, [playMode]) 
 
+	// ================== Run Timer
 	useEffect(() => {
 		let timeout;
 
@@ -78,13 +81,37 @@ function Timer({finishedSound, buttonSound}) {
 		return () => { clearTimeout(timeout) }
 	}, [playMode, seconds, minutes, hours])
 
+	// ================== Disable buttons
+	useEffect(() => {
+		if(playMode === 'play') setButtonsDisabled(true)
+		if(playMode !== 'play') setButtonsDisabled(false)
+	}, [playMode])
+
 	// ==================================== Output =========================================== //
 	return ( 
 		<div className="timer-container">
 			<div className="timer-inputs-container">
-				<TimerInput value={hours} setValue={setHours} buttonSound={buttonSound} min={0} max={99}>Hours</TimerInput>
-				<TimerInput value={minutes} setValue={setMinutes} buttonSound={buttonSound} min={0} max={59}>Minutes</TimerInput>
-				<TimerInput value={seconds} setValue={setSeconds} buttonSound={buttonSound} min={0} max={59}>Seconds</TimerInput>
+				<TimerInput 
+					value={hours}
+					setValue={setHours} 
+					buttonSound={buttonSound} 
+					isDisabled={buttonsDisabled}
+					min={0} 
+					max={99}>Hours</TimerInput>
+				<TimerInput 
+					value={minutes} 
+					setValue={setMinutes} 
+					buttonSound={buttonSound} 
+					isDisabled={buttonsDisabled}
+					min={0} 
+					max={59}>Minutes</TimerInput>
+				<TimerInput 
+					value={seconds} 
+					setValue={setSeconds} 
+					buttonSound={buttonSound} 
+					isDisabled={buttonsDisabled}
+					min={0} 
+					max={59}>Seconds</TimerInput>
 			</div>
 			<div className="timer-button-container">
 				<button type="button" onClick={onClickPlay}>Play</button>

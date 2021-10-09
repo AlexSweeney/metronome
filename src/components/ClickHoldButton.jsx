@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import './../styles/ClickHoldButton.css';
 
-export default function ClickHoldButton({handleClickHold, className, children}) {
+export default function ClickHoldButton({handleClickHold, className, isDisabled=false, children}) {
 	/*
 		* call handleClickHold when clicked
 		* trigger handleClickHold when held
@@ -81,6 +82,7 @@ export default function ClickHoldButton({handleClickHold, className, children}) 
 			onMouseDown={onMouseDown} 
 			onMouseUp={onMouseUp} 
 			onMouseOut={onMouseOut}
-			className={className}>{children}</button>
+			className={`${className} click-hold-button`}
+			disabled={isDisabled}>{children}</button>
 	)
 }

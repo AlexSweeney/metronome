@@ -13,8 +13,7 @@ import './styles/Metronome.css';
   To do
     
   blip start paus stop timer
-
-  don't play bell if timer hasn't counted down (on press stop)
+ 
   disable timer buttons when playing
   icons - play and stop plus and minus
   input time - replace old

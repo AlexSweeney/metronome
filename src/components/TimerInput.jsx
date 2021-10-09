@@ -3,7 +3,7 @@ import ClickHoldButton from './ClickHoldButton.jsx';
 import {playSound} from './utils.js';
 import './../styles/TimerInput.css';
 
-export default function TimerInput({value, setValue, min, max, buttonSound, children}) {
+export default function TimerInput({value, setValue, isDisabled, min, max, buttonSound, children}) {
 	// ============================= Event Handlers ============================= //
 	function onClickMinus() {
 		const newVal = value - 1;
@@ -43,11 +43,16 @@ export default function TimerInput({value, setValue, min, max, buttonSound, chil
 	return (
 		<div>
 			<h4 className="timer-heading">{children}</h4>
-			<div className="timer-input-container">
-				
-				<ClickHoldButton handleClickHold={onClickMinus} className="timer-button">-</ClickHoldButton>
+			<div className="timer-input-container"> 
+				<ClickHoldButton 
+					handleClickHold={onClickMinus} 
+					isDisabled={isDisabled} 
+					className="timer-button">-</ClickHoldButton>
 					<input type="number" onChange={onChange} className="timer-input" value={addLeadingZero(value)}/>
-				<ClickHoldButton handleClickHold={onClickPlus} className="timer-button">+</ClickHoldButton>
+				<ClickHoldButton 
+					handleClickHold={onClickPlus} 
+					isDisabled={isDisabled} 
+					className="timer-button">+</ClickHoldButton>
 			</div>
 		</div>
 	)
