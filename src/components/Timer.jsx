@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import TimerInput from './TimerInput.jsx';
 import './../styles/Timer.css';
 
-function Timer({finishedSound}) {  
+function Timer({finishedSound, buttonSound}) {  
 	// ==================================== Constants ==================================== //
 	const [playMode, setPlayMode] = useState('stop');
 	const [hours, setHours] = useState(0);
@@ -80,9 +80,9 @@ function Timer({finishedSound}) {
 	return ( 
 		<div className="timer-container">
 			<div className="timer-inputs-container">
-				<TimerInput value={hours} setValue={setHours} min={0} max={99}>Hours</TimerInput>
-				<TimerInput value={minutes} setValue={setMinutes} min={0} max={59}>Minutes</TimerInput>
-				<TimerInput value={seconds} setValue={setSeconds} min={0} max={59}>Seconds</TimerInput>
+				<TimerInput value={hours} setValue={setHours} buttonSound={buttonSound} min={0} max={99}>Hours</TimerInput>
+				<TimerInput value={minutes} setValue={setMinutes} buttonSound={buttonSound} min={0} max={59}>Minutes</TimerInput>
+				<TimerInput value={seconds} setValue={setSeconds} buttonSound={buttonSound} min={0} max={59}>Seconds</TimerInput>
 			</div>
 			<div className="timer-button-container">
 				<button type="button" onClick={onClickPlay}>Play</button>

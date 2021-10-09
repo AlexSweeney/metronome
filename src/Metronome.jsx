@@ -5,14 +5,16 @@ import SettingsView from './components/SettingsView.jsx';
 import BpmDisplay from './components/BpmDisplay.jsx';
 import VolumeSlider from './components/VolumeSlider.jsx';
 import Timer from './components/Timer.jsx';
+import {playSound, stopSound} from './components/utils.js';
 
 import './styles/Metronome.css';
  
 /*
   To do
-  
-  ding when finish timer
+   
   click when change bpm / time
+
+  don't play bell if timer hasn't counted down (on press stop)
   disable timer buttons when playing
   icons - play and stop plus and minus
   input time - replace old
@@ -30,12 +32,13 @@ export default function Metronome() {
   // =============== Audio
   const audioIDs = [
     "Wood", 
-    "Bell", 
     "Click", 
     "Snare-Drum", 
     "Kick-Drum", 
     "Dog",
     "Cat", 
+    "Bell",
+    "Snap",
   ]; 
 
   const metronomeSounds = [
@@ -51,7 +54,9 @@ export default function Metronome() {
   const [metronomeSound, setMetronomeSound] = useState(null); 
   const [metronomeInterval, setMetronomeInterval] = useState(null);
   const [metronomeTime, setMetronomeTime] = useState(getMetronomeTime(bpm));
+  
   const [timerFinishedSound, setTimerFinishedSound] = useState(null);
+  const [buttonClickSound, setButtonClickSound] = useState(null);
 
   // =============== Mode
   const [playMode, setPlayMode] = useState('stop');
@@ -75,6 +80,7 @@ export default function Metronome() {
   function onAudioLoad() {
     updateMetronomeSound(selectedMetronomeSound)
     setTimerFinishedSound(document.getElementById('Bell'))
+    setButtonClickSound(document.getElementById('Snap'))
   }
 
   function onVolumeChange(newVolume) {
@@ -116,21 +122,6 @@ export default function Metronome() {
 
   function stopMetronomeInterval(interval) {
     clearInterval(interval) 
-  }
-
-  function playSound(sound) { 
-    if(sound) {
-      sound.pause();
-      sound.currentTime = 0;
-      sound.play()   
-    }
-  }
-
-  function stopSound(sound) {
-    if(sound) {
-      sound.pause();
-      sound.currentTime = 0;
-    } 
   }
 
   function getMetronomeTime(bpm) {
@@ -196,7 +187,7 @@ export default function Metronome() {
 
         <div className="metronome-view" hidden={showSettingsView}>
           <div className="bpm-display-container">
-            <BpmDisplay bpm={bpm} setBpm={setBpm}/>
+            <BpmDisplay bpm={bpm} setBpm={setBpm} buttonSound={buttonClickSound}/>
           </div>
 
           <div className="button-container">
@@ -207,7 +198,7 @@ export default function Metronome() {
           <div className="volume-slider-container"> 
             <VolumeSlider volume={volume} setVolume={setVolume}/>
           </div>
-          <Timer finishedSound={timerFinishedSound}/>
+          <Timer finishedSound={timerFinishedSound} buttonSound={buttonClickSound}/>
         </div> 
       </div>  
     </div>

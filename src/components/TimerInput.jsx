@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import ClickHoldButton from './ClickHoldButton.jsx';
+import {playSound} from './utils.js';
 import './../styles/TimerInput.css';
 
-export default function TimerInput({value, setValue, min, max, children}) {
+export default function TimerInput({value, setValue, min, max, buttonSound, children}) {
 	// ============================= Event Handlers ============================= //
 	function onClickMinus() {
 		const newVal = value - 1;
 		if(newVal >= min && newVal <= max) {
 			setValue(newVal)
+			playSound(buttonSound)
 		} 
 	}
 
@@ -15,6 +17,7 @@ export default function TimerInput({value, setValue, min, max, children}) {
 		const newVal = value + 1; 
 		if(newVal >= min && newVal <= max) {
 			setValue(newVal)
+			playSound(buttonSound)
 		}
 	}
 

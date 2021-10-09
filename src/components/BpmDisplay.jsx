@@ -1,8 +1,9 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import ClickHoldButton from './ClickHoldButton.jsx'; 
+import {playSound} from './utils.js';
 import './../styles/BpmDisplay.css';
 
-export default function BpmDisplay({bpm, setBpm}) {
+export default function BpmDisplay({bpm, setBpm, buttonSound}) {
   /* 
     * show bpm
     * show tempo
@@ -29,10 +30,12 @@ export default function BpmDisplay({bpm, setBpm}) {
   
   function onMinusClickHold() {
     changeBpm(bpm - 1)
+    playSound(buttonSound)
   }
 
   function onPlusClickHold() { 
     changeBpm(bpm + 1)
+    playSound(buttonSound)
   }
 
   // ========================== Helper Fns ========================== //
