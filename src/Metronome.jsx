@@ -10,14 +10,11 @@ import './styles/Metronome.css';
  
 /*
   To do
-
-  change metronome sound 
-    * when playing
-
+  
   ding when finish timer
   click when change bpm / time
   disable timer buttons when playing
-  icons - play and stop
+  icons - play and stop plus and minus
   input time - replace old
 
   tidy 
@@ -54,6 +51,7 @@ export default function Metronome() {
   const [metronomeSound, setMetronomeSound] = useState(null); 
   const [metronomeInterval, setMetronomeInterval] = useState(null);
   const [metronomeTime, setMetronomeTime] = useState(getMetronomeTime(bpm));
+  const [timerFinishedSound, setTimerFinishedSound] = useState(null);
 
   // =============== Mode
   const [playMode, setPlayMode] = useState('stop');
@@ -76,6 +74,7 @@ export default function Metronome() {
 
   function onAudioLoad() {
     updateMetronomeSound(selectedMetronomeSound)
+    setTimerFinishedSound(document.getElementById('Bell'))
   }
 
   function onVolumeChange(newVolume) {
@@ -208,7 +207,7 @@ export default function Metronome() {
           <div className="volume-slider-container"> 
             <VolumeSlider volume={volume} setVolume={setVolume}/>
           </div>
-          <Timer/>
+          <Timer finishedSound={timerFinishedSound}/>
         </div> 
       </div>  
     </div>

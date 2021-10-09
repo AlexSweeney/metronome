@@ -2,12 +2,14 @@ import React, {useState, useEffect} from 'react';
 import TimerInput from './TimerInput.jsx';
 import './../styles/Timer.css';
 
-function Timer() {  
+function Timer({finishedSound}) {  
+	// ==================================== Constants ==================================== //
 	const [playMode, setPlayMode] = useState('stop');
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
 	
+	// ==================================== Event Handlers =============================== //
 	function onClickPlay() {
 		setPlayMode('play')
 	}
@@ -21,6 +23,7 @@ function Timer() {
 		resetTime()
 	}
 
+	// ==================================== Helper Fns ==================================== //
 	function decrementTime(seconds, minutes, hours) {
 		if (seconds > 0) decrementSeconds(seconds)
 		else if(seconds === 0 && minutes > 0) decrementMinutes(minutes)
@@ -44,6 +47,7 @@ function Timer() {
 	}
 
 	function finishTime() { 
+		finishedSound.play()
 		resetTime()
 	}
 
@@ -53,6 +57,7 @@ function Timer() {
 		setSeconds(0)
 	}
 
+	// ==================================== Listen / Trigger ================================== //
 	useEffect(() => { 
 		if(playMode === 'play')
 		if(playMode === 'pause') 
@@ -64,7 +69,6 @@ function Timer() {
 
 		if(playMode === 'play') {
 			timeout = setTimeout(() => {
-				console.log('timeout', seconds)
 				decrementTime(seconds, minutes, hours)
 			}, 1000)
 		}
@@ -72,6 +76,7 @@ function Timer() {
 		return () => { clearTimeout(timeout) }
 	}, [playMode, seconds, minutes, hours])
 
+	// ==================================== Output =========================================== //
 	return ( 
 		<div className="timer-container">
 			<div className="timer-inputs-container">
