@@ -1,5 +1,6 @@
 .settings-view { 
   display: flex; 
+  color: white;
 }
 
 .show-settings-view {
@@ -12,11 +13,14 @@
 
 .settings-view h3 {
   font-size: 1.3em;
-  font-family: sans-serif;
-  color: black;
+  font-family: sans-serif; 
   cursor: default;
 }    
 
 .MuiFormControlLabel-root { 
-  height: 1.6em;
+  height: 1.6em; 
 } 
+
+.MuiIconButton-label { 
+  color: white;
+}

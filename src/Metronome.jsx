@@ -10,8 +10,7 @@ import './styles/Metronome.css';
  
 /*
   To do
-    
-  style - hover 
+  
   style - options
   change metronome sound
     * when not playing
