@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Wood from './../audio/Wood.mp3';
 
-export default function AudioElements({ids}) { 
+export default function AudioElements({ids, onLoad}) { 
 	/*
 		* import audio file for each id
 		* create audio element for each id
@@ -23,6 +23,7 @@ export default function AudioElements({ids}) {
 		Promise.all(promises).then((result) => { 
 			setLoadedAudio(result)
 			setFinishedLoading(true)
+			onLoad()
 		})
 	}
 

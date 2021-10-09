@@ -10,11 +10,10 @@ import './styles/Metronome.css';
  
 /*
   To do
-  
-  style - options
-  change metronome sound
-    * when not playing
+
+  change metronome sound 
     * when playing
+
   ding when finish timer
   click when change bpm / time
   disable timer buttons when playing
@@ -42,9 +41,17 @@ export default function Metronome() {
     "Cat", 
   ]; 
 
-  const [metronomeSoundId, setMetronomeSoundId] = useState(audioIDs[0]);
-  const metronomeSound = document.getElementById(metronomeSoundId);
-  // const [metronomeSound, setMetronomeSound] = useState(getElement(metronomeSoundId)); 
+  const metronomeSounds = [
+    "Wood",
+    "Click", 
+    "Snare-Drum", 
+    "Kick-Drum", 
+    "Dog",
+    "Cat", 
+  ];
+
+  const [selectedMetronomeSound, setSelectedMetronomeSound] = useState(metronomeSounds[0]);
+  const [metronomeSound, setMetronomeSound] = useState(null); 
   const [metronomeInterval, setMetronomeInterval] = useState(null);
   const [metronomeTime, setMetronomeTime] = useState(getMetronomeTime(bpm));
 
@@ -63,8 +70,12 @@ export default function Metronome() {
     if(!showSettingsView && !hasInlineHeight('metronomeContainer')) keepHeight('metronomeContainer')
   }
 
-  function onSettingsOptionClick(e) {
-    setMetronomeSoundId(e.target.value)
+  function onSettingsOptionClick(e) { 
+    setSelectedMetronomeSound(e.target.value)
+  }
+
+  function onAudioLoad() {
+    updateMetronomeSound(selectedMetronomeSound)
   }
 
   function onVolumeChange(newVolume) {
@@ -80,8 +91,8 @@ export default function Metronome() {
     setPlayMode('stop')
   }
 
-  function onPlay(intervalTime) { 
-    return startMetronomeInterval(intervalTime)
+  function onPlay(intervalTime, playSound) { 
+    return startMetronomeInterval(intervalTime, playSound)
   }
 
   function onStop(interval) {  
@@ -98,9 +109,9 @@ export default function Metronome() {
     return document.getElementById(id);
   }
 
-  function startMetronomeInterval(intervalTime) {
+  function startMetronomeInterval(intervalTime, sound) {
     return setInterval(() => { 
-      playSound(metronomeSound)
+      playSound(sound)
     }, intervalTime) 
   }
 
@@ -138,6 +149,11 @@ export default function Metronome() {
     return element.style.height !== '';
   }
 
+  function updateMetronomeSound(id) {
+    const newSound = document.getElementById(selectedMetronomeSound);
+    setMetronomeSound(newSound)
+  }
+
   // =============================== Listen / trigger =============================== //
   // =============== Change Volume
   useEffect(() => {
@@ -148,21 +164,26 @@ export default function Metronome() {
   useEffect(() => {
     let thisInterval;
 
-    if(playMode === 'play') thisInterval = onPlay(metronomeTime);
+    if(playMode === 'play') thisInterval = onPlay(metronomeTime, metronomeSound);
 
     return () => { onStop(thisInterval) }
-  }, [playMode, metronomeTime]) 
+  }, [playMode, metronomeTime, metronomeSound]) 
 
   // =============== Change Bpm 
   useEffect(() => { 
     const newTime = getMetronomeTime(bpm);
     setMetronomeTime(newTime) 
   }, [bpm]) 
+
+  // =============== Change MetronomeSoundId
+  useEffect(() => {
+    updateMetronomeSound(selectedMetronomeSound)
+  }, [selectedMetronomeSound]) 
  
   // =============================== Output =============================== //
   return (
     <div>
-      <AudioElements ids={audioIDs}/>
+      <AudioElements ids={audioIDs} onLoad={onAudioLoad}/>
 
       <div className="metronome-container" id="metronomeContainer"> 
         <SettingsViewToggle handleClick={onSettingsViewToggleClick}/>
@@ -170,8 +191,8 @@ export default function Metronome() {
         <SettingsView 
           show={showSettingsView} 
           handleClick={onSettingsOptionClick} 
-          options={audioIDs}
-          selectedOption={metronomeSoundId}
+          options={metronomeSounds}
+          selectedOption={selectedMetronomeSound}
         />
 
         <div className="metronome-view" hidden={showSettingsView}>
