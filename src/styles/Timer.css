@@ -1,6 +1,5 @@
 .timer-container {
-	padding: 1em;
-	/*height: 6em;*/
+	padding: 1em; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;

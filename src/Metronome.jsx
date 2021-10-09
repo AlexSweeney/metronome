@@ -7,20 +7,7 @@ import VolumeSlider from './components/VolumeSlider.jsx';
 import Timer from './components/Timer.jsx';
 import { BiPlayCircle, BiStopCircle } from 'react-icons/bi';
 import {playSound, stopSound} from './components/utils.js';
-
 import './styles/Metronome.css';
- 
-/*
-  To do
-
-  fix - replace time then press add on bpm (convert to number on change)
-  
-  input time - replace old 
-
-  tidy 
-  push
-  publish
-*/
 
 export default function Metronome() {
   // =============================== Constants =============================== //

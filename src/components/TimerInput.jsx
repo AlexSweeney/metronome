@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ClickHoldButton from './ClickHoldButton.jsx';
-import {playSound} from './utils.js';
+import {playSound, addToEndOfInputNumber} from './utils.js';
 import './../styles/TimerInput.css';
 
 export default function TimerInput({value, setValue, isDisabled, min, max, buttonSound, children}) {
@@ -25,14 +25,9 @@ export default function TimerInput({value, setValue, isDisabled, min, max, butto
 	}
 
 	function onChange(e) {  
-		let newVal = e.target.value;   
-		if(newVal.length > 2) newVal = newVal.slice(1); 
-		newVal = Number(newVal);
-
-		if((newVal >= min && newVal <= max) || newVal === '') {
-			setValue(newVal)
-		}
+		addToEndOfInputNumber(e, 2, min, max, value, setValue)
 	} 
+
 
 	// ============================= Helper Fns ============================= //
 	function addLeadingZero(number) {
@@ -43,6 +38,17 @@ export default function TimerInput({value, setValue, isDisabled, min, max, butto
 
 		return string;
 	} 
+
+	function addToEndOfInputNumber(e, maxLength, min, max, value, setValue) {
+	  let newVal = String(e.target.value);    
+
+	  if(newVal.length > maxLength) newVal = newVal.slice(1);
+	  newVal = Number(newVal);
+
+	  if((newVal >= min && newVal <= max) || newVal === '') {
+	    setValue(newVal)
+	  }
+	}
 
 	// ============================= Output ================================ //
 	return (

@@ -1,7 +1,7 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import ClickHoldButton from './ClickHoldButton.jsx'; 
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import {playSound} from './utils.js';
+import {playSound, addToEndOfInputNumber} from './utils.js';
 import './../styles/BpmDisplay.css';
 
 export default function BpmDisplay({bpm, setBpm, buttonSound}) {
@@ -25,10 +25,6 @@ export default function BpmDisplay({bpm, setBpm, buttonSound}) {
   const maxBpm = 400;
 
   // ========================== Event Handlers ========================== //
-  function onInputChange(e) {
-    changeBpm(e.target.value)
-  }
-  
   function onMinusClickHold() {
     changeBpm(bpm - 1)
     playSound(buttonSound)
@@ -86,7 +82,7 @@ export default function BpmDisplay({bpm, setBpm, buttonSound}) {
         <ClickHoldButton handleClickHold={onMinusClickHold} className="bpm-button">
           <AiOutlineMinus/>
         </ClickHoldButton> 
-          <input className="bpm-display-input" type="number" value={bpm} onChange={onInputChange}/>
+          <div className="bpm-display-input">{bpm}</div> 
         <ClickHoldButton handleClickHold={onPlusClickHold} className="bpm-button">
           <AiOutlinePlus/>
         </ClickHoldButton> 
