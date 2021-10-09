@@ -18,7 +18,11 @@ import './styles/Metronome.css';
   click when change bpm / time
   disable timer buttons when playing
   icons - play and stop
+  input time - replace old
 
+  tidy 
+  push
+  publish
 */
 
 export default function Metronome() {
@@ -52,11 +56,10 @@ export default function Metronome() {
   // =============== Volume
   const [volume, setVolume] = useState(0.5);
 
-  // =============================== Classes ====================================== //
-
   // =============================== Event Handlers =============================== //
   function onSettingsViewToggleClick() {
     setShowSettingsView(oldVal => !oldVal)
+    if(!showSettingsView && !hasInlineHeight('metronomeContainer')) keepHeight('metronomeContainer')
   }
 
   function onSettingsOptionClick(e) {
@@ -121,6 +124,17 @@ export default function Metronome() {
 
   function getMetronomeTime(bpm) {
     return 60000 / bpm;
+  }
+
+  function keepHeight(id) {
+    const element = document.getElementById(id);
+    const style = window.getComputedStyle(element); 
+    element.style.height = style.height;
+  }
+
+  function hasInlineHeight(id) {
+    const element = document.getElementById(id); 
+    return element.style.height !== '';
   }
 
   // =============================== Listen / trigger =============================== //
