@@ -17,7 +17,8 @@ import './styles/Metronome.css';
 
   flash color on play
   
-  icons - play and stop plus and minus
+  icons -  plus and minus
+
   input time - replace old
 
   tidy 
@@ -194,8 +195,6 @@ export default function Metronome() {
           <div className="button-container">
             <BiPlayCircle onClick={onClickPlay} id="playButton" className="play-mode-button"/>
             <BiStopCircle  onClick={onClickStop} id="stopButton" className="play-mode-button"/>
-           {/* <button onClick={onClickPlay} id="playButton" className="bpm-button"></button>*/}
-            {/*<button onClick={onClickStop} id="stopButton" className="bpm-button"><FaStop/></button> */}
           </div> 
 
           <div className="volume-slider-container"> 
