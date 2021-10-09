@@ -11,8 +11,8 @@ import './styles/Metronome.css';
  
 /*
   To do
-   
-  click when change bpm / time
+    
+  blip start paus stop timer
 
   don't play bell if timer hasn't counted down (on press stop)
   disable timer buttons when playing

@@ -11,7 +11,9 @@ function Timer({finishedSound, buttonSound}) {
 	
 	// ==================================== Event Handlers =============================== //
 	function onClickPlay() {
-		setPlayMode('play')
+		if(seconds > 0 || minutes > 0 || hours > 0) {
+			setPlayMode('play')
+		}
 	}
 
 	function onClickPause() {
