@@ -13,12 +13,10 @@ import './styles/Metronome.css';
 /*
   To do
     
-  blip start paus stop timer
+ fix - delay on bell when reach 00
 
   flash color on play
   
-  icons -  plus and minus
-
   input time - replace old
 
   tidy 

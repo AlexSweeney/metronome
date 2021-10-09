@@ -31,7 +31,10 @@ function Timer({finishedSound, buttonSound}) {
 		if (seconds > 0) decrementSeconds(seconds)
 		else if(seconds === 0 && minutes > 0) decrementMinutes(minutes)
 		else if(seconds === 0 && minutes === 0 && hours > 0) decrementHours(hours)
-		else if(seconds === 0 && minutes === 0 && hours === 0) finishTime()
+	}
+
+	function checkIfFinished(seconds, minutes, hours) {
+		if(seconds === 1 && minutes === 0 && hours === 0) finishTime()
 	}
 
 	function decrementSeconds(seconds) { 
@@ -74,6 +77,7 @@ function Timer({finishedSound, buttonSound}) {
 
 		if(playMode === 'play') {
 			timeout = setTimeout(() => {
+				checkIfFinished(seconds, minutes, hours)
 				decrementTime(seconds, minutes, hours)
 			}, 1000)
 		}
