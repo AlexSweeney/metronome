@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './../styles/VolumeSlider.css';
 
 export default function VolumeSlider({volume, setVolume}) {
 	// ============================ Constants ================================= //
@@ -30,6 +31,7 @@ export default function VolumeSlider({volume, setVolume}) {
   // ============================ Output =================================== //
   return (
     <input type="range" min="0" max="100" 
+      className="volume-slider"
       value={sliderValue} 
       onChange={onSliderChange}/> 
   )

@@ -10,9 +10,9 @@ import './styles/Metronome.css';
  
 /*
   To do
-   
-  style - layout
+    
   style - hover 
+  style - options
   change metronome sound
     * when not playing
     * when playing
@@ -181,8 +181,8 @@ export default function Metronome() {
           </div>
 
           <div className="button-container">
-            <button onClick={onClickPlay} id="playButton" className="BPMButton">Play</button>
-            <button onClick={onClickStop} id="stopButton" className="BPMButton">Stop</button> 
+            <button onClick={onClickPlay} id="playButton" className="bpm-button">Play</button>
+            <button onClick={onClickStop} id="stopButton" className="bpm-button">Stop</button> 
           </div> 
 
           <div className="volume-slider-container"> 

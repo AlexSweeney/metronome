@@ -5,6 +5,7 @@
   text-transform: uppercase;
   font-size: 0.7em;
   font-family: sans-serif;
+  cursor: default;
 }
 
 .timer-input-container {
@@ -13,6 +14,7 @@
 
 .timer-button {
 	width: 2em;
+	cursor: pointer;
 }
 
 .timer-input {

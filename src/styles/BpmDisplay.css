@@ -1,4 +1,4 @@
-.bpm-display { 
+4.bpm-display { 
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -16,6 +16,7 @@
   font-size: 1.5em;
   width: 4em;
   margin: 0 0.3em;
+  cursor: pointer;
 }
 
 .bpm-display-input { 
@@ -45,4 +46,7 @@
   font-weight: bold;
   color: white;
   font-family: sans-serif;
+  cursor: default;
+  display: flex;
+  justify-content: center;
 } 
