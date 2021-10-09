@@ -12,7 +12,7 @@ function Timer({finishedSound, buttonSound}) {
 	
 	// ==================================== Event Handlers =============================== //
 	function onClickPlay() {
-		if(seconds > 0 || minutes > 0 || hours > 0) {
+		if(seconds > 0 || minutes > 0 || hours > 0) { 
 			setPlayMode('play')
 		}
 	}

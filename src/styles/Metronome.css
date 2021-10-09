@@ -52,8 +52,7 @@
 }
 
 .volume-slider {
-  cursor: pointer;
-  background: red;
+  cursor: pointer; 
 }
 
 .bpm-display-container {

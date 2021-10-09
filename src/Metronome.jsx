@@ -12,12 +12,10 @@ import './styles/Metronome.css';
  
 /*
   To do
-    
- fix - delay on bell when reach 00
 
-  flash color on play
+  fix - replace time then press add on bpm (convert to number on change)
   
-  input time - replace old
+  input time - replace old 
 
   tidy 
   push

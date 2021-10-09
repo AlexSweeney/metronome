@@ -4,6 +4,9 @@ import {playSound} from './utils.js';
 import './../styles/TimerInput.css';
 
 export default function TimerInput({value, setValue, isDisabled, min, max, buttonSound, children}) {
+	const i = Date.parse(new Date());
+	const timerInputId = `timer-input-${i}`;
+
 	// ============================= Event Handlers ============================= //
 	function onClickMinus() {
 		const newVal = value - 1;
@@ -21,13 +24,15 @@ export default function TimerInput({value, setValue, isDisabled, min, max, butto
 		}
 	}
 
-	function onChange(e) {
-		const newVal = Number(e.target.value); 
+	function onChange(e) {  
+		let newVal = e.target.value;   
+		if(newVal.length > 2) newVal = newVal.slice(1); 
+		newVal = Number(newVal);
 
 		if((newVal >= min && newVal <= max) || newVal === '') {
 			setValue(newVal)
 		}
-	}
+	} 
 
 	// ============================= Helper Fns ============================= //
 	function addLeadingZero(number) {
@@ -48,7 +53,11 @@ export default function TimerInput({value, setValue, isDisabled, min, max, butto
 					handleClickHold={onClickMinus} 
 					isDisabled={isDisabled} 
 					className="timer-button">-</ClickHoldButton>
-					<input type="number" onChange={onChange} className="timer-input" value={addLeadingZero(value)}/>
+					<input id={timerInputId}
+						type="number" 
+						onChange={onChange} 
+						className="timer-input" 
+						value={addLeadingZero(value)}/>
 				<ClickHoldButton 
 					handleClickHold={onClickPlus} 
 					isDisabled={isDisabled} 
